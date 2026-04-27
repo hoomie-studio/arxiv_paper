@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
@@ -9,17 +10,35 @@
     .hk-container { width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; position: relative; z-index: 1; }
     .hk-background-text { position: absolute; top: 5%; right: 5%; font-size: 22vw; font-weight: 900; color: rgba(0,0,0,0.03); z-index: 0; pointer-events: none; white-space: nowrap; }
     .hk-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; z-index: 1; flex-grow: 1; min-height: 0; margin-bottom: 30px; }
+    
     .hk-main-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 4rem); line-height: 1.15; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; }
     .hk-eng-subtitle { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 40px; }
-    .hk-core-statement { display: flex; gap: 20px; align-items: flex-start; }
+    .hk-core-statement { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
     .hk-label { background: var(--hk-black); color: #fff; padding: 4px 10px; font-size: 0.7rem; font-weight: 900; transform: rotate(-90deg) translateX(-5px); }
     .hk-core-statement p { font-size: 1.3rem; font-family: var(--serif); line-height: 1.4; font-weight: 700; color: var(--hk-black); }
+    
+    .hk-link-btn { 
+        display: inline-block; 
+        margin-top: 20px; 
+        padding: 12px 28px; 
+        border: 2px solid var(--hk-black); 
+        color: var(--hk-black); 
+        text-decoration: none; 
+        font-weight: 900; 
+        font-size: 0.8rem; 
+        letter-spacing: 2px; 
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    .hk-link-btn:hover { background: var(--hk-black); color: #fff; transform: translateY(-3px); }
+
     .hk-right-col { position: relative; overflow-y: auto; padding-right: 25px; scrollbar-width: thin; scrollbar-color: var(--hk-black) transparent; }
     h3 { font-family: var(--serif); font-size: 1.5rem; margin: 35px 0 15px; border-bottom: 2px solid var(--hk-black); display: inline-block; }
     p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
     strong, b { color: var(--hk-red); font-weight: 700; } 
     li { font-size: 1.05rem; padding: 12px 0; border-bottom: 1px solid var(--hk-gray); display: flex; gap: 10px; line-height: 1.6; }
     li::before { content: '→'; font-weight: 900; color: var(--hk-red); flex-shrink: 0; }
+    
     .hk-footer { flex-shrink: 0; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #000; padding-top: 20px; z-index: 2; background: var(--hk-bg); }
     .hk-logo { font-weight: 900; letter-spacing: 2px; font-size: 1.1rem; }
     .hk-logo span { color: var(--hk-red); }
@@ -37,6 +56,7 @@
                             <span class="hk-label">CORE</span>
                             <p>用特殊「稀疏感知」的數據訓練方法，讓 3D 重建模型能從極少數且分散的網路照片中，成功還原世界上的「冷門景點」。</p>
                         </div>
+                        <a href="#" target="_blank" class="hk-link-btn">READ ORIGINAL PAPER</a>
                     </div>
                     <div class="hk-right-col">
                         <div class="hk-content-wrapper"><h3>歸檔日期: 2026-04-27 12:10:05</h3>
@@ -93,4 +113,4 @@
             </div>
         </div></div></div>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>const swiper = new Swiper('.swiper', { mousewheel: true, speed: 800 });</script></body></html>
+    <script>const swiper = new Swiper('.swiper', { mousewheel: true, speed: 800, direction: 'vertical' });</script></body></html>
