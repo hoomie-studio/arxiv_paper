@@ -21,6 +21,6 @@ powershell -Command "if (!(Test-Path 'C:\Users\folow\.openclaw\workspace\skills\
 
 ## 第四階段：自動歸檔與合併 (Paperbot 整合)
 【動作 6】：執行合併歸檔指令：
-C:\Users\folow\AppData\Local\Programs\Python\Python313\python.exe C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\arxiv_downloader.py --mode merge
+C:\Users\folow\AppData\Local\Programs\Python\Python313\python.exe C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\arxiv_manager.py --mode merge
 
 【動作 7】：任務完成，在對話中呈現摘要結果。
