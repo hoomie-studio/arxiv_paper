@@ -1,7 +1,620 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Study Mode</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
 :root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#6f6f6f;--line:#deded8;--accent:#e92727;--soft:#f1f1ee;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}a{color:inherit}.paper-page{display:grid;grid-template-columns:minmax(0,1fr)270px;gap:28px;min-height:100vh;padding:32px 28px 28px 46px;border-bottom:1px solid var(--line)}.paper-main{min-width:0}.paper-hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;align-items:start;margin-bottom:18px}.date-tag{margin:0 0 4px;font-size:16px;font-weight:700}h1{font-family:var(--serif);font-size:clamp(38px,5vw,72px);line-height:1.06;margin:0;letter-spacing:0}.eng-title{margin:8px 0 0;color:#949494;text-transform:uppercase;letter-spacing:2px;font-size:16px}.hero-actions{display:flex;gap:14px;align-items:center;padding-top:38px}.outline-btn,.study-toggle{min-height:56px;border-radius:6px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;text-decoration:none;border:2px solid var(--ink);background:var(--paper);cursor:pointer;white-space:nowrap}.study-toggle{background:var(--ink);color:#fff}.core-line{grid-column:1/-1;display:flex;gap:14px;align-items:flex-start;font-size:17px;line-height:1.75}.core-line span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;letter-spacing:1px;margin-top:6px}.core-line p{margin:0}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.study-card{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:7px;padding:20px 22px;min-height:150px;scroll-margin-top:24px}.study-card:nth-child(1),.study-card:nth-child(4),.study-card:nth-child(5),.study-card:nth-child(6){grid-column:span 6}.study-card:nth-child(2),.study-card:nth-child(3),.study-card:nth-child(7),.study-card:nth-child(8){grid-column:span 4}.single-column .study-card{grid-column:1/-1}.card-heading{display:flex;align-items:center;gap:12px;margin-bottom:12px}.card-icon{color:var(--accent);border:1px solid var(--accent);width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}.card-heading h2{margin:0;font-size:20px;line-height:1.2}.markdown-body{font-size:15px;line-height:1.75}.markdown-body p{margin:0 0 10px}.markdown-body ul,.markdown-body ol{margin:0;padding-left:20px}.markdown-body li{margin:7px 0}.markdown-body strong{font-weight:900}.flow-card{grid-column:span 8!important}.flow-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px}.flow-step{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:14px;min-height:130px}.flow-number{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-bottom:10px}.flow-step strong{display:block;margin-bottom:8px}.flow-step p{margin:0;color:#444;font-size:13px;line-height:1.6}.quiz-question{font-weight:800;margin-top:0}.quiz-options{display:grid;gap:8px}.quiz-option{width:100%;border:1px solid var(--line);background:#fff;border-radius:7px;padding:10px 12px;text-align:left;cursor:pointer;font:inherit;display:flex;gap:10px;align-items:flex-start}.quiz-option span{color:var(--muted);font-weight:900}.quiz-option.correct{border-color:var(--accent);background:#fff4f4}.quiz-option.wrong{opacity:.55}.quiz-feedback{margin:10px 0 0;color:var(--accent);font-weight:800}.study-rail{position:sticky;top:0;height:100vh;padding:34px 0 28px 28px;border-left:1px solid var(--line);background:var(--bg)}.study-rail h2{margin:0 0 16px;font-size:22px}.study-rail>p{color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}.study-rail nav{display:grid;gap:12px}.study-rail nav a{display:grid;grid-template-columns:34px 1fr;gap:8px 10px;text-decoration:none;align-items:start}.study-rail nav span{width:26px;height:26px;border-radius:50%;border:1px solid #c8c8c8;display:inline-flex;align-items:center;justify-content:center;color:#777;font-size:13px}.study-rail nav strong{font-size:15px}.study-rail nav em{grid-column:2;color:#444;font-style:normal;font-size:14px}.hint-box{margin-top:40px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.6);padding:18px;line-height:1.8}.hint-box p{margin:10px 0 0;color:#666}body.study-mode .paper-page:not(.active-study){display:none}body.study-mode .study-card{opacity:.38;transition:opacity .2s,transform .2s}body.study-mode .study-card:hover,body.study-mode .study-card:target{opacity:1;transform:translateY(-2px)}body.study-mode .study-toggle{background:var(--accent);border-color:var(--accent)}@media(max-width:1080px){.paper-page{grid-template-columns:1fr;padding:24px}.study-rail{position:static;height:auto;border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.study-rail nav{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions{padding-top:0}}@media(max-width:760px){.paper-hero{grid-template-columns:1fr}.hero-actions{flex-wrap:wrap}.outline-btn,.study-toggle{width:100%}.study-card,.flow-card{grid-column:1/-1!important}.study-rail nav{grid-template-columns:1fr}.paper-page{padding:18px}h1{font-size:38px}}
 </style></head><body><div class="site-shell">
-    <article class="paper-page" id="paper-1">
+    <article class="paper-page legacy-page" id="paper-1">
+      <main class="paper-main">
+        <header class="paper-hero">
+          <div><p class="date-tag">[ 04/27 ]</p><h1>未命名研究</h1><p class="eng-title">Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction ?</p></div>
+          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22557" target="_blank" rel="noopener">閱讀原始論文</a></div>
+          <div class="core-line"><span>CORE</span><p>尚未填寫核心摘要</p></div>
+        </header>
+        <div class="card-grid single-column">
+      <section class="study-card " id="paper-1-legacy">
+        <div class="card-heading"><span class="card-icon">¶</span><h2>摘要內容</h2></div>
+        <div class="markdown-body"><h1>今日待處理論文任務</h1>
+<h3>論文內容:</h3>
+<h2>1 Introduction</h2>
+<p>Cardiovascular disease continues to be the leading cause of mortality worldwide, underscoring the importance of accurate and non-invasive imaging for early diagnosis and monitoring [<a href="#bib.bib1" title="Fill the k-space and refine the image: prompting for dynamic and multi-contrast mri reconstruction">38</a>]. Cardiac magnetic resonance (CMR) imaging has emerged as a powerful tool due to its ability to provide high-resolution assessment of cardiac anatomy, function, and tissue properties without the use of ionizing radiation [<a href="#bib.bib2" title="The state-of-the-art in cardiac mri reconstruction: results of the cmrxrecon challenge in miccai 2023">21</a>, <a href="#bib.bib3" title="Simultaneous multi-parametric acquisition and reconstruction techniques in cardiac magnetic resonance imaging: basic concepts and status of clinical development">11</a>].</p>
+<p>Despite its clinical benefits, MRI acquisition is inherently slow because k-space measurements must be collected sequentially during the scan. Long acquisition times can lead to patient discomfort and motion artifacts [<a href="#bib.bib4" title="Recurrent variational network: a deep learning inverse problem solver applied to the task of accelerated mri reconstruction">39</a>]. Accelerated MRI addresses this challenge by undersampling k-space to shorten scan duration; however, reconstructing images from such incomplete measurements is an ill-posed inverse problem (i.e. there are fewer measurements than unknowns) [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>] that requires strong prior information.</p>
+<p>In recent years, deep learning–based reconstruction approaches have emerged as a powerful solution to this challenge [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>, <a href="#bib.bib6" title="Deep learning techniques for inverse problems in imaging">26</a>]. In particular, unrolled networks have achieved state-of-the-art performance [<a href="#bib.bib1" title="Fill the k-space and refine the image: prompting for dynamic and multi-contrast mri reconstruction">38</a>] by combining physics-based data consistency with learned image priors, effectively integrating the MRI acquisition model with data-driven representations. However, these conventional deep learning models are typically designed for specific tasks and often require substantial retraining or fine-tuning when deployed in new settings [<a href="#bib.bib8" title="Foundation models in medical image analysis: a systematic review and meta-analysis">30</a>]. Moreover, their clinical applicability is frequently challenged by domain shifts arising from variations in acquisition protocols, imaging settings, scanner hardware, and anatomical differences across patient populations [<a href="#bib.bib12" title="Zero-shot domain generalization of foundational models for 3d medical image segmentation: an experimental study">8</a>]. These limitations highlight a key challenge: how to develop reconstruction methods that generalize reliably across diverse settings.</p>
+<p>More recently, the broader deep learning community has increasingly shifted toward large-scale foundation models, which are pretrained on extensive datasets and exhibit strong generalization across tasks and domains [<a href="#bib.bib7" title="Are natural domain foundation models useful for medical image classification? in 2024 ieee/cvf winter conference on applications of computer vision (wacv). waikoloa, hi, usa: ieee;[cited 2024 aug 27]. 7619–7628">15</a>, <a href="#bib.bib9" title="Evaluating general purpose vision foundation models for medical image analysis: an experimental study of dinov2 on radiology benchmarks">3</a>]. Their success has been particularly transformative in natural language processing [<a href="#bib.bib10" title="BART: denoising sequence-to-sequence pre-training for natural language generation, translation, and comprehension">18</a>, <a href="#bib.bib11" title="Improving language understanding by generative pre-training">29</a>, <a href="#bib.bib13" title="On the opportunities and risks of foundation models">4</a>], and has recently been extended to computer vision and medical imaging [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>, <a href="#bib.bib15" title="Dinov2: learning robust visual features without supervision">27</a>, <a href="#bib.bib16" title="Segment anything">17</a>, <a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>, <a href="#bib.bib19" title="Universeg: universal medical image segmentation">5</a>, <a href="#bib.bib17" title="Medclip: contrastive learning from unpaired medical images and text">36</a>, <a href="#bib.bib18" title="Segment anything in medical images">22</a>]. By learning rich, transferable representations from large-scale data, these models enable strong performance even in low-data or zero-shot regimes, reducing the need for task-specific supervision. This paradigm shift suggests a promising alternative to highly specialized architectures: leveraging pretrained models as general-purpose priors.</p>
+<p>However, applying foundation models to medical imaging, and in particular to physics-based inverse problems such as MRI reconstruction–remains largely unexplored. A key challenge lies in the domain gap between natural images used for large-scale pretraining and medical imaging data. While medical imaging is often constrained by limited annotated data due to privacy and acquisition costs [<a href="#bib.bib7" title="Are natural domain foundation models useful for medical image classification? in 2024 ieee/cvf winter conference on applications of computer vision (wacv). waikoloa, hi, usa: ieee;[cited 2024 aug 27]. 7619–7628">15</a>, <a href="#bib.bib22" title="What makes transfer learning work for medical images: feature reuse &amp; other factors">23</a>, <a href="#bib.bib21" title="Pretrained vits yield versatile representations for medical images">24</a>], making it well-suited for transfer learning, it is unclear whether representations learned from natural images can effectively transfer to this fundamentally different domain.</p>
+<p>These challenges motivate a shift in perspective: rather than designing increasingly task-specific reconstruction architectures, we investigate whether the transferable representations learned by foundation models can serve as effective priors for accelerated MRI reconstruction.</p>
+<p>Building on this perspective, we investigate whether frozen vision foundation models can serve as effective priors for physics-based MRI reconstruction, and compare natural-image-pretrained models with domain-specific counterparts such as BiomedCLIP [<a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>]. We propose an unrolled reconstruction framework that integrates pretrained visual encoders, such as CLIP [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>], DINOv2 [<a href="#bib.bib15" title="Dinov2: learning robust visual features without supervision">27</a>], and BiomedCLIP [<a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>], within each cascade of the reconstruction pipeline. The foundation models remain frozen during training and provide feature representations that guide iterative refinement, while data-consistency operations enforce fidelity to the acquired k-space measurements.</p>
+<p>Through extensive experiments on the CMRxRecon 2023 dataset [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>], we observe that task-specific reconstruction models, such as E2E-VarNet [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], achieve superior performance in standard in-distribution settings, as expected due to their end-to-end optimization on domain-specific MRI data. However, a markedly different trend emerges under more challenging conditions. In cross-domain evaluations and at higher acceleration factors, corresponding to increasingly ill-posed reconstruction problems, the performance gap between the two approaches narrows substantially. In these regimes, foundation-model-based reconstructions become competitive and, in some cases, surpass task-specific baseline. We further observe that natural-image-pretrained models, such as CLIP, learn highly transferable structural representations, while domain-specific pretraining (BiomedCLIP) provides modest additional gains in more ill-posed regimes.</p>
+<p>These findings reveal a regime-dependent trade-off: while fully supervised reconstruction network excel when sufficient domain-specific data is available, pretrained foundation models provide more robust and transferable priors under distribution shifts. Overall, this suggests that large-scale visual pretraining captures structural representations that generalize beyond natural images and can be effectively leveraged for medical image reconstruction, particularly in challenging, cross-domain settings.</p>
+<p>In summary, our main contributions are:</p>
+<ul>
+<li>•</li>
+</ul>
+<p>To the best of our knowledge, we present one of the first studies investigating frozen vision foundation models as priors for physics-based MRI reconstruction. We introduce an unrolled reconstruction framework that integrates pretrained encoders (CLIP, DINOv2, BiomedCLIP) within each cascade, and compare domain-specific (BiomedCLIP) and natural-image-pretrained models.<br />
+* •</p>
+<p>We evaluate performance across both in-distribution and challenging cross-domain settings, revealing a regime-dependent behavior in which task-specific model dominate under standard conditions, while foundation-model-based approaches become increasingly competitive as reconstruction difficulty and domain shift increase.<br />
+* •</p>
+<p>We show that large-scale pretrained visual representations, despite being learned from natural images, capture transferable structural priors that can generalize to MRI reconstruction across anatomically distinct domains.</p>
+<h2>2 Background and Related Work</h2>
+<h4>Inverse Problem Modeling of Accelerated MRI Reconstruction.</h4>
+<p>Magnetic resonance imaging (MRI) acquires measurements of the underlying anatomy in the frequency domain, known as k-space. During acquisition, multiple receiver coils are used, each with a distinct spatial sensitivity profile [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>]. Let x∗∈ℂnx^{\ast}\in\mathbb{C}^{n} denote the target image. The measurement from the ii-th coil is given by</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>ki=ℱ​(Si​x∗)+zi,i=1,…,N,k_{i}=\mathcal{F}(S_{i}x^{\ast})+z_{i},\quad i=1,\dots,N,</td>
+<td></td>
+<td>(1)</td>
+</tr>
+</tbody>
+</table>
+<p>where SiS_{i} denotes the coil sensitivity map, ℱ\mathcal{F} the Fourier transform, and ziz_{i} measurement noise. Collectively, measurements across all coils are denoted by k=(k1,…,kN)k=(k_{1},\dots,k_{N}).</p>
+<p>To accelerate acquisition, only a subset of k-space is sampled using an undersampling mask, yielding</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>k~i=M​ki,i=1,…,N,\tilde{k}_{i}=Mk_{i},\quad i=1,\dots,N,</td>
+<td></td>
+<td>(2)</td>
+</tr>
+</tbody>
+</table>
+<p>where MM is a binary sampling operator. The forward model can thus be written compactly as k~=𝒜​(x∗)\tilde{k}=\mathcal{A}(x^{\ast}), where 𝒜​(⋅)\mathcal{A}(\cdot) represents the undersampled multi-coil acquisition process.</p>
+<p>Recovering x∗x^{\ast} from k~\tilde{k} is an ill-posed inverse problem due to insufficient measurements. Classical approaches address this by incorporating prior knowledge, such as sparsity in a transform domain, leading to compressed sensing formulations [<a href="#bib.bib23" title="Stable signal recovery from incomplete and inaccurate measurements">6</a>, <a href="#bib.bib24" title="Compressed sensing">10</a>, <a href="#bib.bib25" title="Compressed sensing mri">20</a>]:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>x^=arg⁡minx⁡‖𝒜​(x)−k~‖2+ℛ​(x),\hat{x}=\arg\min_{x}\;|\mathcal{A}(x)-\tilde{k}|^{2}+\mathcal{R}(x),</td>
+<td></td>
+<td>(3)</td>
+</tr>
+</tbody>
+</table>
+<p>where ℛ​(⋅)\mathcal{R}(\cdot) encodes prior information. In modern approaches, this prior is learned directly from data using deep neural networks, forming the basis of learning-based MRI reconstruction methods.</p>
+<h4>Deep Learning for Accelerated MRI Reconstruction.</h4>
+<p>Deep learning has become the dominant paradigm for accelerated MRI reconstruction, with models learning data-driven image priors from large-scale datasets. Among these, unrolled networks achieve state-of-the-art performance by modeling reconstruction as a sequence of cascades, each corresponding to an iteration of an optimization algorithm [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>, <a href="#bib.bib1" title="Fill the k-space and refine the image: prompting for dynamic and multi-contrast mri reconstruction">38</a>, <a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>]. This formulation enables tight integration of MRI acquisition physics, particularly k-space undersampling, with learned image-domain priors, yielding iterative refinement schemes that progressively improve reconstruction quality. A prominent and widely adopted example is the End-to-End Variational Network (E2E-VarNet) [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], which has established itself as a strong state-of-the-art baseline on benchmarks such as fastMRI [<a href="#bib.bib29" title="FastMRI: an open dataset and benchmarks for accelerated mri">40</a>, <a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>]. Owing to its effectiveness and generality, E2E-VarNet has become a foundational architecture in MRI reconstruction, with many subsequent methods building upon its design.</p>
+<h4>Foundation Models.</h4>
+<p>Foundation models have significantly advanced transfer learning, enabling pretrained models to generalize across diverse tasks [<a href="#bib.bib7" title="Are natural domain foundation models useful for medical image classification? in 2024 ieee/cvf winter conference on applications of computer vision (wacv). waikoloa, hi, usa: ieee;[cited 2024 aug 27]. 7619–7628">15</a>]. In computer vision, CLIP [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>] has gained widespread attention for learning aligned image–text representations via contrastive learning, supporting strong performance across a range of downstream tasks [<a href="#bib.bib30" title="CLIP in medical imaging: a survey">42</a>]. Recent work has explored its use in medical imaging, showing that pretrained visual features can rival or even surpass domain-specific models in certain clinical settings [<a href="#bib.bib17" title="Medclip: contrastive learning from unpaired medical images and text">36</a>, <a href="#bib.bib31" title="Radiological reports improve pre-training for localized imaging tasks on chest x-rays">25</a>, <a href="#bib.bib32" title="One-shot localization and segmentation of medical images with foundation models">1</a>]. To bridge the domain gap, BiomedCLIP [<a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>] extends CLIP to the biomedical domain using curated image–text pairs, achieving state-of-the-art results on multiple medical benchmarks. Similarly, self-supervised vision transformers such as DINOv2 [<a href="#bib.bib15" title="Dinov2: learning robust visual features without supervision">27</a>] learn robust and transferable representations without manual annotations, achieving strong performance across diverse vision tasks [<a href="#bib.bib33" title="General purpose image encoder dinov2 for medical image registration">31</a>, <a href="#bib.bib9" title="Evaluating general purpose vision foundation models for medical image analysis: an experimental study of dinov2 on radiology benchmarks">3</a>]. Despite these advances, existing work primarily focuses on high-level vision tasks. The role of foundation models in physics-based inverse problems, such as MRI reconstruction, remains largely unexplored.</p>
+<h2>3 Methodology</h2>
+<p>The primary objective of this work is to evaluate the effectiveness of vision foundation models in the context of MRI reconstruction. In particular, we aim to assess whether features learned from large-scale pretraining, primarily on natural images–can serve as transferable priors for reconstructing undersampled MRI data.<br />
+To this end, we propose an unrolled reconstruction framework that integrates pretrained vision foundation models within a physics-based MRI reconstruction pipeline. Given undersampled multi-coil k-space measurements, the objective is to recover an image that is both consistent with the acquired data and guided by informative structural priors. The reconstruction is modeled as a sequence of cascades, each comprising a data-consistency step and a learned refinement module.</p>
+<p>Unlike conventional approaches that learn priors solely from task-specific MRI data, our method incorporates frozen visual encoders–such as CLIP [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>], DINOv2 [<a href="#bib.bib15" title="Dinov2: learning robust visual features without supervision">27</a>], and BiomedCLIP [<a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>], within each cascade. These encoders extract feature representations from intermediate reconstructions, which are used to guide iterative refinement. This design enables the model to leverage large-scale pretrained knowledge while maintaining fidelity to the underlying acquisition physics.</p>
+<h4>Foundation Model Encoders.</h4>
+<p>All encoders are transformer-based models pretrained on large-scale datasets using self-supervised or multimodal objectives. We select representative models spanning both natural-image and medical-domain pretraining to study the impact of pretraining data on reconstruction performance. For all models, we use the ViT-B backbone for consistency across experiments.</p>
+<ul>
+<li>•</li>
+</ul>
+<p>CLIP (Contrastive Language-Image Pre-training) [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>] is a vision–language model trained via contrastive learning on 400 million image–text pairs [<a href="#bib.bib14" title="Learning transferable visual models from natural language supervision">28</a>, <a href="#bib.bib42" title="Navigating data scarcity using foundation models: a benchmark of few-shot and zero-shot learning approaches in medical imaging">37</a>], to learn aligned multimodal embeddings. This objective enables CLIP to capture rich semantic and structural features that transfer effectively across diverse visual tasks [<a href="#bib.bib7" title="Are natural domain foundation models useful for medical image classification? in 2024 ieee/cvf winter conference on applications of computer vision (wacv). waikoloa, hi, usa: ieee;[cited 2024 aug 27]. 7619–7628">15</a>].<br />
+* •</p>
+<p>DINOv2 (DIstillation with NO labels) [<a href="#bib.bib15" title="Dinov2: learning robust visual features without supervision">27</a>] is a state-of-the-art self-supervised Vision Transformer trained on a curated dataset of 142M natural images using a self-distillation objective. It learns robust and transferable visual representations without manual annotations.<br />
+* •</p>
+<p>BiomedCLIP [<a href="#bib.bib20" title="Biomedclip: a multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs">41</a>] is a domain-specific extension of CLIP trained on PMC-15M, a large-scale biomedical dataset of 15M image–text pairs from PubMed Central. It captures fine-grained alignments between medical imagery and clinical context, enabling direct comparison between natural-domain and medical-domain pretrained representations.</p>
+<h3>3.1 Network Architecture</h3>
+<p>Our architecture follows an unrolled reconstruction paradigm, where a sequence of cascades iteratively refines the image. Each cascade consists of a data-consistency step in k-space and an image-domain refinement module. The data-consistency operation enforces agreement with acquired measurements, while the refinement module incorporates learned priors to improve reconstruction quality. In contrast to conventional approaches that rely on task-specific CNN priors, we introduce a foundation-model-guided denoiser, which leverages pretrained visual representations. This module integrates a frozen vision transformer encoder with a lightweight decoder, enabling the use of transferable features within each cascade. We first describe the architecture of the proposed foundation-model-based denoiser, followed by its integration within the unrolled reconstruction framework.</p>
+<h4>Foundation Model Denoiser.</h4>
+<p>Given an intermediate reconstruction, the complex-valued MRI image is converted to a magnitude image and normalized using percentile-based scaling [<a href="#bib.bib34" title="Do vision foundation models enhance domain generalization in medical image segmentation?">7</a>] to reduce outliers. The image is then replicated across three channels, resized to 224×224224\times 224, and standardized using ImageNet [<a href="#bib.bib35" title="Imagenet: a large-scale hierarchical image database">9</a>] statistics to match the input distribution of pretrained encoders. The normalized image is passed through a frozen Vision Transformer encoder (CLIP, DINOv2, or BiomedCLIP), whose parameters remain fixed throughout training to ensure that reconstruction is guided by pretrained representations rather than domain-specific adaptation. We refer to the resulting models as CMR-CLIP, CMR-DINOv2, and CMR-BiomedCLIP, respectively.</p>
+<p>Instead of relying solely on the final transformer layer, we extract intermediate features from the first six layers, which capture low-level and structural information beneficial for reconstruction [<a href="#bib.bib7" title="Are natural domain foundation models useful for medical image classification? in 2024 ieee/cvf winter conference on applications of computer vision (wacv). waikoloa, hi, usa: ieee;[cited 2024 aug 27]. 7619–7628">15</a>]. These features are fused via a learnable mechanism: each layer is first aligned using LayerNorm [<a href="#bib.bib36" title="Layer normalization">2</a>], then combined using softmax-normalized weights constrained to sum to one [<a href="#bib.bib26" title="From clip to dino: visual encoders shout in multi-modal large language models">16</a>], enabling adaptive integration of multi-level representations. The fused patch tokens are reshaped into spatial feature maps and processed by a UNETR-style [<a href="#bib.bib37" title="Unetr: transformers for 3d medical image segmentation">14</a>] hierarchical decoder with multi-scale skip connections from intermediate encoder layers (layers 5, 4, and 3). Each skip feature is reshaped, resized via bilinear interpolation, and projected using 1×11\times 1 convolutions before fusion.</p>
+<p>Each decoding stage consists of bilinear upsampling followed by convolutional refinement. In contrast to standard UNETR [<a href="#bib.bib37" title="Unetr: transformers for 3d medical image segmentation">14</a>] designs that employ full convolutions, we use depthwise separable convolutions (a 3×33\times 3 depthwise convolution followed by a 1×11\times 1 pointwise convolution) to improve parameter efficiency [<a href="#bib.bib39" title="Depthwise convolution is all you need for learning multiple visual domains">13</a>], along with instance normalization [<a href="#bib.bib38" title="Instance normalization: the missing ingredient for fast stylization">33</a>] and ReLU activation. At each stage, the upsampled features are concatenated with the corresponding multi-scale skip features from the encoder, as illustrated in Fig. <a href="#S3.F1" title="Figure 1 ‣ 3.2 Iterative Unrolled Reconstruction ‣ 3 Methodology ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">1</a>(a), and further refined using a 3×33\times 3 convolution, instance normalization, and non-linearity. This process is repeated across multiple stages, progressively recovering spatial resolution and integrating both high-level and low-level information. To preserve fine-grained details, we additionally incorporate an input-level skip connection by projecting the original complex-valued reconstruction through a shallow convolutional layer and injecting it at the final decoding stage. The final output is produced via a lightweight convolutional head, yielding a two-channel reconstruction corresponding to the real and imaginary components. Overall, the proposed denoiser combines frozen foundation model features, multi-layer transformer fusion, and a lightweight hierarchical decoder to provide transferable yet task-adapted priors for MRI reconstruction.</p>
+<h3>3.2 Iterative Unrolled Reconstruction</h3>
+<p>Architectures based on unrolled optimization strategies have shown strong effectiveness in addressing inverse problems, particularly in accelerated MRI reconstruction [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>]. These methods model reconstruction as a sequence of cascades, where each stage iteratively refines the estimate by enforcing data consistency and incorporating learned image priors.</p>
+<p>Building on the E2E-VarNet framework [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], we adopt an unrolled reconstruction approach in the k-space domain, where the solution to the regularized inverse problem</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>x^=arg⁡minx⁡‖𝒜​(x)−k~‖22+ℛ​(x)\hat{x}=\arg\min_{x}\;\left|\mathcal{A}(x)-\tilde{k}\right|_{2}^{2}+\mathcal{R}(x)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>is approximated by unfolding the optimization into a sequence of TT cascades.<br />
+Each cascade corresponds to an update of the form:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>k^t+1=k^t−μt​M​(k^t−k~)+G​(k^t),\hat{k}^{t+1}=\hat{k}^{t}-\mu^{t}M(\hat{k}^{t}-\tilde{k})+G(\hat{k}^{t}),</td>
+<td></td>
+<td>(4)</td>
+</tr>
+</tbody>
+</table>
+<p>where k^t\hat{k}^{t} denotes the current estimate in k-space at cascade tt, μt\mu^{t} is a learnable step size, and G​(⋅)G(\cdot) represents a learned regularization term [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>]. The second term enforces data consistency (DC) by ensuring that the reconstructed k-space remains aligned with the acquired measurements at sampled locations.</p>
+<p>The regularization is applied in the image domain through our proposed foundation-model-guided denoiser. Specifically, the mapping G​(⋅)G(\cdot) can be expressed as:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>G​(k)=ℱ​(ℰ​(𝒟​(ℛ​(ℱ−1​(k))))),G(k)=\mathcal{F}\big(\mathcal{E}\big(\mathcal{D}\big(\mathcal{R}(\mathcal{F}^{-1}(k))\big)\big)\big),</td>
+<td></td>
+<td>(5)</td>
+</tr>
+</tbody>
+</table>
+<p>where 𝒟\mathcal{D} denotes the proposed denoiser, ℛ​(x1,…,xN)=∑i=1NSi∗​xi\mathcal{R}(x_{1},\dots,x_{N})=\sum_{i=1}^{N}S_{i}^{*}x_{i} is the reduction operator that combines multi-coil images using the corresponding sensitivity maps, and ℰ​(x)=(S1​x,…,SN​x)\mathcal{E}(x)=(S_{1}x,\dots,S_{N}x) is the expansion operator that maps the combined image back to individual coil images. This formulation enables the integration of learned image-domain priors within the iterative reconstruction process while maintaining consistency with the underlying acquisition model.<br />
+We estimate coil sensitivity maps using a standard sensitivity estimation module [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], where maps are derived from the low-frequency (ACS) region of the undersampled k-space data. These maps enable transformations between image space and multi-coil representations during reconstruction. Starting from the masked input k-space, the model applies a sequence of cascades, each performing data consistency in k-space followed by image-domain refinement using the proposed denoiser. After the final cascade, the reconstructed image is obtained via an inverse Fourier transform and combined across coils using root-sum-of-squares (RSS) [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>]. This iterative formulation allows the reconstruction to be progressively refined while jointly leveraging acquisition physics and transferable pretrained visual priors.</p>
+<p><img alt="Refer to caption" src="2604.22557v1/sec/denoiser_3.png" /></p>
+<p>(a) Proposed denoiser architecture. Multi-level features from the first six layers of the frozen vision encoder are fused using LayerNorm and learnable softmax weights. Selected intermediate layers (z5,z4,z3z_{5},z_{4},z_{3}) provide spatially aligned skip connections, which are concatenated with decoder features at corresponding resolutions. A lightweight hierarchical decoder progressively upsamples and refines these features to generate the final reconstruction. Adapted from [<a href="#bib.bib37" title="Unetr: transformers for 3d medical image segmentation">14</a>]</p>
+<p><img alt="Refer to caption" src="2604.22557v1/sec/denoiser_unroll.png" /></p>
+<p>(b) Overview of the unrolled model architecture. Reconstruction is performed through TT cascades, each consisting of a data-consistency (DC) step in k-space and an image-domain refinement using the proposed denoiser. A sensitivity map estimator (SME) computes coil sensitivity maps, enabling transformations between image and multi-coil domains. Adapted from [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>]</p>
+<p>Figure 1: Overview of the proposed architecture.</p>
+<h2>4 Experiments</h2>
+<p>In this section, we present the experimental setup and evaluate the performance of the proposed method on both in-distribution and cross-domain reconstruction tasks. We first report results on the CMRxRecon [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>] dataset, where models are trained and tested on cardiac MRI data under varying acceleration factors (×4\times 4, ×8\times 8, and ×10\times 10). Reconstruction quality is assessed using standard metrics, including SSIM, PSNR, and NMSE. In particular, we emphasize the structural similarity index measure (SSIM) [<a href="#bib.bib40" title="Multiscale structural similarity for image quality assessment">35</a>], which is widely regarded as the primary evaluation metric in medical image reconstruction [<a href="#bib.bib5" title="Humus-net: hybrid unrolled multi-scale network architecture for accelerated mri reconstruction">12</a>].</p>
+<p>To further evaluate generalization, we consider challenging cross-domain settings by training models on CMRxRecon [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>] and testing them on anatomically distinct datasets from fastMRI [<a href="#bib.bib29" title="FastMRI: an open dataset and benchmarks for accelerated mri">40</a>], including knee and brain MRI. This setup enables us to assess the robustness of the proposed approach under significant domain shifts.</p>
+<h3>4.1 CMRxRecon Dataset</h3>
+<p>The CMRxRecon dataset [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>] consists of 120 cardiac MRI cases acquired on 3T scanners, providing fully sampled dynamic cine and multi-contrast raw k-space data. The cine sequences include multiple standard cardiac views, such as short-axis (SAX) and long-axis views (2-chamber, 3-chamber, and 4-chamber), while the multi-contrast acquisitions comprise T1-weighted and T2-weighted images. For our experiments, we use the provided fully sampled data to simulate undersampling with acceleration factors of ×4\times 4, ×8\times 8, and ×10\times 10 using uniform sampling patterns, along with corresponding masks and 24 auto-calibration (ACS) lines [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>]. The dataset is split into training, validation, and test sets using a 70%/10%/20% partition, resulting in 17,916 training samples, 2,664 validation samples, and 5,112 test samples. All models are trained and evaluated on this split for in-distribution experiments.</p>
+<h3>4.2 fastMRI Dataset</h3>
+<p>To evaluate cross-domain generalization, we test models trained on CMRxRecon [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>] on the fastMRI dataset [<a href="#bib.bib29" title="FastMRI: an open dataset and benchmarks for accelerated mri">40</a>, <a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], which consists of fully sampled knee and brain MRI scans acquired on 1.5T and 3T scanners. The knee subset includes coronal proton density-weighted images with and without fat suppression, while the brain subset contains axial T1-weighted, T2-weighted, and FLAIR sequences. For evaluation, we use a subset of 1,767 knee images and 3,168 brain images. Undersampling is simulated using equispaced sampling masks with center fractions of 0.04 and 0.08 [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], corresponding to different amounts of low-frequency information. We consider acceleration factors of ×4\times 4, ×8\times 8, and ×10\times 10 to assess performance under varying reconstruction difficulty in cross-domain settings.</p>
+<h3>4.3 Implementation Details</h3>
+<p>Our framework is implemented following the standard unrolled reconstruction setting. All input images are resized to 224×224224\times 224 to match the input requirements of the pretrained vision encoders. We compare our method against the state-of-the-art E2E-VarNet [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], which we reimplement using the same architecture and hyperparameters for a fair comparison. To ensure consistency, we adopt the same sensitivity map estimation network as E2E-VarNet across all models. All reconstruction models are trained with 1212 cascades (unrolled iterations). The baseline E2E-VarNet contains approximately 29.929.9M trainable parameters, while our foundation-model-based approach has approximately 5656M trainable parameters due to the additional decoder and fusion components, with the foundation model encoder kept frozen. We train separate models for acceleration factors of ×4\times 4, ×8\times 8, and ×10\times 10. The models are optimized using the Adam optimizer with an initial learning rate of 1×10−31\times 10^{-3}, which is decayed by a factor of 0.10.1 after 4040 epochs. We use no weight decay. Training is performed for 5050 epochs with early stopping based on validation performance (patience of 55 epochs). We minimize the SSIM loss [<a href="#bib.bib40" title="Multiscale structural similarity for image quality assessment">35</a>, <a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>] between the reconstructed and target images. For the sensitivity estimation network, we use 44 pooling layers and 88 base channels, consistent with prior work [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>]. All experiments were conducted on NVIDIA RTX 4090 and RTX 3090 GPUs.</p>
+<h2>5 Results</h2>
+<h3>5.1 In-Distribution Reconstruction Results</h3>
+<p>We first evaluate the proposed method on the CMRxRecon dataset [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>], where models are trained and tested on cardiac MRI data under varying acceleration factors.</p>
+<p>Table <a href="#S5.T1" title="Table 1 ‣ 5.1 In-Distribution Reconstruction Results ‣ 5 Results ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">1</a> summarizes reconstruction performance on the CMRxRecon test set across acceleration factors of ×4\times 4, ×8\times 8, and ×10\times 10. Qualitative comparisons are shown in Fig. <a href="#S5.F2" title="Figure 2 ‣ 5.1 In-Distribution Reconstruction Results ‣ 5 Results ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">2</a>. As expected, the task-specific E2E-VarNet [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>] consistently achieves the best results across all metrics, benefiting from end-to-end supervision tailored to MRI reconstruction.</p>
+<p>Foundation-model-based approaches, while using frozen encoders pretrained on natural or biomedical data, remain competitive. At ×4\times 4, CLIP achieves an SSIM of 0.95850.9585 compared to 0.96760.9676 for E2E-VarNet, and similar trends persist at ×8\times 8 and ×10\times 10, with the performance gap widening as acceleration increases. This reflects the growing difficulty of the reconstruction problem, where task-specific model retain an advantage in in-distribution settings.</p>
+<p>Among foundation models, performance differences are relatively small. CMR-CLIP performs best at lower acceleration factors (×4\times 4 and ×8\times 8), indicating that natural-image pretraining provides strong general-purpose representations. At higher acceleration (×10\times 10), CMR-BiomedCLIP becomes the strongest variant, achieving the highest SSIM (0.92400.9240), suggesting that domain-specific pretraining offers advantages in more ill-posed regimes.</p>
+<p>Overall, while task-specific architecture remain superior in standard settings, foundation models achieve competitive performance without MRI-specific training, demonstrating their ability to learn transferable structural priors.</p>
+<p>Table 1: Reconstruction performance on the CMRxRecon test set under different acceleration factors. Best results in bold, second-best underlined.</p>
+<table>
+<thead>
+<tr>
+<th>Acc.</th>
+<th>Method</th>
+<th>SSIM ↑\uparrow</th>
+<th>PSNR ↑\uparrow</th>
+<th>NMSE ↓\downarrow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>×4\times 4</td>
+<td>E2E-VarNet</td>
+<td>0.9676</td>
+<td>41.29</td>
+<td>0.0154</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.9585</td>
+<td>40.12</td>
+<td>0.0226</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.9548</td>
+<td>39.57</td>
+<td>0.0249</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.9557</td>
+<td>39.67</td>
+<td>0.0252</td>
+<td></td>
+</tr>
+<tr>
+<td>×8\times 8</td>
+<td>E2E-VarNet</td>
+<td>0.9502</td>
+<td>38.21</td>
+<td>0.0227</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.9359</td>
+<td>36.83</td>
+<td>0.0340</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.9340</td>
+<td>36.65</td>
+<td>0.0340</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.9358</td>
+<td>36.79</td>
+<td>0.0343</td>
+<td></td>
+</tr>
+<tr>
+<td>×10\times 10</td>
+<td>E2E-VarNet</td>
+<td>0.9417</td>
+<td>37.32</td>
+<td>0.0262</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.9215</td>
+<td>35.51</td>
+<td>0.0418</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.9223</td>
+<td>35.54</td>
+<td>0.0419</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.9240</td>
+<td>35.73</td>
+<td>0.0401</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Refer to caption" src="2604.22557v1/In_domain_acc_8.png" /></p>
+<p>Figure 2: Qualitative results at ×8\times 8 acceleration. From top to bottom: E2E-VarNet, CMR-CLIP, CMR-DINOv2, and CMR-BiomedCLIP. Columns show the target image, reconstruction, error map, and zero-filled input, respectively.</p>
+<p><img alt="Refer to caption" src="2604.22557v1/sec/ood_results_2.png" /></p>
+<p>Figure 3: Out-of-distribution qualitative results. Visual comparison on fastMRI knee (left) and brain (right) datasets at ×10\times 10 acceleration and center fraction 0.08. From top to bottom: E2E-VarNet, CMR-CLIP, and CMR-BiomedCLIP. Columns show the target image, reconstruction, error map, and zero-filled input, respectively. Red boxes highlight regions with notable differences in structural fidelity.</p>
+<h3>5.2 Cross-Domain Generalization Results</h3>
+<p>We evaluate the generalization capability of the proposed approach under challenging cross-domain settings by training on the CMRxRecon dataset [<a href="#bib.bib28" title="CMRxRecon: an open cardiac mri dataset for the competition of accelerated image reconstruction">34</a>] and testing on the fastMRI knee and brain datasets [<a href="#bib.bib29" title="FastMRI: an open dataset and benchmarks for accelerated mri">40</a>]. These datasets differ substantially in anatomical structure, image contrast, and acquisition characteristics, making this a stringent test of robustness. In addition to the domain shift in anatomy, we introduce a further mismatch in the sampling patterns. During training, models are exposed to equispaced undersampling masks with fixed auto-calibration signal (ACS) lines (24 central k-space lines). At test time, however, we use equispaced masks defined by center fractions of 0.04 and 0.08 [<a href="#bib.bib27" title="End-to-end variational networks for accelerated mri reconstruction">32</a>], where the center fraction specifies the proportion of low-frequency k-space that is fully sampled. This results in a different distribution of sampling patterns and reduces the amount of low-frequency information available, making reconstruction significantly more challenging.<br />
+Together, these shifts in anatomy, contrast, and sampling strategy create a realistic and demanding evaluation setting for assessing the robustness and transferability of learned reconstruction priors.<br />
+Quantitative results are reported in Tables <a href="#S5.T2" title="Table 2 ‣ Analysis and Discussion. ‣ 5.2 Cross-Domain Generalization Results ‣ 5 Results ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">2</a> and <a href="#S5.T3" title="Table 3 ‣ Analysis and Discussion. ‣ 5.2 Cross-Domain Generalization Results ‣ 5 Results ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">3</a>, with corresponding qualitative comparisons shown in Fig. <a href="#S5.F3" title="Figure 3 ‣ 5.1 In-Distribution Reconstruction Results ‣ 5 Results ‣ Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?">3</a>.</p>
+<h4>Analysis and Discussion.</h4>
+<p>The cross-domain results on fastMRI knee and brain datasets reveal several important trends regarding the behavior of foundation-model-based priors under distribution shift.<br />
+At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best performance across both knee and brain datasets. This is expected, as fully supervised reconstruction models are optimized for the training distribution and can effectively exploit dataset-specific priors when sufficient measurements are available. However, as reconstruction becomes more challenging, through higher acceleration (×8\times 8, ×10\times 10) and reduced center fraction (0.04), a clear shift in behavior emerges. The performance of E2E-VarNet degrades more rapidly, while foundation-model-based approaches exhibit more stable performance and consistently match or outperform E2E-VarNet.</p>
+<p>This trend is consistent across both anatomical domains. On the knee dataset, CMR-BiomedCLIP achieves the best performance at ×8\times 8, while CMR-CLIP and CMR-BiomedCLIP outperform E2E-VarNet at ×10\times 10, particularly under reduced center fraction. Similarly, on the brain dataset, foundation models surpass E2E-VarNet at ×8\times 8 and ×10\times 10, with CMR-BiomedCLIP achieving the strongest overall performance at the highest acceleration. These gains are most pronounced under center fraction 0.04, where limited low-frequency information increases reconstruction ambiguity and places greater reliance on learned priors.</p>
+<p>Comparing foundation models, CMR-CLIP performs strongly at moderate acceleration, indicating that natural-image pretraining captures highly transferable structural representations. CMR-BiomedCLIP provides additional gains in more ill-posed regimes, suggesting that domain-specific pretraining becomes beneficial as reconstruction difficulty increases. In contrast, CMR-DINOv2 consistently underperforms across settings, particularly under severe domain shift, likely due to the absence of cross-modal alignment in its pretraining objective [<a href="#bib.bib41" title="Data or language supervision: what makes clip better than dino?">19</a>], which may limit its ability to encode higher-level structural priors necessary for robust MRI reconstruction.</p>
+<p>Overall, these results suggest a regime-dependent behavior: task-specific model excel in in-distribution and well-conditioned settings, while pretrained foundation models provide more robust and transferable priors under severe undersampling and domain shift. This highlights the potential of leveraging large-scale pretrained representations as a complementary alternative to conventional task-specific reconstruction pipelines, particularly in scenarios where training data is mismatched.</p>
+<p>Table 2: OOD reconstruction performance on the FastMRI Knee dataset under different acceleration factors. Best results in bold, second-best underlined.</p>
+<table>
+<thead>
+<tr>
+<th>Acc</th>
+<th>Method</th>
+<th>Center frac = 0.08</th>
+<th></th>
+<th></th>
+<th>Center frac = 0.04</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td>SSIM ↑\uparrow</td>
+<td>PSNR ↑\uparrow</td>
+<td>NMSE ↓\downarrow</td>
+<td>SSIM ↑\uparrow</td>
+<td>PSNR ↑\uparrow</td>
+<td>NMSE ↓\downarrow</td>
+</tr>
+<tr>
+<td>4x</td>
+<td>E2E-VarNet</td>
+<td>0.8061</td>
+<td>31.06</td>
+<td>0.0280</td>
+<td>0.7769</td>
+<td>29.21</td>
+<td>0.0412</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7864</td>
+<td>30.88</td>
+<td>0.0288</td>
+<td>0.7387</td>
+<td>27.92</td>
+<td>0.0548</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.7412</td>
+<td>27.50</td>
+<td>0.0647</td>
+<td>0.6873</td>
+<td>21.91</td>
+<td>0.2781</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7848</td>
+<td>30.66</td>
+<td>0.0302</td>
+<td>0.7310</td>
+<td>27.60</td>
+<td>0.0591</td>
+<td></td>
+</tr>
+<tr>
+<td>8x</td>
+<td>E2E-VarNet</td>
+<td>0.7161</td>
+<td>28.59</td>
+<td>0.0479</td>
+<td>0.6552</td>
+<td>25.88</td>
+<td>0.0876</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7232</td>
+<td>28.72</td>
+<td>0.0470</td>
+<td>0.6668</td>
+<td>26.17</td>
+<td>0.0820</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.7137</td>
+<td>27.33</td>
+<td>0.0646</td>
+<td>0.6566</td>
+<td>25.61</td>
+<td>0.0932</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7285</td>
+<td>28.84</td>
+<td>0.0457</td>
+<td>0.6712</td>
+<td>26.26</td>
+<td>0.0804</td>
+<td></td>
+</tr>
+<tr>
+<td>10x</td>
+<td>E2E-VarNet</td>
+<td>0.6956</td>
+<td>28.08</td>
+<td>0.0542</td>
+<td>0.6287</td>
+<td>25.26</td>
+<td>0.1014</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7150</td>
+<td>28.36</td>
+<td>0.0509</td>
+<td>0.6576</td>
+<td>26.08</td>
+<td>0.0839</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.6960</td>
+<td>27.03</td>
+<td>0.0684</td>
+<td>0.6244</td>
+<td>24.73</td>
+<td>0.1148</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7133</td>
+<td>28.55</td>
+<td>0.0491</td>
+<td>0.6545</td>
+<td>25.91</td>
+<td>0.0873</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Table 3: OOD reconstruction performance on the FastMRI Brain dataset under different acceleration factors. Best results in bold, second-best underlined.</p>
+<table>
+<thead>
+<tr>
+<th>Acc</th>
+<th>Method</th>
+<th>Center frac = 0.08</th>
+<th></th>
+<th></th>
+<th>Center frac = 0.04</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td>SSIM ↑\uparrow</td>
+<td>PSNR ↑\uparrow</td>
+<td>NMSE ↓\downarrow</td>
+<td>SSIM ↑\uparrow</td>
+<td>PSNR ↑\uparrow</td>
+<td>NMSE ↓\downarrow</td>
+</tr>
+<tr>
+<td>4x</td>
+<td>E2E-VarNet</td>
+<td>0.8209</td>
+<td>30.29</td>
+<td>0.0241</td>
+<td>0.7670</td>
+<td>27.23</td>
+<td>0.0483</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7962</td>
+<td>29.69</td>
+<td>0.0281</td>
+<td>0.7208</td>
+<td>25.79</td>
+<td>0.0682</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.7321</td>
+<td>25.65</td>
+<td>0.0808</td>
+<td>0.6531</td>
+<td>20.59</td>
+<td>0.3796</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7985</td>
+<td>29.52</td>
+<td>0.0290</td>
+<td>0.7163</td>
+<td>25.43</td>
+<td>0.0747</td>
+<td></td>
+</tr>
+<tr>
+<td>8x</td>
+<td>E2E-VarNet</td>
+<td>0.7363</td>
+<td>27.25</td>
+<td>0.0473</td>
+<td>0.6416</td>
+<td>23.74</td>
+<td>0.1069</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7391</td>
+<td>27.36</td>
+<td>0.0462</td>
+<td>0.6505</td>
+<td>23.99</td>
+<td>0.1006</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.7203</td>
+<td>25.28</td>
+<td>0.0753</td>
+<td>0.6300</td>
+<td>22.86</td>
+<td>0.1309</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7447</td>
+<td>27.14</td>
+<td>0.0483</td>
+<td>0.6514</td>
+<td>23.88</td>
+<td>0.1035</td>
+<td></td>
+</tr>
+<tr>
+<td>10x</td>
+<td>E2E-VarNet</td>
+<td>0.7234</td>
+<td>26.84</td>
+<td>0.0520</td>
+<td>0.6209</td>
+<td>23.33</td>
+<td>0.1172</td>
+</tr>
+<tr>
+<td>CMR-CLIP</td>
+<td>0.7261</td>
+<td>26.22</td>
+<td>0.0594</td>
+<td>0.6312</td>
+<td>23.32</td>
+<td>0.1166</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-DINOv2</td>
+<td>0.7142</td>
+<td>25.42</td>
+<td>0.0730</td>
+<td>0.6135</td>
+<td>22.63</td>
+<td>0.1407</td>
+<td></td>
+</tr>
+<tr>
+<td>CMR-BiomedCLIP</td>
+<td>0.7326</td>
+<td>26.87</td>
+<td>0.0515</td>
+<td>0.6374</td>
+<td>23.47</td>
+<td>0.1134</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>6 Conclusion</h2>
+<p>We present the first study investigating frozen vision foundation models as priors for physics-based MRI reconstruction, introducing an unrolled framework that integrates pretrained visual encoders within each cascade. While task-specific models such as E2E-VarNet achieve superior performance in standard in-distribution settings, foundation-model-based approaches demonstrate greater robustness under cross-domain shifts and severe undersampling, where the reconstruction problem becomes increasingly ill-posed. Notably, as reconstruction difficulty increases, these models provide more stable and transferable priors, narrowing and in some cases surpassing the performance gap with the supervised baseline. Furthermore, we find that natural-image-pretrained models such as CLIP already capture highly transferable structural representations, with domain-specific pretraining BiomedCLIP offering modest additional gains in challenging regimes. Overall, our findings highlight the potential of large-scale pretrained visual representations as a complementary source of priors for improving robustness and generalization in MRI reconstruction and, more broadly, in physics-based inverse problems.</p>
+<h2>Acknowledgements</h2>
+<p>This work was supported by Taighde Éireann–Research Ireland under Grant numbers 18/CRT/6183 &amp; 12/RC/2289 P2.</p></div>
+      </section></div>
+      </main>
+      <aside class="study-rail"><h2>學習導覽</h2><p>舊版摘要格式</p><div class="hint-box"><strong>提示</strong><p>這篇是舊格式資料，已用 fallback 模式顯示。</p></div></aside>
+    </article>
+    <article class="paper-page" id="paper-2">
       <main class="paper-main">
         <header class="paper-hero">
           <div><p class="date-tag">[ 04/27 ]</p><h1>長尾網路照片重建</h1><p class="eng-title">Long-tail Internet photo reconstruction</p></div>
@@ -9,11 +622,11 @@
           <div class="core-line"><span>CORE</span><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
         </header>
         <div class="card-grid">
-      <section class="study-card overview-card" id="paper-1-overview">
+      <section class="study-card overview-card" id="paper-2-overview">
         <div class="card-heading"><span class="card-icon">◎</span><h2>30 秒看懂這篇論文</h2></div>
         <div class="markdown-body"><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
       </section>
-      <section class="study-card " id="paper-1-prerequisites">
+      <section class="study-card " id="paper-2-prerequisites">
         <div class="card-heading"><span class="card-icon">□</span><h2>先備知識</h2></div>
         <div class="markdown-body"><ul>
 <li>3D 重建（3D reconstruction）：從 2D 照片還原出三維場景。</li>
@@ -21,7 +634,7 @@
 <li>長尾（long-tail）：資料分佈中少見但實際上很常見的案例。</li>
 </ul></div>
       </section>
-      <section class="study-card " id="paper-1-terms">
+      <section class="study-card " id="paper-2-terms">
         <div class="card-heading"><span class="card-icon">◇</span><h2>重要名詞</h2></div>
         <div class="markdown-body"><ol>
 <li><strong>長尾（long-tail）</strong>：照片資料裡，熱門地標影像多，冷門地標影像少，這種分佈叫長尾。</li>
@@ -29,15 +642,15 @@
 <li><strong>稀疏感知採樣（sparsity-aware sampling）</strong>：刻意挑選稀疏但具多視角的照片來訓練，讓模型學得更 robust。</li>
 </ol></div>
       </section>
-      <section class="study-card " id="paper-1-motivation">
+      <section class="study-card " id="paper-2-motivation">
         <div class="card-heading"><span class="card-icon">※</span><h2>研究動機</h2></div>
         <div class="markdown-body"><ul>
 <li>背景：網路照片多數集中在幾個熱門地標，大部分真實影像都很稀疏。</li>
 <li>痛點：現行模型在稀疏照片上表現差，無法處理長尾場景。</li>
 <li>目標：透過模擬訓練與新資料集，讓模型在稀疏與雜亂的網路照片也能重建。</li>
 </ul></div>
-      </section><section class="study-card flow-card" id="paper-1-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>過濾與消歧</strong><p>從 MegaScenes 挑選穩定重建的場景，排除動態內容與雙胞胎問題。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>深度細化</strong><p>運用多視角立體（MVS）與單眼深度先驗，產生高品質深度圖。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>模擬長尾</strong><p>用稀疏感知採樣從資料集中抽取稀疏但有覆蓋度的照片子集。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>微調模型</strong><p>用處理過的 MD-X 資料集訓練 VGGT 與 π³ 等基礎模型。</p></div></div></section>
-      <section class="study-card " id="paper-1-results">
+      </section><section class="study-card flow-card" id="paper-2-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>過濾與消歧</strong><p>從 MegaScenes 挑選穩定重建的場景，排除動態內容與雙胞胎問題。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>深度細化</strong><p>運用多視角立體（MVS）與單眼深度先驗，產生高品質深度圖。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>模擬長尾</strong><p>用稀疏感知採樣從資料集中抽取稀疏但有覆蓋度的照片子集。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>微調模型</strong><p>用處理過的 MD-X 資料集訓練 VGGT 與 π³ 等基礎模型。</p></div></div></section>
+      <section class="study-card " id="paper-2-results">
         <div class="card-heading"><span class="card-icon">▣</span><h2>圖表導讀</h2></div>
         <div class="markdown-body"><ul>
 <li>圖表重點：圖 6 展示在真實長尾場景上，微調模型與傳統 SfM 或預訓練模型的對比。</li>
@@ -45,13 +658,13 @@
 <li>新手重點：即使只有幾張角度不一的照片，也能還原出正確的三維場景。</li>
 </ul></div>
       </section>
-      <section class="study-card quiz-card" id="paper-1-quiz" data-answer="A" data-explanation="論文聚焦於長尾場景下的 3D 重建挑戰，並透過資料集與採樣策略來提升模型的泛化性。">
+      <section class="study-card quiz-card" id="paper-2-quiz" data-answer="A" data-explanation="論文聚焦於長尾場景下的 3D 重建挑戰，並透過資料集與採樣策略來提升模型的泛化性。">
         <div class="card-heading"><span class="card-icon">?</span><h2>理解檢查</h2></div>
         <p class="quiz-question">這篇論文最主要想解決什麼問題？</p>
         <div class="quiz-options"><button class="quiz-option" type="button" data-option="A"><span>A</span>提高 3D 重建模型在稀疏、雜亂的網路照片上的表現</button><button class="quiz-option" type="button" data-option="B"><span>B</span>開發一種新的物體識別演算法</button><button class="quiz-option" type="button" data-option="C"><span>C</span>降低電腦視覺模型的計算成本</button><button class="quiz-option" type="button" data-option="D"><span>D</span>設計更快速的影像壓縮技術</button></div>
         <p class="quiz-feedback" aria-live="polite"></p>
       </section>
-      <section class="study-card " id="paper-1-reading">
+      <section class="study-card " id="paper-2-reading">
         <div class="card-heading"><span class="card-icon">+</span><h2>延伸閱讀</h2></div>
         <div class="markdown-body"><ol>
 <li><strong>DUSt3R</strong>：從一對圖片預測 3D 點雲的 feed-forward 模型，這篇是它的前驅工作。</li>
@@ -60,7 +673,7 @@
 </ol></div>
       </section></div>
       </main>
-      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-1-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-1-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-1-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-1-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-1-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-1-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-1-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
+      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-2-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-2-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-2-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-2-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-2-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-2-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-2-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
     </article></div><script>
 document.querySelectorAll('.study-toggle').forEach((button)=>{button.addEventListener('click',()=>{const page=button.closest('.paper-page');const active=document.body.classList.toggle('study-mode');document.querySelectorAll('.paper-page').forEach((item)=>item.classList.remove('active-study'));if(active){page.classList.add('active-study');button.textContent='離開 Study Mode'}else{document.querySelectorAll('.study-toggle').forEach((item)=>item.textContent='進入 Study Mode')}})});
 document.querySelectorAll('.quiz-card').forEach((card)=>{const answer=card.dataset.answer;const explanation=card.dataset.explanation;const feedback=card.querySelector('.quiz-feedback');card.querySelectorAll('.quiz-option').forEach((option)=>{option.addEventListener('click',()=>{card.querySelectorAll('.quiz-option').forEach((item)=>{item.classList.toggle('correct',item.dataset.option===answer);item.classList.toggle('wrong',item.dataset.option!==answer)});feedback.textContent=option.dataset.option===answer?`答對了：${explanation}`:`再想一下：正確答案是 ${answer}。${explanation}`})})});
