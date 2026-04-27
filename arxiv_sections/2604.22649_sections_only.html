@@ -1,0 +1,849 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>body{font-family:sans-serif; line-height:1.7; padding:40px; max-width:900px; margin:auto; color:#333;}.paper-info{background:#f8f9fa; padding:20px; border-radius:8px; border-left:5px solid #2c3e50;}h2{color:#2c3e50; border-bottom:2px solid #eee; padding-bottom:10px; margin-top:40px;}</style></head><body><div class="paper-info"><h1>標題: Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction</h1><p><strong>Source:</strong> <a href="https://arxiv.org/abs/2604.22649" target="_blank">https://arxiv.org/abs/2604.22649</a></p></div><hr/>
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1 </span>Introduction</h2>
+<div class="ltx_para ltx_noindent" id="S1.p1">
+<p class="ltx_p" id="S1.p1.1">Decoding human thoughts from brain activity has long been regarded as one of the central goals of neuroscience <cite class="ltx_cite ltx_citemacro_cite">He and Chen (<a class="ltx_ref" href="#bib.bib23" title="Neural engineering for brain connectivity and neural decoding">2018</a>); Murad and Rahimi (<a class="ltx_ref" href="#bib.bib21" title="Unveiling thoughts: a review of advancements in eeg brain signal decoding into text">2024</a>); Tong and Pratte (<a class="ltx_ref" href="#bib.bib20" title="Decoding patterns of human brain activity">2012</a>)</cite>. In recent years, the rapid development of artificial intelligence has made it increasingly feasible to decode neural representations of visual perception and cognition <cite class="ltx_cite ltx_citemacro_cite">Chen<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib5" title="Toward reliable signals decoding for electroencephalogram: a benchmark study to eegnex">2024</a>); Scotti<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib6" title="Reconstructing the mind’s eye: fmri-to-image with contrastive learning and diffusion priors">2023</a>); Wang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib4" title="Progress, challenges and future of linguistic neural decoding with deep learning">2025</a>)</cite>. Among various neuroimaging techniques, electroencephalography (EEG) offers millisecond-level temporal resolution that captures subtle dynamics of brain activity <cite class="ltx_cite ltx_citemacro_cite">Luck (<a class="ltx_ref" href="#bib.bib22" title="An introduction to the event-related potential technique">2014</a>); Wang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib4" title="Progress, challenges and future of linguistic neural decoding with deep learning">2025</a>)</cite>. Due to its non-invasiveness and accessibility, EEG has become a crucial tool for investigating visual perception and cognitive processes <cite class="ltx_cite ltx_citemacro_cite">Cheng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib12" title="Fine-grained image generation with eeg multi-level semantics">2025</a>); Zeng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib3" title="DM-re2i: a framework based on diffusion model for the reconstruction from eeg to image">2023</a>)</cite>. However, the low signal-to-noise ratio, significant inter-individual variability, and complex associations among hierarchical visual semantics make it challenging to reconstruct images that humans “see” from EEG signals <cite class="ltx_cite ltx_citemacro_cite">Zeng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib3" title="DM-re2i: a framework based on diffusion model for the reconstruction from eeg to image">2023</a>); Singh<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib2" title="Learning robust deep visual representations from eeg brain recordings">2024</a>)</cite>. Furthermore, generating images that reflect subjective cognition introduces additional challenges related to experimental paradigms and generative modeling mechanisms <cite class="ltx_cite ltx_citemacro_cite">Palazzo<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib25" title="Decoding brain representations by multimodal learning of neural activity and visual features">2021</a>); Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p2">
+<p class="ltx_p" id="S1.p2.1">In recent years, researchers have attempted to extract visually relevant representations from EEG signals using deep learning models <cite class="ltx_cite ltx_citemacro_cite">Spampinato<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib24" title="Deep learning human mind for automated visual classification">2017</a>); Lawhern<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib26" title="EEGNet: a compact convolutional neural network for eeg-based brain–computer interfaces">2018</a>)</cite>, aiming to decode perceptual images evoked by visual stimuli. Early studies employed convolutional neural networks (CNNs) and recurrent neural networks (RNNs) to achieve relatively accurate object category recognition <cite class="ltx_cite ltx_citemacro_cite">Guo<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib1" title="Investigating the interpretability of schizophrenia eeg mechanism through a 3dcnn-based hidden layer features aggregation framework">2024</a>); Bashivan<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib28" title="Learning representations from eeg with deep recurrent-convolutional neural networks">2016</a>); Roy<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib27" title="Deep learning-based electroencephalography analysis: a systematic review">2019</a>)</cite>. Subsequently, the integration of contrastive learning and cross-modal embedding techniques enabled the alignment of EEG signals with visual semantic spaces <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>); Jia<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib31" title="Scaling up visual and vision-language representation learning with noisy text supervision">2021</a>)</cite>. Combined with the progress in diffusion-based generative models <cite class="ltx_cite ltx_citemacro_cite">Ho<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib33" title="Denoising diffusion probabilistic models">2020</a>); Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>); Saharia<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib34" title="Photorealistic text-to-image diffusion models with deep language understanding">2022</a>)</cite>, these advances have significantly propelled image retrieval and reconstruction from neural signals. In particular, the remarkable reconstruction results achieved using fMRI have provided substantial impetus to the development of this field <cite class="ltx_cite ltx_citemacro_cite">Takagi and Nishimoto (<a class="ltx_ref" href="#bib.bib37" title="High-resolution image reconstruction with latent diffusion models from human brain activity">2023</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p3">
+<p class="ltx_p" id="S1.p3.1">Inspired by the hierarchical processing mechanism of the human visual system <cite class="ltx_cite ltx_citemacro_cite">Felleman and Essen (<a class="ltx_ref" href="#bib.bib41" title="Distributed hierarchical processing in the primate cerebral cortex">1991</a>); Kriegeskorte<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib42" title="Representational similarity analysis—connecting the branches of systems neuroscience">2008</a>); Yamins and DiCarlo (<a class="ltx_ref" href="#bib.bib43" title="Using goal-driven deep learning models to understand sensory cortex">2016</a>)</cite>, recent studies have begun to emphasize hierarchical visual representations that go beyond categorical semantics <cite class="ltx_cite ltx_citemacro_cite">Beliy<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib39" title="Voxel-wise encoding models reveal the hierarchical organization of the human visual cortex">2019</a>); Kar<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib44" title="Evidence that recurrent circuits are critical to the ventral stream’s hierarchical computations of visual form">2019</a>)</cite>. By incorporating multi-level features into the latent space of diffusion models, these approaches aim to enhance reconstruction fidelity <cite class="ltx_cite ltx_citemacro_cite">Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>); Takagi and Nishimoto (<a class="ltx_ref" href="#bib.bib37" title="High-resolution image reconstruction with latent diffusion models from human brain activity">2023</a>)</cite>. However, decoding low-level visual features from EEG remains particularly challenging <cite class="ltx_cite ltx_citemacro_cite">Roy<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib27" title="Deep learning-based electroencephalography analysis: a systematic review">2019</a>); Palazzo<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib25" title="Decoding brain representations by multimodal learning of neural activity and visual features">2021</a>)</cite>. Existing approaches often align EEG features with high-dimensional CLIP embeddings <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>); Jia<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib31" title="Scaling up visual and vision-language representation learning with noisy text supervision">2021</a>)</cite> or apply joint training strategies to achieve cross-modal mapping <cite class="ltx_cite ltx_citemacro_cite">Yang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib32" title="Cross-modal representation alignment for brain–image decoding">2022</a>); Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>. Yet, due to the substantial distributional discrepancy between EEG and visual semantic spaces, these methods typically ensure similarity only at a numerical level, leading to unstable training, overfitting, and poor generalization across subjects <cite class="ltx_cite ltx_citemacro_cite">Palazzo<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib25" title="Decoding brain representations by multimodal learning of neural activity and visual features">2021</a>); Spampinato<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib24" title="Deep learning human mind for automated visual classification">2017</a>)</cite>. Consequently, both structural accuracy and semantic consistency remain limited <cite class="ltx_cite ltx_citemacro_cite">Shen<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib40" title="End-to-end deep image reconstruction from human brain activity">2019</a>); Zeng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib3" title="DM-re2i: a framework based on diffusion model for the reconstruction from eeg to image">2023</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p4">
+<p class="ltx_p" id="S1.p4.1">In summary, current EEG-based visual decoding approaches suffer from three major limitations <cite class="ltx_cite ltx_citemacro_cite">Roy<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib27" title="Deep learning-based electroencephalography analysis: a systematic review">2019</a>); Cheng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib12" title="Fine-grained image generation with eeg multi-level semantics">2025</a>)</cite>:
+(1) Over-reliance on categorical representations. Existing models are predominantly based on natural image stimuli and heavily depend on categorical discrimination, while overlooking structured representations of visual objects at the cognitive level, resulting in poor generalization under complex cognitive scenarios <cite class="ltx_cite ltx_citemacro_cite">Singh<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib2" title="Learning robust deep visual representations from eeg brain recordings">2024</a>)</cite>;
+(2) Lack of explicit hierarchical structural information. Most studies focus on low-level visual features such as category, color, and contour, without datasets or modeling frameworks capable of explicitly describing local-to-global structural relationships <cite class="ltx_cite ltx_citemacro_cite">Zeng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib3" title="DM-re2i: a framework based on diffusion model for the reconstruction from eeg to image">2023</a>)</cite>;
+(3) Difficulty in aligning individual cognitive interpretations. Current experimental paradigms primarily focus on objective "seen" stimuli and often overlook the subjective cognitive processes involved in how individuals decompose and interpret visual structures. This neglect leads to a "semantic gap" between generic neural signals and the fine-grained cognitive representations of specific objects, hindering a deeper understanding of how the brain encodes complex visual hierarchies <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p5">
+<p class="ltx_p" id="S1.p5.1">To address these challenges, this study proposes a Structure-Guided Diffusion Model (SGDM) for EEG-based visual cognition reconstruction <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>); Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>)</cite>. Instead of solely relying on categorical labels, the model leverages detailed human-annotated structural priors to bridge the gap between low-level visual perception and high-level cognitive interpretation <cite class="ltx_cite ltx_citemacro_cite">Zhang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib45" title="Adding conditional control to text-to-image diffusion models">2023</a>); Huang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib36" title="Resolving multi-condition confusion for finetuning-free personalized image generation">2025</a>)</cite>. We utilize the Kilogram dataset, which comprises abstract visual objects with subjectively defined local-to-global structures. This allows us to model how the brain represents organized visual entities through the lens of individual cognitive consensus, rather than simple stimulus-response mapping.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p6">
+<p class="ltx_p" id="S1.p6.1">Based on this foundation, the SGDM framework incorporates three key mechanisms:</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p7">
+<p class="ltx_p" id="S1.p7.1">1. Structured priors and explicit prediction: A variational autoencoder (VAE) is employed to learn structural encodings of visual objects, enabling generative prediction from EEG latent representations to structural embeddings <cite class="ltx_cite ltx_citemacro_cite">Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>); Kar<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib44" title="Evidence that recurrent circuits are critical to the ventral stream’s hierarchical computations of visual form">2019</a>)</cite>;</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p8">
+<p class="ltx_p" id="S1.p8.1">2. Cross-modal semantic alignment via multi-semantic annotations: To capture the cognitive diversity of visual objects, we fine-tune a CLIP model using abstract images paired with detailed, human-labeled structural descriptions. Contrastive learning is then applied to align EEG features with these cognitively enriched visual embeddings <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>); Jia<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib31" title="Scaling up visual and vision-language representation learning with noisy text supervision">2021</a>); Frome<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib29" title="DeViSE: a deep visual-semantic embedding model">2013</a>)</cite>, ensuring the model decodes not just a silhouette, but the intended structural meaning;</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p9">
+<p class="ltx_p" id="S1.p9.1">3. Controllable diffusion generation: Structural predictions are embedded into the ControlNet diffusion process, allowing cognitively generated images to achieve structural controllability while maintaining semantic individuality <cite class="ltx_cite ltx_citemacro_cite">Zhang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib45" title="Adding conditional control to text-to-image diffusion models">2023</a>); Huang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib36" title="Resolving multi-condition confusion for finetuning-free personalized image generation">2025</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S1.p10">
+<p class="ltx_p" id="S1.p10.1">Experimental results on the Kilogram and THINGS datasets demonstrate that SGDM significantly outperforms existing methods in structural prediction accuracy, image generation quality, and semantic consistency <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>); Takagi and Nishimoto (<a class="ltx_ref" href="#bib.bib37" title="High-resolution image reconstruction with latent diffusion models from human brain activity">2023</a>)</cite>. Moreover, spatiotemporal feature analysis reveals that the structural encoding patterns learned by the model exhibit strong correspondence with neural mechanisms underlying visual cognition <cite class="ltx_cite ltx_citemacro_cite">Felleman and Essen (<a class="ltx_ref" href="#bib.bib41" title="Distributed hierarchical processing in the primate cerebral cortex">1991</a>); Kar<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib44" title="Evidence that recurrent circuits are critical to the ventral stream’s hierarchical computations of visual form">2019</a>)</cite>. Overall, this work introduces a new structured decoding paradigm for EEG-based visual cognition reconstruction and provides fresh insights into the cognitive guidance mechanisms of multimodal generative models.</p>
+</div>
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2 </span>Methods</h2>
+<div class="ltx_para ltx_noindent" id="S2.p1">
+<p class="ltx_p" id="S2.p1.1">In this section, we present the proposed <span class="ltx_text ltx_font_bold" id="S2.p1.1.1">Structure-Guided Diffusion Model (SGDM)</span>(Fig. <a class="ltx_ref" href="#S2.F1" title="Figure 1 ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">1</span></a>),
+a unified framework for EEG-based visual cognition reconstruction.
+Given raw EEG signals as input, SGDM aims to explicitly disentangle structural information
+and establish cross-modal correlations between <span class="ltx_text ltx_font_italic" id="S2.p1.1.2">EEG–Vision–Text</span>,
+ultimately generating visual images consistent with individual cognitive representations.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.p2">
+<p class="ltx_p" id="S2.p2.1">SGDM consists of four collaborative modules:
+(1) a CLIP-based text–image dual encoder to construct a unified semantic space,
+(2) an EEG semantic encoder to extract and align high-level EEG features,
+(3) a structure prediction module based on SDXL-turbo VAE for generating visual structure maps,
+and (4) a dual-constrained diffusion generator for semantic–structural guided image synthesis.</p>
+</div>
+<figure class="ltx_figure" id="S2.F1"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="451" id="S2.F1.g1" src="2604.22649v1/x2.png" width="665"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>
+Overview of the proposed <span class="ltx_text ltx_font_bold" id="S2.F1.2.1">Structure-Guided Diffusion Model (SGDM)</span> framework.
+The system consists of four main modules:
+(1) a CLIP text–image dual encoder <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>)</cite> for unified semantic representation learning,
+(2) an EEG semantic encoder trained to align with the CLIP image space <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>,
+(3) a structure prediction module based on the SDXL-turbo VAE <cite class="ltx_cite ltx_citemacro_cite">Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>)</cite> for generating spatial priors,
+and (4) a dual-constrained diffusion generator that integrates semantic and structural conditions
+via IP-Adapter <cite class="ltx_cite ltx_citemacro_cite">Huang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib36" title="Resolving multi-condition confusion for finetuning-free personalized image generation">2025</a>)</cite> and ControlNet <cite class="ltx_cite ltx_citemacro_cite">Zhang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib45" title="Adding conditional control to text-to-image diffusion models">2023</a>)</cite>
+to synthesize cognitively consistent images.
+</figcaption>
+</figure>
+<section class="ltx_subsection" id="S2.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.1 </span>Dataset and Preprocessing</h3>
+<section class="ltx_subsubsection" id="S2.SS1.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.1.1 </span>Dataset</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS1.p1">
+<p class="ltx_p" id="S2.SS1.SSS1.p1.1">The experiments were conducted on two complementary datasets: the Kilogram Abstract Visual Object Dataset and the THINGS Natural Image Dataset.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS1.p2">
+<p class="ltx_p" id="S2.SS1.SSS1.p2.1">Kilogram <cite class="ltx_cite ltx_citemacro_cite">Ji<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib14" title="Abstract visual reasoning with tangram shapes">2022</a>)</cite> contains over 900 tangrams, each of which was annotated with at least 10 segmentation annotations (See Supplementary data). On the basis of this dataset, we constructed the Cognitive Encoding to establish a mathematical foundation for quantification and to provide supervisory information. We further established quantitative indices of tangram stimuli, including abstraction level and local feature density. Based on these measures, 75 representative tangram figures were selected, and EEG experiments<cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite> were conducted with 24 participants with Psychopy toolbox <cite class="ltx_cite ltx_citemacro_cite">Peirce<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib11" title="PsychoPy2: experiments in behavior made easy">2019</a>)</cite>.
+The THINGS dataset <cite class="ltx_cite ltx_citemacro_cite">Gifford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib18" title="A large and rich eeg dataset for modeling human visual object recognition">2022</a>)</cite> contains 1,854 natural object categories with 26,000 high-resolution images, serving as a perceptual baseline for generalization and cross-domain evaluation.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S2.SS1.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.1.2 </span>EEG Acquisition and Preprocessing</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS2.p1">
+<p class="ltx_p" id="S2.SS1.SSS2.p1.1">The EEG experimental data were obtained from our previous work <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>. Detailed information regarding <span class="ltx_text ltx_font_bold" id="S2.SS1.SSS2.p1.1.1">visual stimuli, hardware specifications, experimental parameters, preprocessing pipelines, electrode configurations, and ocular artifact removal</span> is provided in the <span class="ltx_text ltx_font_bold" id="S2.SS1.SSS2.p1.1.2">Supplementary Data</span>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS2.p2">
+<p class="ltx_p" id="S2.SS1.SSS2.p2.1">The experimental paradigm is illustrated in Fig. <a class="ltx_ref" href="#S2.F2" title="Figure 2 ‣ 2.1.2 EEG Acquisition and Preprocessing ‣ 2.1 Dataset and Preprocessing ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">2</span></a>. Participants sequentially completed a visual cognition EEG acquisition task (Fig. <a class="ltx_ref" href="#S2.F2" title="Figure 2 ‣ 2.1.2 EEG Acquisition and Preprocessing ‣ 2.1 Dataset and Preprocessing ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">2</span></a>(a)) and a Tangram labeling task (Fig. <a class="ltx_ref" href="#S2.F2" title="Figure 2 ‣ 2.1.2 EEG Acquisition and Preprocessing ‣ 2.1 Dataset and Preprocessing ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">2</span></a>(b)). In the EEG acquisition task, each trial began with a fixation cross presented for 500 ms, followed by a 500 ms blank screen. At 0 ms, a visual stimulus was randomly presented for a duration of 1000 ms. Upon stimulus offset, a response prompt appeared, requiring participants to perform a categorical judgment (i.e., whether the object was an animal).
+To eliminate motor effector bias from the left and right hands, the mapping between the response keys and the "Yes/No" options was randomized for each trial. The trial was terminated upon the participant’s key press. An inter-trial interval (ITI) of 1.5–2.5 s was applied to mitigate expectancy effects.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS2.p3">
+<p class="ltx_p" id="S2.SS1.SSS2.p3.1">Following the EEG acquisition, a behavioral labeling experiment was conducted. Participants provided detailed English annotations for the stimulus images presented during the previous session. The labeling process consisted of two distinct sub-tasks: global annotation and semantic segmentation. These annotated data represent the participants’ subjective cognitive perception of the Tangram stimuli.</p>
+</div>
+<div class="ltx_para" id="S2.SS1.SSS2.p4">
+<p class="ltx_p" id="S2.SS1.SSS2.p4.1">EEG preprocessing followed the standardized MNE <cite class="ltx_cite ltx_citemacro_cite">Gramfort<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib10" title="MEG and eeg data analysis with mne-python">2013</a>)</cite> protocol described in our previous study <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite> (see <span class="ltx_text ltx_font_bold" id="S2.SS1.SSS2.p4.1.1">Supplementary Data</span> for details). Unless otherwise specified, all preprocessing parameters and channel configurations remained consistent with the established protocol <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>, ensuring cross-subject consistency and signal reliability.</p>
+</div>
+<figure class="ltx_figure" id="S2.F2"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="226" id="S2.F2.g1" src="2604.22649v1/x3.png" width="415"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>
+EEG data acquisition and labeling tasks on the Tangram dataset.
+(a)Experimental paradigm for Tangram EEG data acquisition.
+(b)Global annotation and semantic segmentation tasks for Tangram images.
+</figcaption>
+</figure>
+</section>
+<section class="ltx_subsubsection" id="S2.SS1.SSS3">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.1.3 </span>Data Splitting and Leakage Avoidance</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS3.p1">
+<p class="ltx_p" id="S2.SS1.SSS3.p1.1">The dataset was partitioned into training, validation, and test sets using an <math alttext="8:1:1" class="ltx_Math" display="inline" id="S2.SS1.SSS3.p1.1.m1" intent=":literal"><semantics><mrow><mn>8</mn><mo lspace="0.278em" rspace="0.278em">:</mo><mn>1</mn><mo lspace="0.278em" rspace="0.278em">:</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">8:1:1</annotation></semantics></math> ratio. The partitioning was performed at the image level rather than the subject level to ensure that the visual stimuli in the test set were entirely absent from the training set. This image-wise isolation protocol was strictly followed to prevent data leakage, thereby avoiding overestimation of the model’s performance.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S2.SS1.SSS4">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.1.4 </span>Statistical Analysis</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS1.SSS4.p1">
+<p class="ltx_p" id="S2.SS1.SSS4.p1.1">Group-level differences between reconstruction methods were evaluated using two-tailed paired t-tests unless otherwise specified. p-values were adjusted for multiple comparisons using the Benjamini–Hochberg false discovery rate (FDR) correction. Statistical significance was defined at <math alttext="p&lt;0.05" class="ltx_Math" display="inline" id="S2.SS1.SSS4.p1.1.m1" intent=":literal"><semantics><mrow><mi>p</mi><mo>&lt;</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">p&lt;0.05</annotation></semantics></math>. Bootstrapped confidence intervals (1,000 resamples) were computed to estimate inter-subject variability.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S2.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.2 </span>CLIP Text–Image Encoder</h3>
+<div class="ltx_para ltx_noindent" id="S2.SS2.p1">
+<p class="ltx_p" id="S2.SS2.p1.1">To establish a consistent cross-modal reference for EEG–vision alignment,
+we first construct a unified semantic space between natural language and visual stimuli.
+Specifically, we adopt the CLIP ViT-H/14 architecture <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>)</cite>
+as the foundation for cross-modal representation learning.
+The pretrained text–image dual encoders provide robust semantic alignment
+and serve as a semantic baseline for EEG-to-vision mapping.
+An overview of the dual-encoder architecture is illustrated in Fig. <a class="ltx_ref" href="#S2.F3" title="Figure 3 ‣ 2.2.2 Image Encoder ‣ 2.2 CLIP Text–Image Encoder ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">3</span></a>.</p>
+</div>
+<section class="ltx_subsubsection" id="S2.SS2.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.2.1 </span>Text Encoder</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS2.SSS1.p1">
+<p class="ltx_p" id="S2.SS2.SSS1.p1.1">The text encoder transforms natural-language annotations into normalized semantic embeddings.
+It consists of a 12-layer Transformer with a hidden dimension of 768 and 12 attention heads.
+Each input text sequence is tokenized using CLIP’s ByteLevel BPE tokenizer,
+padded or truncated to a fixed length of 77 tokens, and enriched with <span class="ltx_text ltx_font_typewriter" id="S2.SS2.SSS1.p1.1.1">&lt;start&gt;</span> and <span class="ltx_text ltx_font_typewriter" id="S2.SS2.SSS1.p1.1.2">&lt;end&gt;</span> symbols.
+The resulting embeddings are mapped to 768 dimensions and combined with learnable positional encodings,
+forming an input tensor of shape <math alttext="(B,77,768)" class="ltx_Math" display="inline" id="S2.SS2.SSS1.p1.1.m1" intent=":literal"><semantics><mrow><mo stretchy="false">(</mo><mi>B</mi><mo>,</mo><mn>77</mn><mo>,</mo><mn>768</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(B,77,768)</annotation></semantics></math>.
+After Transformer encoding, the hidden state corresponding to the <span class="ltx_text ltx_font_typewriter" id="S2.SS2.SSS1.p1.1.3">&lt;end&gt;</span> token is linearly projected into
+a 1024-dimensional semantic vector:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex1">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="z_{T}=\mathrm{Proj}(h_{\texttt{&lt;end&gt;}})" class="ltx_Math" display="block" id="S2.Ex1.m1" intent=":literal"><semantics><mrow><msub><mi>z</mi><mi>T</mi></msub><mo>=</mo><mrow><mi>Proj</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msub><mi>h</mi><mtext class="ltx_mathvariant_monospace">&lt;end&gt;</mtext></msub><mo stretchy="false">)</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">z_{T}=\mathrm{Proj}(h_{\texttt{&lt;end&gt;}})</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS2.SSS1.p1.2">which is directly comparable to the CLIP image encoder output.
+The 1024-dimensional embedding design ensures compatibility with the EEG latent space in later alignment modules.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S2.SS2.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.2.2 </span>Image Encoder</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS2.SSS2.p1">
+<p class="ltx_p" id="S2.SS2.SSS2.p1.1">The image encoder follows the ViT-H/14 backbone, consisting of 32 Transformer blocks with a hidden size of 1280.
+Input images are resized to <math alttext="224\times 224" class="ltx_Math" display="inline" id="S2.SS2.SSS2.p1.1.m1" intent=":literal"><semantics><mrow><mn>224</mn><mo lspace="0.222em" rspace="0.222em">×</mo><mn>224</mn></mrow><annotation encoding="application/x-tex">224\times 224</annotation></semantics></math>, divided into non-overlapping patches, linearly projected,
+and augmented with positional encodings.
+After Transformer encoding, the [CLS] token is projected to a 1024-dimensional embedding:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex2">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="z_{I}=\mathrm{Proj}(h_{\text{CLS}})" class="ltx_Math" display="block" id="S2.Ex2.m1" intent=":literal"><semantics><mrow><msub><mi>z</mi><mi>I</mi></msub><mo>=</mo><mrow><mi>Proj</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msub><mi>h</mi><mtext>CLS</mtext></msub><mo stretchy="false">)</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">z_{I}=\mathrm{Proj}(h_{\text{CLS}})</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS2.SSS2.p1.3">Since CLIP is pretrained primarily on natural images and lacks abstraction-awareness,
+we fine-tune only the last three Transformer layers and the projection head using the InfoNCE contrastive loss:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex3">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathcal{L}_{\mathrm{CLIP}}=-\frac{1}{B}\sum_{i}\log\frac{\exp(\mathrm{sim}(z_{T}^{(i)},z_{I}^{(i)})/\tau)}{\sum_{j}\exp(\mathrm{sim}(z_{T}^{(i)},z_{I}^{(j)})/\tau)}" class="ltx_Math" display="block" id="S2.Ex3.m1" intent=":literal"><semantics><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>CLIP</mi></msub><mo>=</mo><mrow><mo>−</mo><mrow><mfrac><mn>1</mn><mi>B</mi></mfrac><mo lspace="0em" rspace="0em">​</mo><mrow><munder><mo movablelimits="false">∑</mo><mi>i</mi></munder><mrow><mi>log</mi><mo lspace="0.167em">⁡</mo><mfrac><mrow><mi>exp</mi><mo>⁡</mo><mrow><mo stretchy="false">(</mo><mrow><mrow><mi>sim</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msubsup><mi>z</mi><mi>T</mi><mrow><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>,</mo><msubsup><mi>z</mi><mi>I</mi><mrow><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow></msubsup><mo stretchy="false">)</mo></mrow></mrow><mo>/</mo><mi>τ</mi></mrow><mo stretchy="false">)</mo></mrow></mrow><mrow><msub><mo>∑</mo><mi>j</mi></msub><mrow><mi>exp</mi><mo>⁡</mo><mrow><mo stretchy="false">(</mo><mrow><mrow><mi>sim</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msubsup><mi>z</mi><mi>T</mi><mrow><mo stretchy="false">(</mo><mi>i</mi><mo stretchy="false">)</mo></mrow></msubsup><mo>,</mo><msubsup><mi>z</mi><mi>I</mi><mrow><mo stretchy="false">(</mo><mi>j</mi><mo stretchy="false">)</mo></mrow></msubsup><mo stretchy="false">)</mo></mrow></mrow><mo>/</mo><mi>τ</mi></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow></mfrac></mrow></mrow></mrow></mrow></mrow><annotation encoding="application/x-tex">\mathcal{L}_{\mathrm{CLIP}}=-\frac{1}{B}\sum_{i}\log\frac{\exp(\mathrm{sim}(z_{T}^{(i)},z_{I}^{(i)})/\tau)}{\sum_{j}\exp(\mathrm{sim}(z_{T}^{(i)},z_{I}^{(j)})/\tau)}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS2.SSS2.p1.2">where <math alttext="\tau" class="ltx_Math" display="inline" id="S2.SS2.SSS2.p1.2.m1" intent=":literal"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math> denotes the temperature parameter controlling similarity distribution sharpness.
+The resulting 1024-D embeddings define a unified semantic space that serves as the foundation
+for EEG–vision–text alignment in subsequent modules.</p>
+</div>
+<figure class="ltx_figure" id="S2.F3"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="215" id="S2.F3.g1" src="2604.22649v1/x4.png" width="415"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>
+Overview of the CLIP-based text–image dual encoder <cite class="ltx_cite ltx_citemacro_cite">Radford<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib30" title="Learning transferable visual models from natural language supervision">2021</a>)</cite>.
+The text branch encodes tokenized descriptions through Transformer layers,
+while the image branch processes visual patches with a Vision Transformer.
+Both outputs are projected into a shared 1024-dimensional semantic space.
+</figcaption>
+</figure>
+</section>
+</section>
+<section class="ltx_subsection" id="S2.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.3 </span>EEG–Semantic Alignment with Diffusion Image Embedding</h3>
+<div class="ltx_para ltx_noindent" id="S2.SS3.p1">
+<p class="ltx_p" id="S2.SS3.p1.1">This module aims to bridge EEG representations and visual semantics in the CLIP latent space,
+providing high-level priors for downstream image generation.
+It consists of two cooperative components:
+(1) an <span class="ltx_text ltx_font_bold" id="S2.SS3.p1.1.1">EEG semantic encoder</span> that extracts and aligns cognitive representations from EEG signals,
+and (2) a <span class="ltx_text ltx_font_bold" id="S2.SS3.p1.1.2">Prior Diffusion Model</span> that transforms EEG-derived embeddings into CLIP-like latent distributions,
+ensuring consistency with visual semantic priors.</p>
+</div>
+<section class="ltx_subsubsection" id="S2.SS3.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.3.1 </span>EEG Encoder (ATM)</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS1.p1">
+<p class="ltx_p" id="S2.SS3.SSS1.p1.1">The EEG encoder follows the architecture of the <span class="ltx_text ltx_font_bold" id="S2.SS3.SSS1.p1.1.1">Adaptive Thinking Mapper (ATM)</span> <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>,
+which is designed to extract semantic representations from EEG signals
+and align them with the CLIP embedding space.
+This design is inspired by previous EEG-to-vision alignment work <cite class="ltx_cite ltx_citemacro_cite">Spampinato<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib24" title="Deep learning human mind for automated visual classification">2017</a>)</cite>.
+Given EEG inputs <math alttext="\mathbf{E}=[e_{1},e_{2},\ldots,e_{C}]^{\top}\in\mathbb{R}^{C\times T}" class="ltx_Math" display="inline" id="S2.SS3.SSS1.p1.1.m1" intent=":literal"><semantics><mrow><mi>𝐄</mi><mo>=</mo><msup><mrow><mo stretchy="false">[</mo><msub><mi>e</mi><mn>1</mn></msub><mo>,</mo><msub><mi>e</mi><mn>2</mn></msub><mo>,</mo><mi mathvariant="normal">…</mi><mo>,</mo><msub><mi>e</mi><mi>C</mi></msub><mo stretchy="false">]</mo></mrow><mo>⊤</mo></msup><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>C</mi><mo lspace="0.222em" rspace="0.222em">×</mo><mi>T</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{E}=[e_{1},e_{2},\ldots,e_{C}]^{\top}\in\mathbb{R}^{C\times T}</annotation></semantics></math>,
+the encoder maps them into the CLIP semantic space:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex4">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathbf{Z}_{E}=f_{\text{EEG}}(\mathbf{E};\theta_{E})\in\mathbb{R}^{B\times 1024}" class="ltx_Math" display="block" id="S2.Ex4.m1" intent=":literal"><semantics><mrow><msub><mi>𝐙</mi><mi>E</mi></msub><mo>=</mo><mrow><msub><mi>f</mi><mtext>EEG</mtext></msub><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mi>𝐄</mi><mo>;</mo><msub><mi>θ</mi><mi>E</mi></msub><mo stretchy="false">)</mo></mrow></mrow><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>B</mi><mo lspace="0.222em" rspace="0.222em">×</mo><mn>1024</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{Z}_{E}=f_{\text{EEG}}(\mathbf{E};\theta_{E})\in\mathbb{R}^{B\times 1024}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS1.p1.2">The encoder integrates <span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p1.2.1">channel-wise attention</span>, <span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p1.2.2">temporal–spatial convolution</span>,
+and an <span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p1.2.3">MLP projector with residual blocks and LayerNorm</span>
+to capture rich temporal–spatial dependencies within EEG signals.
+The structure of the ATM encoder is illustrated in Fig. <a class="ltx_ref" href="#S2.F4" title="Figure 4 ‣ 2.3.1 EEG Encoder (ATM) ‣ 2.3 EEG–Semantic Alignment with Diffusion Image Embedding ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">4</span></a>.</p>
+</div>
+<figure class="ltx_figure" id="S2.F4"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="226" id="S2.F4.g1" src="2604.22649v1/x5.png" width="415"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>
+Architecture of the <span class="ltx_text ltx_font_bold" id="S2.F4.2.1">Adaptive Thinking Mapper (ATM)</span> EEG encoder <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>.
+Raw EEG signals from multiple channels are first embedded through an embedding layer,
+followed by a channel-wise attention mechanism to model inter-channel dependencies.
+The temporal–spatial convolution module aggregates local and global EEG dynamics,
+and the MLP projector with residual and normalization layers
+maps the extracted features into the 1024-dimensional CLIP semantic space.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS1.p2">
+<p class="ltx_p" id="S2.SS3.SSS1.p2.1"><span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p2.1.1">(1) Channel-wise Attention.</span>
+Temporal embeddings are first computed via 1D convolution and positional encoding:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex5">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="H_{c}=\mathrm{Conv1D}(e_{c})+P_{t}" class="ltx_Math" display="block" id="S2.Ex5.m1" intent=":literal"><semantics><mrow><msub><mi>H</mi><mi>c</mi></msub><mo>=</mo><mrow><mrow><mi>Conv1D</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msub><mi>e</mi><mi>c</mi></msub><mo stretchy="false">)</mo></mrow></mrow><mo>+</mo><msub><mi>P</mi><mi>t</mi></msub></mrow></mrow><annotation encoding="application/x-tex">H_{c}=\mathrm{Conv1D}(e_{c})+P_{t}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS1.p2.2">Attention weights are then obtained through a self-attention operation:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex6">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\widetilde{\mathbf{H}}=\mathrm{softmax}\!\left(\frac{(\mathbf{H}W_{Q})(\mathbf{H}W_{K})^{\top}}{\sqrt{d_{k}}}\right)(\mathbf{H}W_{V}),\quad\mathbf{H}^{\prime}=\widetilde{\mathbf{H}}+\mathbf{H}" class="ltx_Math" display="block" id="S2.Ex6.m1" intent=":literal"><semantics><mrow><mrow><mover accent="true"><mi>𝐇</mi><mo>~</mo></mover><mo>=</mo><mrow><mpadded style="width:3.720em;" width="3.720em"><mi>softmax</mi></mpadded><mo lspace="0em" rspace="0em">​</mo><mrow><mo>(</mo><mfrac><mrow><mrow><mo stretchy="false">(</mo><mrow><mi>𝐇</mi><mo lspace="0em" rspace="0em">​</mo><msub><mi>W</mi><mi>Q</mi></msub></mrow><mo stretchy="false">)</mo></mrow><mo lspace="0em" rspace="0em">​</mo><msup><mrow><mo stretchy="false">(</mo><mrow><mi>𝐇</mi><mo lspace="0em" rspace="0em">​</mo><msub><mi>W</mi><mi>K</mi></msub></mrow><mo stretchy="false">)</mo></mrow><mo>⊤</mo></msup></mrow><msqrt><msub><mi>d</mi><mi>k</mi></msub></msqrt></mfrac><mo>)</mo></mrow><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><mi>𝐇</mi><mo lspace="0em" rspace="0em">​</mo><msub><mi>W</mi><mi>V</mi></msub></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow><mo rspace="1.167em">,</mo><mrow><msup><mi>𝐇</mi><mo>′</mo></msup><mo>=</mo><mrow><mover accent="true"><mi>𝐇</mi><mo>~</mo></mover><mo>+</mo><mi>𝐇</mi></mrow></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\mathbf{H}}=\mathrm{softmax}\!\left(\frac{(\mathbf{H}W_{Q})(\mathbf{H}W_{K})^{\top}}{\sqrt{d_{k}}}\right)(\mathbf{H}W_{V}),\quad\mathbf{H}^{\prime}=\widetilde{\mathbf{H}}+\mathbf{H}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS1.p3">
+<p class="ltx_p" id="S2.SS3.SSS1.p3.3"><span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p3.3.1">(2) Temporal–Spatial Convolution.</span>
+The model aggregates features across temporal and spatial dimensions:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex7">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathbf{F}=\sigma(W_{t}*\mathbf{H}^{\prime}+W_{s}*\mathbf{H}^{\prime}+b)" class="ltx_Math" display="block" id="S2.Ex7.m1" intent=":literal"><semantics><mrow><mi>𝐅</mi><mo>=</mo><mrow><mi>σ</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><mrow><msub><mi>W</mi><mi>t</mi></msub><mo lspace="0.222em" rspace="0.222em">∗</mo><msup><mi>𝐇</mi><mo>′</mo></msup></mrow><mo>+</mo><mrow><msub><mi>W</mi><mi>s</mi></msub><mo lspace="0.222em" rspace="0.222em">∗</mo><msup><mi>𝐇</mi><mo>′</mo></msup></mrow><mo>+</mo><mi>b</mi></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">\mathbf{F}=\sigma(W_{t}*\mathbf{H}^{\prime}+W_{s}*\mathbf{H}^{\prime}+b)</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS1.p3.2">where <math alttext="*" class="ltx_Math" display="inline" id="S2.SS3.SSS1.p3.1.m1" intent=":literal"><semantics><mo>∗</mo><annotation encoding="application/x-tex">*</annotation></semantics></math> denotes convolution and <math alttext="\sigma(\cdot)" class="ltx_Math" display="inline" id="S2.SS3.SSS1.p3.2.m2" intent=":literal"><semantics><mrow><mi>σ</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mo lspace="0em" rspace="0em">⋅</mo><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">\sigma(\cdot)</annotation></semantics></math> is the ReLU activation function.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS1.p4">
+<p class="ltx_p" id="S2.SS3.SSS1.p4.1"><span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p4.1.1">(3) MLP Projector.</span>
+Flattened features are passed through a two-layer MLP with residual and normalization layers
+to produce semantic embeddings aligned with the CLIP image space:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex8">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathbf{Z}_{E}=W_{2}\phi(W_{1}\mathrm{Flatten}(\mathbf{F})+b_{1})+b_{2}" class="ltx_Math" display="block" id="S2.Ex8.m1" intent=":literal"><semantics><mrow><msub><mi>𝐙</mi><mi>E</mi></msub><mo>=</mo><mrow><mrow><msub><mi>W</mi><mn>2</mn></msub><mo lspace="0em" rspace="0em">​</mo><mi>ϕ</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><mrow><msub><mi>W</mi><mn>1</mn></msub><mo lspace="0em" rspace="0em">​</mo><mi>Flatten</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mi>𝐅</mi><mo stretchy="false">)</mo></mrow></mrow><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub></mrow><mo stretchy="false">)</mo></mrow></mrow><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow></mrow><annotation encoding="application/x-tex">\mathbf{Z}_{E}=W_{2}\phi(W_{1}\mathrm{Flatten}(\mathbf{F})+b_{1})+b_{2}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+</div>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS1.p5">
+<p class="ltx_p" id="S2.SS3.SSS1.p5.2"><span class="ltx_text ltx_font_italic" id="S2.SS3.SSS1.p5.2.1">(4) Training Objective.</span>
+The encoder is optimized with a joint contrastive–regression objective:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex9">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathcal{L}_{\text{sem}}=\lambda_{1}\mathcal{L}_{\text{CLIP}}+\lambda_{2}\mathcal{L}_{\text{MSE}},\quad\mathcal{L}_{\text{MSE}}=\|\mathbf{Z}_{E}-z_{I}\|_{2}^{2}" class="ltx_Math" display="block" id="S2.Ex9.m1" intent=":literal"><semantics><mrow><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>sem</mtext></msub><mo>=</mo><mrow><mrow><msub><mi>λ</mi><mn>1</mn></msub><mo lspace="0em" rspace="0em">​</mo><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>CLIP</mtext></msub></mrow><mo>+</mo><mrow><msub><mi>λ</mi><mn>2</mn></msub><mo lspace="0em" rspace="0em">​</mo><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>MSE</mtext></msub></mrow></mrow></mrow><mo rspace="1.167em">,</mo><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>MSE</mtext></msub><mo>=</mo><msubsup><mrow><mo stretchy="false">‖</mo><mrow><msub><mi>𝐙</mi><mi>E</mi></msub><mo>−</mo><msub><mi>z</mi><mi>I</mi></msub></mrow><mo stretchy="false">‖</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mrow></mrow><annotation encoding="application/x-tex">\mathcal{L}_{\text{sem}}=\lambda_{1}\mathcal{L}_{\text{CLIP}}+\lambda_{2}\mathcal{L}_{\text{MSE}},\quad\mathcal{L}_{\text{MSE}}=\|\mathbf{Z}_{E}-z_{I}\|_{2}^{2}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS1.p5.1">where <math alttext="\mathcal{L}_{\text{CLIP}}" class="ltx_Math" display="inline" id="S2.SS3.SSS1.p5.1.m1" intent=":literal"><semantics><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>CLIP</mtext></msub><annotation encoding="application/x-tex">\mathcal{L}_{\text{CLIP}}</annotation></semantics></math> is the contrastive loss defined in the previous subsection.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S2.SS3.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.3.2 </span>Prior Diffusion</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS3.SSS2.p1">
+<p class="ltx_p" id="S2.SS3.SSS2.p1.1">To further align EEG-derived embeddings with the visual semantic manifold,
+a conditional diffusion prior <cite class="ltx_cite ltx_citemacro_cite">Ho<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib33" title="Denoising diffusion probabilistic models">2020</a>)</cite> is introduced to model the distribution <math alttext="p(z_{I}\mid\mathbf{Z}_{E})" class="ltx_Math" display="inline" id="S2.SS3.SSS2.p1.1.m1" intent=":literal"><semantics><mrow><mi>p</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><msub><mi>z</mi><mi>I</mi></msub><mo>∣</mo><msub><mi>𝐙</mi><mi>E</mi></msub></mrow><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(z_{I}\mid\mathbf{Z}_{E})</annotation></semantics></math>.
+The model learns to predict Gaussian noise in the CLIP latent space:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex10">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="z_{I}^{t}=z_{I}+\sigma_{t}\epsilon,\quad\hat{\epsilon}=\epsilon_{\text{prior}}(z_{I}^{t},t,\mathbf{Z}_{E})" class="ltx_Math" display="block" id="S2.Ex10.m1" intent=":literal"><semantics><mrow><mrow><msubsup><mi>z</mi><mi>I</mi><mi>t</mi></msubsup><mo>=</mo><mrow><msub><mi>z</mi><mi>I</mi></msub><mo>+</mo><mrow><msub><mi>σ</mi><mi>t</mi></msub><mo lspace="0em" rspace="0em">​</mo><mi>ϵ</mi></mrow></mrow></mrow><mo rspace="1.167em">,</mo><mrow><mover accent="true"><mi>ϵ</mi><mo>^</mo></mover><mo>=</mo><mrow><msub><mi>ϵ</mi><mtext>prior</mtext></msub><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msubsup><mi>z</mi><mi>I</mi><mi>t</mi></msubsup><mo>,</mo><mi>t</mi><mo>,</mo><msub><mi>𝐙</mi><mi>E</mi></msub><mo stretchy="false">)</mo></mrow></mrow></mrow></mrow><annotation encoding="application/x-tex">z_{I}^{t}=z_{I}+\sigma_{t}\epsilon,\quad\hat{\epsilon}=\epsilon_{\text{prior}}(z_{I}^{t},t,\mathbf{Z}_{E})</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS2.p1.2">and minimizes the denoising objective:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex11">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathcal{L}_{\text{prior}}=\mathbb{E}_{t,z_{I},\epsilon}\big[\|\epsilon_{\text{prior}}(z_{I}^{t},t,\mathbf{Z}_{E})-\epsilon\|_{2}^{2}\big]" class="ltx_Math" display="block" id="S2.Ex11.m1" intent=":literal"><semantics><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>prior</mtext></msub><mo>=</mo><mrow><msub><mi>𝔼</mi><mrow><mi>t</mi><mo>,</mo><msub><mi>z</mi><mi>I</mi></msub><mo>,</mo><mi>ϵ</mi></mrow></msub><mo lspace="0em" rspace="0em">​</mo><mrow><mo maxsize="1.200em" minsize="1.200em">[</mo><msubsup><mrow><mo stretchy="false">‖</mo><mrow><mrow><msub><mi>ϵ</mi><mtext>prior</mtext></msub><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msubsup><mi>z</mi><mi>I</mi><mi>t</mi></msubsup><mo>,</mo><mi>t</mi><mo>,</mo><msub><mi>𝐙</mi><mi>E</mi></msub><mo stretchy="false">)</mo></mrow></mrow><mo>−</mo><mi>ϵ</mi></mrow><mo stretchy="false">‖</mo></mrow><mn>2</mn><mn>2</mn></msubsup><mo maxsize="1.200em" minsize="1.200em">]</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">\mathcal{L}_{\text{prior}}=\mathbb{E}_{t,z_{I},\epsilon}\big[\|\epsilon_{\text{prior}}(z_{I}^{t},t,\mathbf{Z}_{E})-\epsilon\|_{2}^{2}\big]</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS3.SSS2.p1.3">This probabilistic alignment enables EEG features to be transformed into CLIP-consistent semantic latents,
+providing a robust prior for downstream visual reconstruction.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S2.SS4">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.4 </span>Structure Prediction Module</h3>
+<div class="ltx_para ltx_noindent" id="S2.SS4.p1">
+<p class="ltx_p" id="S2.SS4.p1.1">To provide spatial priors for visual reconstruction,
+we introduce an EEG-based <span class="ltx_text ltx_font_bold" id="S2.SS4.p1.1.1">Structure Prediction Module</span>
+that estimates coarse visual structures from neural signals.
+This module takes EEG features as input and generates a low-resolution structural representation,
+which guides the subsequent diffusion-based image synthesis.</p>
+</div>
+<section class="ltx_subsubsection" id="S2.SS4.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.4.1 </span>Network Architecture</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS4.SSS1.p1">
+<p class="ltx_p" id="S2.SS4.SSS1.p1.1">As illustrated in Fig. <a class="ltx_ref" href="#S2.F5" title="Figure 5 ‣ 2.4.1 Network Architecture ‣ 2.4 Structure Prediction Module ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">5</span></a>,
+the network follows an encoder–decoder paradigm similar to ControlNet <cite class="ltx_cite ltx_citemacro_cite">Zhang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib45" title="Adding conditional control to text-to-image diffusion models">2023</a>)</cite>.
+Raw EEG signals are first processed through an <span class="ltx_text ltx_font_italic" id="S2.SS4.SSS1.p1.1.1">embedding layer</span>
+and a <span class="ltx_text ltx_font_italic" id="S2.SS4.SSS1.p1.1.2">channel-wise attention layer</span> to obtain discriminative spatiotemporal representations.
+These features are then reshaped into a compact latent tensor and progressively upsampled via multiple
+<span class="ltx_text ltx_font_italic" id="S2.SS4.SSS1.p1.1.3">ConvTranspose2d</span> layers to generate structural feature maps.
+The upper block contains six transposed convolutional layers that double the spatial size
+and halve the feature dimensions,
+while the lower block contains two transposed convolutional layers that preserve the resolution
+and refine the generated structure.
+The resulting feature maps <math alttext="\mathbf{S}\in\mathbb{R}^{4\times 64\times 64}" class="ltx_Math" display="inline" id="S2.SS4.SSS1.p1.1.m1" intent=":literal"><semantics><mrow><mi>𝐒</mi><mo>∈</mo><msup><mi>ℝ</mi><mrow><mn>4</mn><mo lspace="0.222em" rspace="0.222em">×</mo><mn>64</mn><mo lspace="0.222em" rspace="0.222em">×</mo><mn>64</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{S}\in\mathbb{R}^{4\times 64\times 64}</annotation></semantics></math>
+serve as the visual structural prior for diffusion generation.</p>
+</div>
+<figure class="ltx_figure" id="S2.F5"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="303" id="S2.F5.g1" src="2604.22649v1/x6.png" width="415"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>
+Architecture of the EEG-based <span class="ltx_text ltx_font_bold" id="S2.F5.2.1">Structure Prediction Module</span>.
+EEG signals are embedded and processed through a channel-wise attention layer
+to capture spatiotemporal dependencies.
+The resulting latent representations are reshaped and passed through stacked
+transposed convolutional layers to produce a coarse visual structure map,
+providing spatial priors for the subsequent diffusion generator.
+</figcaption>
+</figure>
+</section>
+<section class="ltx_subsubsection" id="S2.SS4.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.4.2 </span>Training Objective</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS4.SSS2.p1">
+<p class="ltx_p" id="S2.SS4.SSS2.p1.2">The structure prediction network is trained to minimize the mean squared error
+between the predicted structure map <math alttext="\mathbf{S}" class="ltx_Math" display="inline" id="S2.SS4.SSS2.p1.1.m1" intent=":literal"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math> and the reference structural map <math alttext="\mathbf{S}_{\text{gt}}" class="ltx_Math" display="inline" id="S2.SS4.SSS2.p1.2.m2" intent=":literal"><semantics><msub><mi>𝐒</mi><mtext>gt</mtext></msub><annotation encoding="application/x-tex">\mathbf{S}_{\text{gt}}</annotation></semantics></math>
+extracted from the SDXL-turbo VAE encoder <cite class="ltx_cite ltx_citemacro_cite">Rombach<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib35" title="High-resolution image synthesis with latent diffusion models">2022</a>)</cite>:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex12">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\mathcal{L}_{\text{struct}}=\|\mathbf{S}-\mathbf{S}_{\text{gt}}\|_{2}^{2}" class="ltx_Math" display="block" id="S2.Ex12.m1" intent=":literal"><semantics><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mtext>struct</mtext></msub><mo>=</mo><msubsup><mrow><mo stretchy="false">‖</mo><mrow><mi>𝐒</mi><mo>−</mo><msub><mi>𝐒</mi><mtext>gt</mtext></msub></mrow><mo stretchy="false">‖</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\mathcal{L}_{\text{struct}}=\|\mathbf{S}-\mathbf{S}_{\text{gt}}\|_{2}^{2}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS4.SSS2.p1.3">This structural supervision ensures that the predicted maps capture
+the global spatial layout and object contours consistent with the subject’s visual perception.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S2.SS5">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">2.5 </span>Dual-Constrained Diffusion Generation</h3>
+<div class="ltx_para ltx_noindent" id="S2.SS5.p1">
+<p class="ltx_p" id="S2.SS5.p1.1">Building upon the semantic alignment and structural prediction modules,
+the final stage of SGDM integrates both priors to synthesize
+cognitively consistent visual representations.
+The goal is to generate images that faithfully reflect
+the subject’s perceived semantics and spatial layout
+while maintaining controllable and coherent reconstruction.</p>
+</div>
+<section class="ltx_subsubsection" id="S2.SS5.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.5.1 </span>Dual Conditioning Mechanism</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS5.SSS1.p1">
+<p class="ltx_p" id="S2.SS5.SSS1.p1.4">As illustrated in Fig. <a class="ltx_ref" href="#S2.F1" title="Figure 1 ‣ 2 Methods ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">1</span></a>,
+the semantic embedding <math alttext="z_{I}" class="ltx_Math" display="inline" id="S2.SS5.SSS1.p1.1.m1" intent=":literal"><semantics><msub><mi>z</mi><mi>I</mi></msub><annotation encoding="application/x-tex">z_{I}</annotation></semantics></math> and predicted structural map <math alttext="\mathbf{S}" class="ltx_Math" display="inline" id="S2.SS5.SSS1.p1.2.m2" intent=":literal"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>
+serve as dual conditioning inputs to the diffusion process.
+The semantic feature <math alttext="z_{I}" class="ltx_Math" display="inline" id="S2.SS5.SSS1.p1.3.m3" intent=":literal"><semantics><msub><mi>z</mi><mi>I</mi></msub><annotation encoding="application/x-tex">z_{I}</annotation></semantics></math> is injected into the SDXL-turbo U-Net
+via the <span class="ltx_text ltx_font_italic" id="S2.SS5.SSS1.p1.4.1">IP-Adapter</span> <cite class="ltx_cite ltx_citemacro_cite">Huang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib36" title="Resolving multi-condition confusion for finetuning-free personalized image generation">2025</a>)</cite> to ensure high-level semantic consistency,
+while the structural map <math alttext="\mathbf{S}" class="ltx_Math" display="inline" id="S2.SS5.SSS1.p1.4.m4" intent=":literal"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math> is integrated through <span class="ltx_text ltx_font_italic" id="S2.SS5.SSS1.p1.4.2">ControlNet</span> <cite class="ltx_cite ltx_citemacro_cite">Zhang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib45" title="Adding conditional control to text-to-image diffusion models">2023</a>)</cite>
+to constrain spatial geometry and preserve object layout.
+This dual-conditioning design effectively balances semantic alignment
+and structural fidelity during image synthesis.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S2.SS5.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">2.5.2 </span>Generation Process</h4>
+<div class="ltx_para ltx_noindent" id="S2.SS5.SSS2.p1">
+<p class="ltx_p" id="S2.SS5.SSS2.p1.3">Starting from Gaussian noise,
+the conditioned U-Net iteratively denoises through 2–4 steps to reconstruct the final image:</p>
+<table class="ltx_equation ltx_eqn_table" id="S2.Ex13">
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math alttext="\hat{x}_{0}=\mathrm{U\text{-}Net}(z_{I},\mathbf{S},\epsilon_{t})" class="ltx_Math" display="block" id="S2.Ex13.m1" intent=":literal"><semantics><mrow><msub><mover accent="true"><mi>x</mi><mo>^</mo></mover><mn>0</mn></msub><mo>=</mo><mrow><mi mathvariant="normal">U</mi><mo lspace="0em" rspace="0em">​</mo><mtext>-</mtext><mo lspace="0em" rspace="0em">​</mo><mi>Net</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><msub><mi>z</mi><mi>I</mi></msub><mo>,</mo><mi>𝐒</mi><mo>,</mo><msub><mi>ϵ</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow></mrow></mrow><annotation encoding="application/x-tex">\hat{x}_{0}=\mathrm{U\text{-}Net}(z_{I},\mathbf{S},\epsilon_{t})</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+</tr></tbody>
+</table>
+<p class="ltx_p" id="S2.SS5.SSS2.p1.2">where <math alttext="\epsilon_{t}" class="ltx_Math" display="inline" id="S2.SS5.SSS2.p1.1.m1" intent=":literal"><semantics><msub><mi>ϵ</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\epsilon_{t}</annotation></semantics></math> denotes the predicted noise at time step <math alttext="t" class="ltx_Math" display="inline" id="S2.SS5.SSS2.p1.2.m2" intent=":literal"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.
+By combining EEG-derived semantic and structural guidance,
+SGDM enables robust, semantically grounded, and spatially coherent
+EEG-to-vision reconstruction without requiring additional fine-tuning.</p>
+</div>
+</section>
+</section>
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3 </span>Results</h2>
+<section class="ltx_subsection" id="S3.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.1 </span>EEG Semantic Alignment: Integrating Multilevel Representations</h3>
+<div class="ltx_para ltx_noindent" id="S3.SS1.p1">
+<p class="ltx_p" id="S3.SS1.p1.1">Achieving effective alignment between EEG signals and the semantic space of cognitive imagery is a critical prerequisite for ensuring accurate image generation. We first visualized the EEG embeddings before and after alignment across multiple representational levels to evaluate the effectiveness of the alignment process in integrating hierarchical representations and explaining individual variability.</p>
+</div>
+<section class="ltx_subsubsection" id="S3.SS1.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.1.1 </span>Group-Level EEG Alignment</h4>
+<figure class="ltx_figure" id="S3.F6"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="390" id="S3.F6.g1" src="2604.22649v1/x7.png" width="663"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>
+Comparison of EEG distributions before and after alignment.
+(a) Dimensionality-reduced visualization of pre-alignment EEG signals around 150 ms, highlighting local feature clustering (e.g., head, feet).
+(b) Dimensionality-reduced visualization of pre-alignment EEG signals around 400 ms, showing semantic clustering (e.g., animal vs. non-animal).
+(c) Dimensionality-reduced visualization of post-alignment EEG embeddings. Colors of tangrams indicate categories; broad color clusters reflect shared cross-category features.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS1.SSS1.p1">
+<p class="ltx_p" id="S3.SS1.SSS1.p1.1">To preserve local neighborhood structures and reveal potential clustering patterns, we employed the t-distributed Stochastic Neighbor Embedding (t-SNE) algorithm <cite class="ltx_cite ltx_citemacro_cite">Maaten and Hinton (<a class="ltx_ref" href="#bib.bib15" title="Visualizing data using t-sne">2008</a>)</cite> to project the EEG features before (Fig. <a class="ltx_ref" href="#S3.F6" title="Figure 6 ‣ 3.1.1 Group-Level EEG Alignment ‣ 3.1 EEG Semantic Alignment: Integrating Multilevel Representations ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">6</span></a>(a)(b)) and after (Fig. <a class="ltx_ref" href="#S3.F6" title="Figure 6 ‣ 3.1.1 Group-Level EEG Alignment ‣ 3.1 EEG Semantic Alignment: Integrating Multilevel Representations ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">6</span></a>(c)) alignment into a two-dimensional space. The results show that, before alignment, EEG signals exhibit distinct representational patterns in early (approximately 150 ms) and late (approximately 400 ms) temporal windows: early responses mainly capture local shape-related features (e.g., head, limbs, wings), while late responses reflect higher-level categorical distinctions (e.g., animal vs. non-animal). This “local-to-category” temporal progression is consistent with our previous representational analyses on the same dataset <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite> and aligns with established findings from prior visual decoding studies <cite class="ltx_cite ltx_citemacro_cite">Grootswagers<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib13" title="The representational dynamics of visual objects in rapid serial visual processing streams">2019</a>); Foster<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib16" title="Alpha-band oscillations enable spatially and temporally resolved tracking of covert spatial attention">2017</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS1.SSS1.p2">
+<p class="ltx_p" id="S3.SS1.SSS1.p2.1">After alignment, the two-dimensional visualization of EEG embeddings revealed that the semantic groupings of the tangram images (e.g., human, animal, object, and structural groups characterized by wings or limbs) formed clearly separated clusters in the low-dimensional space. This result indicates that the EEG encoder successfully captured category-level semantic information while preserving local structural consistency. From the overall distribution (Fig. <a class="ltx_ref" href="#S3.F6" title="Figure 6 ‣ 3.1.1 Group-Level EEG Alignment ‣ 3.1 EEG Semantic Alignment: Integrating Multilevel Representations ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">6</span></a>(c)), three major clusters and their transitional regions can be distinguished, corresponding to cross-category shared local structural patterns (e.g., the upper-view head of biological figures, lateral head profiles, and salient parts of objects). Such cluster–category hierarchical correspondence demonstrates that the aligned EEG embeddings are capable of simultaneously integrating early local features and late semantic representations. The extraction and preservation of these multi-level representations lay the foundation for subsequent cognitive image reconstruction.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S3.SS1.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.1.2 </span>Within-Subject EEG Alignment and Diversity</h4>
+<figure class="ltx_figure" id="S3.F7"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="251" id="S3.F7.g1" src="2604.22649v1/x8.png" width="664"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>
+Subject-specific EEG embeddings after alignment and inter-subject semantic differences.
+From left to right are the aligned EEG embedding distributions of Sub01, Sub18, and Sub19. The panels on the right show semantic annotation differences for the same set of tangram figures across subjects. Scatter colors denote the cross-subject average semantic category of each EEG sample, while clustered color regions indicate subject-specific semantic patterns.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS1.SSS2.p1">
+<p class="ltx_p" id="S3.SS1.SSS2.p1.1">To further verify whether the aligned EEG representations could retain subject-specific cognitive characteristics, we analyzed the embedding distributions across different participants using the Kilogram abstract visual object dataset. Fig. <a class="ltx_ref" href="#S3.F7" title="Figure 7 ‣ 3.1.2 Within-Subject EEG Alignment and Diversity ‣ 3.1 EEG Semantic Alignment: Integrating Multilevel Representations ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">7</span></a> illustrates the visualized EEG embeddings of three subjects (Sub01, Sub18, and Sub19). For each subject, four similar tangram images were selected, and their corresponding EEG embeddings and semantic annotations were labeled.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS1.SSS2.p2">
+<p class="ltx_p" id="S3.SS1.SSS2.p2.1">The results show notable inter-subject variability in semantic labeling. Sub01 labeled one sample as “column,” while the remaining three were annotated as “human.” Sub18 tended to interpret the same images as various objects, whereas Sub19 regarded three images as differently dressed humans and one as an animal. Despite these subjective semantic differences, the aligned EEG embeddings within each individual formed compact intra-class clusters and clearly separated inter-class distributions. This demonstrates that our cross-modal alignment method effectively integrates individual semantic representations while maintaining the structural consistency of the cognitive space.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS1.SSS2.p3">
+<p class="ltx_p" id="S3.SS1.SSS2.p3.1">These findings further validate the effectiveness of our alignment strategy from the perspective of individual specificity. The EEG encoder not only captures hierarchical local and categorical information but also preserves semantic differences across subjects, thereby enabling accurate and personalized cognitive image generation.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S3.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.2 </span>Stage I: Structure Reconstruction from EEG</h3>
+<div class="ltx_para ltx_noindent" id="S3.SS2.p1">
+<p class="ltx_p" id="S3.SS2.p1.1">Introducing structural priors into multilevel visual representations constitutes the core concept of our cognitive image reconstruction framework. The first question to address, therefore, is whether EEG signals contain sufficient structural information that can be explicitly predicted and extracted. In our previous Kilogram EEG experiment <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>, distinct structural types exhibited clear clustering patterns in representational similarity analysis (RSA) embeddings, while temporal generalization analysis further revealed differentiated activation and suppression of local features across participants. These results indicate that EEG signals indeed possess the potential to encode structural characteristics of visual objects.</p>
+</div>
+<figure class="ltx_figure" id="S3.F8"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="366" id="S3.F8.g1" src="2604.22649v1/x9.png" width="665"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 8: </span>
+Pipeline, reconstruction results, and evaluation of structural information.
+(a) The generative model from EEG to structural information. The 7×7 cognitive code <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite> serves as a key structural prior for supervision.
+(b) Comparison of structural reconstruction results between low-level feature extraction <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite> and SGDM on the THINGS dataset.
+(c) Comparison of structural reconstruction results between low-level feature extraction and SGDM on the Kilogram dataset.
+(d) IoU evaluation of the reconstructed structures by the two methods on the Kilogram dataset.
+(e) Shift-IoU evaluation of the reconstructed structures by the two methods on the Kilogram dataset.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS2.p2">
+<p class="ltx_p" id="S3.SS2.p2.1">Building upon these findings, we designed a structural information extraction and generation pipeline (Fig. <a class="ltx_ref" href="#S3.F8" title="Figure 8 ‣ 3.2 Stage I: Structure Reconstruction from EEG ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">8</span></a>(a)). In this framework, the model first generates a structured image of the target foreground via a variational autoencoder (VAE), guided jointly by EEG embeddings and cognitive encodings <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>. The extracted structural information is then utilized to guide the subsequent diffusion-based cognitive image reconstruction. We conducted experiments and evaluations on both the natural image dataset THINGS and the abstract Kilogram dataset, comparing the proposed SGDM structural extraction method with existing low-level feature extraction approaches<cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS2.p3">
+<p class="ltx_p" id="S3.SS2.p3.1">Fig. <a class="ltx_ref" href="#S3.F8" title="Figure 8 ‣ 3.2 Stage I: Structure Reconstruction from EEG ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">8</span></a>(b) illustrates the structural generation results on the THINGS dataset. Here, the Base method for comparison is set as the previously proposed low-level feature extraction approach <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite> that integrates hierarchical representations. The results show that the structural extraction stage reliably captures the global shape of target objects, providing a solid basis for subsequent structure-supervised learning. Compared with Base methods, SGDM produces structures that approximate the spatial layout of the foreground through compositional shape modeling, exhibiting higher interpretability and structural consistency.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS2.p4">
+<p class="ltx_p" id="S3.SS2.p4.2">Fig. <a class="ltx_ref" href="#S3.F8" title="Figure 8 ‣ 3.2 Stage I: Structure Reconstruction from EEG ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">8</span></a>(c) presents the structural generation results on the Kilogram dataset. Given that Tangram images possess explicit geometric compositions and hierarchical relations, the model was trained under direct supervision of structural signals (cognitive encoding<cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>). The results demonstrate that existing low-level feature extraction methods generate blurred or distorted boundaries, deviating substantially from the ground truth. In contrast, SGDM more accurately reconstructs the block composition and spatial relationships of the stimuli. Quantitative results (Fig. <a class="ltx_ref" href="#S3.F8" title="Figure 8 ‣ 3.2 Stage I: Structure Reconstruction from EEG ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">8</span></a>(d)(e)) show that SGDM achieves a higher mean Intersection-over-Union (IoU) between generated and target structures(<math alttext="p=0.013" class="ltx_Math" display="inline" id="S3.SS2.p4.1.m1" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.013</mn></mrow><annotation encoding="application/x-tex">p=0.013</annotation></semantics></math>), and significantly increases the proportion of high-quality structural reconstructions(<math alttext="p=0.008" class="ltx_Math" display="inline" id="S3.SS2.p4.2.m2" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.008</mn></mrow><annotation encoding="application/x-tex">p=0.008</annotation></semantics></math>).</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS2.p5">
+<p class="ltx_p" id="S3.SS2.p5.1">Beyond generation quality, SGDM also exhibits superior training stability. Owing to the cognitively guided encoding supervision and the use of a deconvolutional architecture (see Supplementary data), SGDM effectively captures the key geometric features of Tangram objects and supports controllable structural editing, while mitigating the overfitting tendencies observed in low-level feature extraction Base model.</p>
+</div>
+</section>
+<section class="ltx_subsection" id="S3.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.3 </span>Stage II: Cognitive Image Reconstruction with Structural Guidance</h3>
+<div class="ltx_para ltx_noindent" id="S3.SS3.p1">
+<p class="ltx_p" id="S3.SS3.p1.1">In the image generation experiments, we further validated the capability of the SGDM model to perform cognitive image reconstruction under structural guidance. Fig. <a class="ltx_ref" href="#S3.F9" title="Figure 9 ‣ 3.3.1 Results and Evaluation of Cognitive Image Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">9</span></a>(c) illustrates the overall pipeline, in which SGDM reconstructs realistic images conditioned on abstract Tangram stimuli, along with the corresponding evaluation pipeline. To handle the inherent uncertainty of Tangram annotations and to capture their abstract semantic characteristics, we proposed a similarity-based evaluation scheme for generated images. Specifically, we fine-tuned the CLIP model jointly on Tangram images and their semantic annotations, ensuring comparability between abstract stimuli and real visual images within a shared CLIP embedding space. This allowed us to compute the CLIP feature similarity between generated and target images, thereby quantifying the semantic consistency and cognitive plausibility of the generated outputs.</p>
+</div>
+<section class="ltx_subsubsection" id="S3.SS3.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.3.1 </span>Results and Evaluation of Cognitive Image Reconstruction</h4>
+<figure class="ltx_figure" id="S3.F9"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_square" height="669" id="S3.F9.g1" src="2604.22649v1/x10.png" width="706"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 9: </span>
+Performance and framework of cognitive image generation.
+(a)Visual comparison of cognitive image generation results among SGDM and different reconstruction methods on the Kilogram dataset.
+(b)Visual comparison of cognitive image generation results among SGDM and different reconstruction methods on the THINGS dataset.
+(c)Pipeline of the SGDM framework for cognitive image generation, including the neural decoding stage and the evaluation procedure.
+(d)Similarity-based quantitative evaluation comparing SGDM with other representative methods on the Kilogram dataset.
+(e) Similarity-based quantitative evaluation comparing SGDM with other representative methods on the THINGS dataset.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p1">
+<p class="ltx_p" id="S3.SS3.SSS1.p1.1">Fig. <a class="ltx_ref" href="#S3.F9" title="Figure 9 ‣ 3.3.1 Results and Evaluation of Cognitive Image Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">9</span></a>(a),(b) show the generation results on the THINGS and Kilogram (Tangram) datasets, respectively, in comparison with other representative generation model<cite class="ltx_cite ltx_citemacro_cite">Fu<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib46" title="BrainVis: exploring the bridge between brain and visual signals via image reconstruction">2025</a>); Zhou<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib47" title="DREAM: diffusion rectification and estimation-adaptive models">2024</a>)</cite>. For comparison, the Base method is still a model that leverages multi-level representations to guide the diffusion process  <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>. These examples were uniformly sampled from the results based on semantic categories, without any additional selection criteria.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p2">
+<p class="ltx_p" id="S3.SS3.SSS1.p2.1">On the THINGS dataset, it can be observed that both SGDM and the baseline methods are capable of generating images that exhibit a relatively high degree of semantic similarity to the viewed stimuli (e.g., food items, containers, elongated objects). However, SGDM demonstrates a clear advantage in capturing structural information of objects. This is particularly evident for visually complex structures—such as multiple stacked sausages, horizontally elongated rods, and densely arranged items—where SGDM more accurately reconstructs spatial layouts and geometric relationships.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p3">
+<p class="ltx_p" id="S3.SS3.SSS1.p3.1">In contrast, the reconstructions generated by BrainVis and DreamDiffusion exhibit less stable semantic representations. The core strength of the proposed SGDM framework lies in its brain-inspired dual constraints on structural geometry and semantic information. These results suggest that, while maintaining relatively accurate semantic predictions, the structural information pathway in SGDM effectively regularizes and guides the image reconstruction process.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p4">
+<p class="ltx_p" id="S3.SS3.SSS1.p4.1">On the Kilogram dataset, we evaluated both structural and semantic reconstruction performance. SGDM showed a striking advantage in structural reconstruction, producing segmented and spatially coherent object arrangements that closely matched the stimuli. In contrast, the Base model yielded blurred and structurally inconsistent results. At the semantic level, due to the inherently ambiguous categorical nature of Tangram stimuli, the Base model’s performance declined substantially. SGDM, however, generated semantically plausible images that corresponded meaningfully with participants’ annotations (e.g., “mountain,” “seated person,” “glass trophy”), demonstrating the model’s ability to generalize abstract cognitive semantics from EEG signals.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p5">
+<p class="ltx_p" id="S3.SS3.SSS1.p5.2">Fig. <a class="ltx_ref" href="#S3.F9" title="Figure 9 ‣ 3.3.1 Results and Evaluation of Cognitive Image Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">9</span></a>(d),(e) present quantitative evaluations of cognitive image reconstruction. We computed the CLIP feature similarity between generated and viewed images for random generation, SGDM and other representative methods across both THINGS and Kilogram. Results show that all methods significantly outperform random generation, while SGDM consistently achieves higher mean similarity scores on Kilogram (<math alttext="p=0.021" class="ltx_Math" display="inline" id="S3.SS3.SSS1.p5.1.m1" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.021</mn></mrow><annotation encoding="application/x-tex">p=0.021</annotation></semantics></math>) and THINGS (<math alttext="p=0.037" class="ltx_Math" display="inline" id="S3.SS3.SSS1.p5.2.m2" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.037</mn></mrow><annotation encoding="application/x-tex">p=0.037</annotation></semantics></math>), confirming that incorporating structural priors leads to more accurate and cognitively consistent reconstructions.</p>
+</div>
+<figure class="ltx_table" id="S3.T1">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 1: </span>Comparison of generation metrics on the Kilogram and THINGS</figcaption>
+<table class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle" id="S3.T1.1">
+<thead class="ltx_thead">
+<tr class="ltx_tr" id="S3.T1.1.1.1">
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_th_row ltx_border_t" id="S3.T1.1.1.1.1"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.1.1">Dataset</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_t" id="S3.T1.1.1.1.2"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.2.1">Model</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T1.1.1.1.3"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.3.1">SSIM ↑</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T1.1.1.1.4"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.4.1">IS ↑</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T1.1.1.1.5"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.5.1">SwAV FID ↓</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T1.1.1.1.6"><span class="ltx_text ltx_font_bold" id="S3.T1.1.1.1.6.1">CLIP Score ↑</span></th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr class="ltx_tr" id="S3.T1.1.2.1">
+<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_t" id="S3.T1.1.2.1.1" rowspan="4"><span class="ltx_text" id="S3.T1.1.2.1.1.1">Tangram</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t" id="S3.T1.1.2.1.2">Base</th>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.2.1.3">0.198</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.2.1.4">7.070</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.2.1.5">49.979</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.2.1.6">0.222</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.3.2">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T1.1.3.2.1">BrainVis</th>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.3.2.2">0.232</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.3.2.3">7.497</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.3.2.4">47.631</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.3.2.5">0.331</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.4.3">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T1.1.4.3.1">DreamDiffusion</th>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.4.3.2">0.218</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.4.3.3">6.380</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.4.3.4">56.081</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.4.3.5">0.209</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.5.4">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T1.1.5.4.1">SGDM</th>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.5.4.2"><span class="ltx_text ltx_font_bold" id="S3.T1.1.5.4.2.1">0.322</span></td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.5.4.3">6.208</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.5.4.4"><span class="ltx_text ltx_font_bold" id="S3.T1.1.5.4.4.1">38.999</span></td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.5.4.5"><span class="ltx_text ltx_font_bold" id="S3.T1.1.5.4.5.1">0.396</span></td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.6.5">
+<th class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_b ltx_border_t" id="S3.T1.1.6.5.1" rowspan="4"><span class="ltx_text" id="S3.T1.1.6.5.1.1">THINGS</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t" id="S3.T1.1.6.5.2">Base</th>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.6.5.3">0.250</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.6.5.4">9.088</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.6.5.5">24.408</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T1.1.6.5.6">0.363</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.7.6">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T1.1.7.6.1">BrainVis</th>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.7.6.2">0.247</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.7.6.3">8.847</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.7.6.4">25.113</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.7.6.5">0.351</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.8.7">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T1.1.8.7.1">DreamDiffusion</th>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.8.7.2">0.245</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.8.7.3">8.594</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.8.7.4">27.637</td>
+<td class="ltx_td ltx_align_center" id="S3.T1.1.8.7.5">0.307</td>
+</tr>
+<tr class="ltx_tr" id="S3.T1.1.9.8">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_b" id="S3.T1.1.9.8.1">SGDM</th>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T1.1.9.8.2"><span class="ltx_text ltx_font_bold" id="S3.T1.1.9.8.2.1">0.279</span></td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T1.1.9.8.3">8.682</td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T1.1.9.8.4"><span class="ltx_text ltx_font_bold" id="S3.T1.1.9.8.4.1">23.979</span></td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T1.1.9.8.5"><span class="ltx_text ltx_font_bold" id="S3.T1.1.9.8.5.1">0.387</span></td>
+</tr>
+</tbody>
+</table>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p6">
+<p class="ltx_p" id="S3.SS3.SSS1.p6.1">When evaluating cognitive image generation, in addition to the CLIP similarity metric, we employed the low-level feature metric Structural Similarity Index Measure(SSIM) <cite class="ltx_cite ltx_citemacro_cite">Wang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib7" title="Image quality assessment: from error visibility to structural similarity">2004</a>)</cite> to assess pixel-level consistency, the Inception Score(IS) <cite class="ltx_cite ltx_citemacro_cite">Salimans<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib8" title="Improved techniques for training gans">2016</a>)</cite> metric to evaluate image realism, and the Swapping Assignments between Views(SwAV) FID <cite class="ltx_cite ltx_citemacro_cite">Caron<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib9" title="Unsupervised learning of visual features by contrasting cluster assignments">2020</a>)</cite> metric to measure overall representation distance.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p7">
+<p class="ltx_p" id="S3.SS3.SSS1.p7.1">Building upon a systematic evaluation framework that spans from low-level visual features to high-level semantic consistency, Table <a class="ltx_ref" href="#S3.T1" title="Table 1 ‣ 3.3.1 Results and Evaluation of Cognitive Image Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">1</span></a> summarizes the image reconstruction performance of different algorithms across the two datasets. The four metrics, listed from left to right, respectively assess reconstruction quality in terms of low-level features, diversity, high-level semantics, and overall semantic alignment.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p8">
+<p class="ltx_p" id="S3.SS3.SSS1.p8.1">In comparison with other representative methods, the proposed SGDM achieves the best performance on SSIM, SwAV FID, and CLIP Score across both the Tangram and THINGS datasets. However, in terms of generative diversity, as measured by the Inception Score (IS), SGDM performs lower than most competing approaches. This behavior is consistent with the design principle of SGDM. By imposing dual constraints on the image generation process, SGDM reduces a certain degree of diversity while improving reconstruction fidelity.
+Importantly, as illustrated by the qualitative results in Fig. <a class="ltx_ref" href="#S3.F9" title="Figure 9 ‣ 3.3.1 Results and Evaluation of Cognitive Image Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">9</span></a>, this reduction in diversity does not significantly compromise the perceptual quality of the reconstructed images.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS1.p9">
+<p class="ltx_p" id="S3.SS3.SSS1.p9.1">Furthermore, among all evaluation metrics, SGDM exhibits the largest improvement in SSIM, indicating that the incorporation of structural priors via the structural representation pathway effectively enhances the reconstruction of low-level visual features.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S3.SS3.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.3.2 </span>Cross-Subject Variability and Cognitive Diversity in Reconstruction</h4>
+<figure class="ltx_figure" id="S3.F10"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="445" id="S3.F10.g1" src="2604.22649v1/x11.png" width="665"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 10: </span>
+Subject-specific cognitive image generation and the effect of image abstraction parameters on reconstruction.
+(a) Cognitive reconstructions and corresponding annotations of the same tangram figure across different subjects.
+(b) Similarity and diversity trends of cognitive reconstructions at different abstraction levels using the SGDM method.
+(c) Similarity and diversity trends of cognitive reconstructions at different abstraction levels using the Base method.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS2.p1">
+<p class="ltx_p" id="S3.SS3.SSS2.p1.1">A particularly noteworthy finding lies in the cognitive diversity of Tangram stimuli. The same Tangram configuration can elicit distinct semantic interpretations across participants, posing a challenging test for EEG-based reconstruction models to extract stable yet individualized representations. Fig. <a class="ltx_ref" href="#S3.F10" title="Figure 10 ‣ 3.3.2 Cross-Subject Variability and Cognitive Diversity in Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">10</span></a>(a) illustrates SGDM’s reconstructions of the same Tangram stimulus across different participants, together with their corresponding semantic annotations. SGDM successfully generated semantically diverse real-world images—such as “hotpot,” “seated person,” “table,” and “candlestick”—while maintaining reasonable visual correspondence to the original Tangram layout. This demonstrates SGDM’s capacity to capture participant-specific semantic representations from EEG.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS2.p2">
+<p class="ltx_p" id="S3.SS3.SSS2.p2.4">Furthermore, we quantitatively analyzed the relationship between image similarity and stimulus abstraction level (Detailed information is provided in Supplementary data). As shown in Fig. <a class="ltx_ref" href="#S3.F10" title="Figure 10 ‣ 3.3.2 Cross-Subject Variability and Cognitive Diversity in Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">10</span></a>(b), within the SGDM model, similarity between generated and stimulus images decreases as the abstraction level increases(Pearson’s <math alttext="r=-0.97" class="ltx_Math" display="inline" id="S3.SS3.SSS2.p2.1.m1" intent=":literal"><semantics><mrow><mi>r</mi><mo>=</mo><mrow><mo>−</mo><mn>0.97</mn></mrow></mrow><annotation encoding="application/x-tex">r=-0.97</annotation></semantics></math>,<math alttext="p&lt;0.001" class="ltx_Math" display="inline" id="S3.SS3.SSS2.p2.2.m2" intent=":literal"><semantics><mrow><mi>p</mi><mo>&lt;</mo><mn>0.001</mn></mrow><annotation encoding="application/x-tex">p&lt;0.001</annotation></semantics></math>), consistent with the intuitive expectation that higher abstraction imposes greater reconstruction difficulty. In contrast, the Base model (Fig. <a class="ltx_ref" href="#S3.F10" title="Figure 10 ‣ 3.3.2 Cross-Subject Variability and Cognitive Diversity in Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">10</span></a>(c)) exhibited no significant trend(Pearson’s <math alttext="r=-0.11" class="ltx_Math" display="inline" id="S3.SS3.SSS2.p2.3.m3" intent=":literal"><semantics><mrow><mi>r</mi><mo>=</mo><mrow><mo>−</mo><mn>0.11</mn></mrow></mrow><annotation encoding="application/x-tex">r=-0.11</annotation></semantics></math>,<math alttext="p=0.73" class="ltx_Math" display="inline" id="S3.SS3.SSS2.p2.4.m4" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.73</mn></mrow><annotation encoding="application/x-tex">p=0.73</annotation></semantics></math>), consistent with its limited generative performance on the Tangram dataset. Collectively, these findings demonstrate that SGDM achieves, for the first time, the modeling and reconstruction of individual cognitive diversity under abstract visual conditions, showing strong adaptability across subjects and abstract semantic contexts in EEG-based cognitive image generation.</p>
+</div>
+<figure class="ltx_figure" id="S3.F11"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="224" id="S3.F11.g1" src="2604.22649v1/x12.png" width="415"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 11: </span>
+Comparative reconstruction performance on natural images with cognitive ambiguity.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS2.p3">
+<p class="ltx_p" id="S3.SS3.SSS2.p3.1">The proposed SGDM framework demonstrates cognitively consistent image reconstruction not only on Tangram stimuli but also on natural images. To better evaluate subjective cognitive alignment, we focus on natural images with cognitive ambiguity, where semantic interpretations are inherently uncertain.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS2.p4">
+<p class="ltx_p" id="S3.SS3.SSS2.p4.1">As shown in Fig. <a class="ltx_ref" href="#S3.F11" title="Figure 11 ‣ 3.3.2 Cross-Subject Variability and Cognitive Diversity in Reconstruction ‣ 3.3 Stage II: Cognitive Image Reconstruction with Structural Guidance ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">11</span></a>, baseline models, BrainVis, and DreamDiffusion exhibit unstable and often incoherent reconstructions under such conditions, frequently failing to align with the actual stimuli (e.g., misinterpreting a minesweeper device as “landmines” or producing disorganized outputs for cluttered tools).</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS3.SSS2.p5">
+<p class="ltx_p" id="S3.SS3.SSS2.p5.1">In contrast, SGDM captures salient cognitive structures despite semantic ambiguity. For example, even when participants cannot recognize a minesweeper device, they reliably perceive “multiple vertically arranged components,” which is reflected in SGDM’s reconstruction. Similarly, for unfamiliar objects such as orchestral instruments, SGDM preserves the perception of “elongated vertical structure.” These results indicate that SGDM effectively leverages structural cues to achieve reconstruction aligned with subjective cognition, even when explicit semantics are unclear.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S3.SS4">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.4 </span>Spatio-Temporal Analysis of EEG-Based Cognitive Image Reconstruction</h3>
+<div class="ltx_para ltx_noindent" id="S3.SS4.p1">
+<p class="ltx_p" id="S3.SS4.p1.1">To further explore the temporal and spatial characteristics of the SGDM reconstruction framework, we conducted a series of spatiotemporal experiments to evaluate how different time windows and cortical regions contribute to reconstruction performance.</p>
+</div>
+<section class="ltx_subsubsection" id="S3.SS4.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.4.1 </span>Temporal Analysis</h4>
+<figure class="ltx_figure" id="S3.F12"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="401" id="S3.F12.g1" src="2604.22649v1/x13.png" width="664"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 12: </span>
+SGDM-based cognitive reconstruction and evaluation across different EEG time windows.
+(a) Cognitive image reconstruction results under sliding time windows. Red boxes highlight reconstructed samples that accurately match the original stimuli.
+(b) Similarity curves of cognitive reconstructions with varying sliding time windows.
+(c) Cognitive image reconstruction results under cumulative time windows.
+(d) Similarity curves of cognitive reconstructions with varying cumulative time windows.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS4.SSS1.p1">
+<p class="ltx_p" id="S3.SS4.SSS1.p1.1">For temporal analysis, we employed two time-windowing strategies: cumulative windows and sliding windows. In the cumulative window experiment, EEG segments were selected from the stimulus onset (0 ms) up to varying endpoints, progressively extending the temporal range. In contrast, the sliding window experiment used a fixed window width of 200 ms, shifting this window across the entire post-stimulus period. Reconstruction quality was assessed by computing the CLIP feature similarity between generated images and their corresponding target stimuli.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS4.SSS1.p2">
+<p class="ltx_p" id="S3.SS4.SSS1.p2.1">As shown in Fig. <a class="ltx_ref" href="#S3.F12" title="Figure 12 ‣ 3.4.1 Temporal Analysis ‣ 3.4 Spatio-Temporal Analysis of EEG-Based Cognitive Image Reconstruction ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">12</span></a>(c)(d), in the cumulative window condition, the highest reconstruction similarity occurred within the 0–500ms time range; both shorter and longer windows led to performance degradation. In the sliding window condition (Fig. <a class="ltx_ref" href="#S3.F12" title="Figure 12 ‣ 3.4.1 Temporal Analysis ‣ 3.4 Spatio-Temporal Analysis of EEG-Based Cognitive Image Reconstruction ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">12</span></a>(a)(b)), reconstruction similarity increased steadily before peaking around 500 ms, followed by minor fluctuations. Collectively, these results suggest that the 400–600 ms interval contributes most substantially to the reconstruction of abstract Tangram stimuli. This temporal range is slightly later than the typical peak window observed for natural image decoding (200–300 ms) <cite class="ltx_cite ltx_citemacro_cite">Grootswagers<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib19" title="Mapping the dynamics of visual feature coding: insights into perception and integration">2024</a>)</cite>, but aligns well with prior findings on abstract visual processing <cite class="ltx_cite ltx_citemacro_cite">Lian<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib17" title="Multidimensional representation dynamics for abstract visual objects in encoded tangram paradigms">2025</a>)</cite>, indicating the additional cognitive load required for semantic abstraction.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S3.SS4.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.4.2 </span>Spatial Analysis</h4>
+<figure class="ltx_figure" id="S3.F13"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="405" id="S3.F13.g1" src="2604.22649v1/x14.png" width="540"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 13: </span>
+SGDM-based cognitive reconstruction and evaluation across different brain regions.
+(a) EEG electrode distributions corresponding to different brain regions.
+(b) Bar chart of cognitive reconstruction similarity across 5 brain regions. Error bars represent the standard error of the mean (SEM).
+(c) Cognitive image reconstruction results based on EEG signals from 5 brain regions under the same tangram stimulus condition. Red boxes highlight reconstructed samples that accurately match the original stimuli.
+</figcaption>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS4.SSS2.p1">
+<p class="ltx_p" id="S3.SS4.SSS2.p1.1">To further assess the spatial contributions of different brain regions, we divided EEG channels into five major brain areas: frontal, parietal, central, temporal, and occipital (Fig. <a class="ltx_ref" href="#S3.F13" title="Figure 13 ‣ 3.4.2 Spatial Analysis ‣ 3.4 Spatio-Temporal Analysis of EEG-Based Cognitive Image Reconstruction ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">13</span></a>(a)). Using the same CLIP-based similarity metric, we evaluated the reconstruction performance for each region separately. As shown in Fig. <a class="ltx_ref" href="#S3.F13" title="Figure 13 ‣ 3.4.2 Spatial Analysis ‣ 3.4 Spatio-Temporal Analysis of EEG-Based Cognitive Image Reconstruction ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">13</span></a>(b)(c), the temporal region exhibited the highest reconstruction similarity (<math alttext="p=0.043" class="ltx_Math" display="inline" id="S3.SS4.SSS2.p1.1.m1" intent=":literal"><semantics><mrow><mi>p</mi><mo>=</mo><mn>0.043</mn></mrow><annotation encoding="application/x-tex">p=0.043</annotation></semantics></math>), followed by the parietal and occipital regions.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS4.SSS2.p2">
+<p class="ltx_p" id="S3.SS4.SSS2.p2.1">This finding contrasts with previous results from natural image decoding studies, where the occipital cortex typically achieves the highest decoding accuracy <cite class="ltx_cite ltx_citemacro_cite">Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>)</cite>, consistent with its role as the core region for early visual processing. In the Tangram condition, however, low-level visual differences among stimuli are minimal, and the primary distinctions arise from higher-level semantic and cognitive processing. Consequently, occipital signals contribute less to reconstruction, while activity from the temporal and parietal cortices—which are associated with semantic integration, mental imagery, and cognitive control—plays a dominant role.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS4.SSS2.p3">
+<p class="ltx_p" id="S3.SS4.SSS2.p3.1">In summary, the temporal analysis reveals that abstract visual reconstruction relies heavily on later processing stages (400–600 ms), while the spatial analysis highlights the critical involvement of temporal and parietal regions during these stages. Together, these findings indicate that SGDM’s success in reconstructing abstract visual stimuli depends on the extraction of structured representations from late cognitive processing, rather than early perceptual signals alone.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S3.SS5">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.5 </span>Ablation on Structural and Generative Components</h3>
+<div class="ltx_para ltx_noindent" id="S3.SS5.p1">
+<p class="ltx_p" id="S3.SS5.p1.1">To analyze the contribution of SGDM’s core components and key parameters to cognitive image reconstruction performance, we conducted a series of ablation experiments. The study consisted of two parts: (1) evaluating the roles of the structure module and structural information during the structure prediction stage, and (2) analyzing the influence of the generation control coefficient during the conditional generation stage.</p>
+</div>
+<section class="ltx_subsubsection" id="S3.SS5.SSS1">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.5.1 </span>Structure-Guided Module Ablation</h4>
+<div class="ltx_para ltx_noindent" id="S3.SS5.SSS1.p1">
+<p class="ltx_p" id="S3.SS5.SSS1.p1.1">Structural guidance serves as the central mechanism of the SGDM framework, and validating the effectiveness of structural priors is essential. We employed Intersection over Union (IoU) and Shifted-IoU as quantitative metrics for evaluating structure generation, and compared three configurations: No Component — removing the structural processing module; Zero Information — retaining the module but setting the input structural information to zero; Structure Guided — the full SGDM model incorporating explicit structural priors.</p>
+</div>
+<figure class="ltx_table" id="S3.T2">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 2: </span>Ablation study of reconstruction accuracy across different datasets</figcaption>
+<table class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle" id="S3.T2.1">
+<thead class="ltx_thead">
+<tr class="ltx_tr" id="S3.T2.1.1.1">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_t" id="S3.T2.1.1.1.1"><span class="ltx_text ltx_font_bold" id="S3.T2.1.1.1.1.1">Dataset</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_t" id="S3.T2.1.1.1.2"><span class="ltx_text ltx_font_bold" id="S3.T2.1.1.1.2.1">Method</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T2.1.1.1.3"><span class="ltx_text ltx_font_bold" id="S3.T2.1.1.1.3.1">IoU</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T2.1.1.1.4"><span class="ltx_text ltx_font_bold" id="S3.T2.1.1.1.4.1">IoU shift</span></th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr class="ltx_tr" id="S3.T2.1.2.1">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t" id="S3.T2.1.2.1.1" rowspan="3"><span class="ltx_text" id="S3.T2.1.2.1.1.1">Kilogram</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t" id="S3.T2.1.2.1.2">No component</th>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T2.1.2.1.3">0.492</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T2.1.2.1.4">0.519</td>
+</tr>
+<tr class="ltx_tr" id="S3.T2.1.3.2">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T2.1.3.2.1">Zero information</th>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.3.2.2">0.494</td>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.3.2.3">0.520</td>
+</tr>
+<tr class="ltx_tr" id="S3.T2.1.4.3">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T2.1.4.3.1">SGDM</th>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.4.3.2"><span class="ltx_text ltx_font_bold" id="S3.T2.1.4.3.2.1">0.517</span></td>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.4.3.3"><span class="ltx_text ltx_font_bold" id="S3.T2.1.4.3.3.1">0.543</span></td>
+</tr>
+<tr class="ltx_tr" id="S3.T2.1.5.4">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_b ltx_border_t" id="S3.T2.1.5.4.1" rowspan="3"><span class="ltx_text" id="S3.T2.1.5.4.1.1">THINGS</span></th>
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t" id="S3.T2.1.5.4.2">No component</th>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T2.1.5.4.3">0.432</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T2.1.5.4.4">0.472</td>
+</tr>
+<tr class="ltx_tr" id="S3.T2.1.6.5">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row" id="S3.T2.1.6.5.1">Zero information</th>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.6.5.2">0.459</td>
+<td class="ltx_td ltx_align_center" id="S3.T2.1.6.5.3">0.481</td>
+</tr>
+<tr class="ltx_tr" id="S3.T2.1.7.6">
+<th class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_b" id="S3.T2.1.7.6.1">SGDM</th>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T2.1.7.6.2"><span class="ltx_text ltx_font_bold" id="S3.T2.1.7.6.2.1">0.541</span></td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T2.1.7.6.3"><span class="ltx_text ltx_font_bold" id="S3.T2.1.7.6.3.1">0.576</span></td>
+</tr>
+</tbody>
+</table>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS5.SSS1.p2">
+<p class="ltx_p" id="S3.SS5.SSS1.p2.1">As shown in Tab. <a class="ltx_ref" href="#S3.T2" title="Table 2 ‣ 3.5.1 Structure-Guided Module Ablation ‣ 3.5 Ablation on Structural and Generative Components ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">2</span></a>, the inclusion of structural guidance significantly improved structural prediction accuracy on both the Kilogram (Tangram) and THINGS datasets. The performance gain was particularly prominent on the THINGS dataset (IoU on THINGS increased by 0.109, on Kilogram increased by 0.025), indicating that in complex natural scenes, structural priors play a crucial role in ensuring generation stability and spatial consistency.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS5.SSS1.p3">
+<p class="ltx_p" id="S3.SS5.SSS1.p3.1">In the second stage of SGDM, final cognitive image reconstruction is performed under the guidance of the predicted structural information. Therefore, we further evaluated the effect of the generation control coefficient, which determines the relative weighting between structural and semantic constraints. Five control values within the range 0-1 were tested, using three evaluation metrics: Structural Similarity Index (SSIM) for low-level feature alignment, Inception Score (IS) for image realism, and SwAV-FID for joint assessment of semantic and structural consistency.</p>
+</div>
+</section>
+<section class="ltx_subsubsection" id="S3.SS5.SSS2">
+<h4 class="ltx_title ltx_title_subsubsection">
+<span class="ltx_tag ltx_tag_subsubsection">3.5.2 </span>Generation Control Parameter Ablation</h4>
+<figure class="ltx_table" id="S3.T3">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 3: </span>Comparison of generation metrics under different control rates on the Kilogram</figcaption>
+<table class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle" id="S3.T3.1">
+<thead class="ltx_thead">
+<tr class="ltx_tr" id="S3.T3.1.1.1">
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T3.1.1.1.1"><span class="ltx_text ltx_font_bold" id="S3.T3.1.1.1.1.1">Control Rate</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T3.1.1.1.2"><span class="ltx_text ltx_font_bold" id="S3.T3.1.1.1.2.1">SSIM ↑</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T3.1.1.1.3"><span class="ltx_text ltx_font_bold" id="S3.T3.1.1.1.3.1">IS ↑</span></th>
+<th class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t" id="S3.T3.1.1.1.4"><span class="ltx_text ltx_font_bold" id="S3.T3.1.1.1.4.1">SwAV FID ↓</span></th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr class="ltx_tr" id="S3.T3.1.2.1">
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T3.1.2.1.1">0.00</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T3.1.2.1.2">0.253</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T3.1.2.1.3">6.864</td>
+<td class="ltx_td ltx_align_center ltx_border_t" id="S3.T3.1.2.1.4">39.913</td>
+</tr>
+<tr class="ltx_tr" id="S3.T3.1.3.2">
+<td class="ltx_td ltx_align_center" id="S3.T3.1.3.2.1">0.25</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.3.2.2">0.278</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.3.2.3">6.829</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.3.2.4">38.891</td>
+</tr>
+<tr class="ltx_tr" id="S3.T3.1.4.3">
+<td class="ltx_td ltx_align_center" id="S3.T3.1.4.3.1">0.50</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.4.3.2">0.308</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.4.3.3">6.298</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.4.3.4"><span class="ltx_text ltx_font_bold" id="S3.T3.1.4.3.4.1">38.424</span></td>
+</tr>
+<tr class="ltx_tr" id="S3.T3.1.5.4">
+<td class="ltx_td ltx_align_center" id="S3.T3.1.5.4.1">0.75</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.5.4.2">0.345</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.5.4.3">5.778</td>
+<td class="ltx_td ltx_align_center" id="S3.T3.1.5.4.4">40.162</td>
+</tr>
+<tr class="ltx_tr" id="S3.T3.1.6.5">
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T3.1.6.5.1">1.00</td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T3.1.6.5.2">0.373</td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T3.1.6.5.3">4.980</td>
+<td class="ltx_td ltx_align_center ltx_border_b" id="S3.T3.1.6.5.4">43.162</td>
+</tr>
+</tbody>
+</table>
+</figure>
+<div class="ltx_para ltx_noindent" id="S3.SS5.SSS2.p1">
+<p class="ltx_p" id="S3.SS5.SSS2.p1.1">As summarized in Tab. <a class="ltx_ref" href="#S3.T3" title="Table 3 ‣ 3.5.2 Generation Control Parameter Ablation ‣ 3.5 Ablation on Structural and Generative Components ‣ 3 Results ‣ Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction"><span class="ltx_text ltx_ref_tag">3</span></a>, increasing the control coefficient led to a monotonic rise in SSIM but a decline in IS, revealing a trade-off between fine-grained structural fidelity and perceptual realism. The comprehensive SwAV-FID metric first decreased and then increased, achieving its minimum around 0.5, suggesting an optimal balance point between low-level and high-level representations. Accordingly, we selected 0.5–0.6 as the optimal control range for subsequent experiments.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S3.SS5.SSS2.p2">
+<p class="ltx_p" id="S3.SS5.SSS2.p2.1">Overall, these results demonstrate that structural priors are indispensable for multi-level visual reconstruction, and that a moderate control strength effectively balances structural precision and semantic coherence. This confirms the architectural soundness and robustness of the SGDM framework in cognitive image generation.</p>
+</div>
+</section>
+</section>
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4 </span>Discussion</h2>
+<div class="ltx_para ltx_noindent" id="S4.p1">
+<p class="ltx_p" id="S4.p1.1">Compared with previous visual decoding approaches that primarily rely on natural images and categorical labels <cite class="ltx_cite ltx_citemacro_cite">Takagi and Nishimoto (<a class="ltx_ref" href="#bib.bib37" title="High-resolution image reconstruction with latent diffusion models from human brain activity">2023</a>); Li<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib38" title="Visual decoding and reconstruction via eeg embeddings with guided diffusion">2024</a>); Cheng<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib12" title="Fine-grained image generation with eeg multi-level semantics">2025</a>)</cite>, the proposed Structure-Guided Diffusion Model (SGDM) explicitly models the hierarchical relationship between structural information and semantic representations through a two-stage design. By incorporating both natural and abstract image datasets, SGDM achieves structured and controllable generation that bridges the perceptual and cognitive levels.
+In the first-stage structure generation, SGDM effectively integrates the spatiotemporal features contained in EEG signals and captures both the global configuration and local composition of visual objects through the structure prediction module. In the second-stage conditional generation, the experimental results demonstrate that SGDM significantly improves structural consistency and cross-subject generalization. Particularly in the abstract visual task using Tangram stimuli, the model not only reconstructs the geometric layout of objects with high fidelity but also reflects individual differences in subjective semantic interpretation, showing sensitivity to personalized cognitive representations. These findings collectively verify the critical role of structural information in cognitive-level image generation and demonstrate the feasibility of controllable visual cognition modeling at the EEG level.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.p2">
+<p class="ltx_p" id="S4.p2.1">From the perspective of neural mechanisms, the spatiotemporal analyses reveal that abstract visual reconstruction mainly depends on EEG activity within the 400–600 ms post-stimulus interval, with substantial contributions from the temporal and parietal regions. This time window occurs later than the early visual responses typically observed for natural image recognition (200–300 ms) <cite class="ltx_cite ltx_citemacro_cite">Grootswagers<span class="ltx_text ltx_bib_etal"> et al.</span> (<a class="ltx_ref" href="#bib.bib13" title="The representational dynamics of visual objects in rapid serial visual processing streams">2019</a>)</cite>, suggesting that abstract visual processing involves deeper semantic integration and higher-order cognitive engagement. Furthermore, the structure-guided constraint introduced in SGDM aligns closely with the theory of distributed hierarchical processing in the brain <cite class="ltx_cite ltx_citemacro_cite">Felleman and Essen (<a class="ltx_ref" href="#bib.bib41" title="Distributed hierarchical processing in the primate cerebral cortex">1991</a>)</cite>. By jointly incorporating structural and semantic constraints during the diffusion generation stage, SGDM partially emulates the human brain’s integration process from local shape encoding to global semantic composition. This structure-guided generation strategy endows the model with a degree of neural interpretability and provides a novel computational pathway for understanding the representational mechanisms underlying visual cognition.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.p3">
+<p class="ltx_p" id="S4.p3.1">Despite these promising results, several limitations remain. First, the current experiments are based on a relatively small dataset of abstract graphical stimuli, and the limited sample size and semantic diversity may constrain the model’s generalization ability. Second, the low spatial resolution of EEG poses challenges for precisely capturing fine-grained structural features. Future studies may address these issues by (1) validating the cross-modal consistency of SGDM on larger and multimodal datasets such as EEG–fMRI or EEG–fNIRS; (2) exploring online learning and few-shot individual adaptation strategies to enable real-time cognitive image generation; and (3) investigating potential applications of SGDM in clinical BCI, consciousness assessment, and cognitive rehabilitation.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S4.p4">
+<p class="ltx_p" id="S4.p4.1">In summary, the proposed SGDM framework demonstrates the feasibility of extracting and utilizing structural information from EEG signals for cognitive image reconstruction. By integrating structure guidance, semantic alignment, and conditional diffusion generation, SGDM achieves a unified balance between high-level semantic coherence and low-level spatial controllability. This work not only advances the frontier of EEG-based perceptual and cognitive image reconstruction but also provides a novel modeling and analytical framework for understanding the hierarchical processing mechanisms of human visual cognition.</p>
+</div>
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5 </span>Conclusion</h2>
+<div class="ltx_para ltx_noindent" id="S5.p1">
+<p class="ltx_p" id="S5.p1.1">This study proposes a novel EEG-based visual cognition reconstruction framework, termed the Structure-Guided Diffusion Model (SGDM). The model introduces structural guidance and dual semantic constraints into the generative mechanism, achieving highly consistent reconstruction of cognitive images from EEG signals through explicit structure prediction, cross-modal semantic alignment, and controllable diffusion generation. Experimental results demonstrate that SGDM significantly enhances structural fidelity, semantic coherence, and cross-subject generalization under abstract visual stimulation, while revealing the critical role of late-stage EEG activity and the temporal–parietal regions in the formation of structured cognitive representations.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S5.p2">
+<p class="ltx_p" id="S5.p2.1">The development of SGDM not only verifies the existence of hierarchically structured information within EEG signals that can be explicitly modeled but also provides new insights into the neural encoding mechanisms of visual cognition. By integrating the hierarchical processing theory of neuroscience with generative diffusion modeling, this study highlights the great potential of cross-modal information fusion in advancing cognitive image reconstruction.</p>
+</div>
+<div class="ltx_para ltx_noindent" id="S5.p3">
+<p class="ltx_p" id="S5.p3.1">Looking forward, the SGDM framework can be extended to multimodal neural signals (e.g., fMRI and MEG) and cross-task decoding scenarios to enable higher-resolution and semantically richer reconstructions. The approach also shows potential for applications in BCIs, psychological assessment, and neurorehabilitation. Overall, this work provides a framework for decoding both externally driven perception and internally generated subjective cognitive representations from neural signals, supporting BCIs with increased degrees of freedom for intention decoding and more flexible brain-to-machine communication.</p>
+</div>
+<h2 class="ltx_title ltx_title_section">About Preprint</h2>
+<div class="ltx_para ltx_noindent" id="Sx1.p1">
+<p class="ltx_p" id="Sx1.p1.1">This is the version of the article before peer review or editing, as submitted by an author to Journal of Neural Engineering.</p>
+</div></body></html>

@@ -1,0 +1,104 @@
+
+    <!DOCTYPE html>
+    <html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Arxiv AI 論文速報</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+        <style>
+    :root { --primary-color: #ff6b6b; --bg-color: #121212; --card-bg: #1e1e1e; }
+    body { background-color: var(--bg-color); color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; }
+    .swiper { width: 100%; height: 100vh; }
+    .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+    .card { 
+        background: var(--card-bg); padding: 40px; border-radius: 20px; 
+        max-width: 900px; width: 100%; max-height: 85vh; overflow-y: auto;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-left: 10px solid var(--primary-color);
+        line-height: 1.6; position: relative;
+    }
+    h2 { color: var(--primary-color); font-size: 2em; border-bottom: 1px solid #333; padding-bottom: 15px; }
+    h3 { color: #4ecdc4; margin-top: 25px; }
+    a { color: #f9d423; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+    code { background: #333; padding: 2px 5px; border-radius: 4px; }
+    /* 滾動條樣式 */
+    .card::-webkit-scrollbar { width: 8px; }
+    .card::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+    </style>
+    </head>
+    <body>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                
+        <div class="swiper-slide">
+            <div class="card">
+                <h2>文獻名稱</h2>
+<p>(AI 自動產生標題)</p>
+<h1>Long-tail Internet photo reconstruction</h1>
+<h2>長尾派系網路照片重建</h2>
+<ul>
+<li>論文來源 URL: https://arxiv.org/abs/2604.22714</li>
+<li>抓取時間: 2026-04-27</li>
+</ul>
+<h3>一句話核心</h3>
+<p>用特殊「稀疏感知」的數據訓練方法，讓 3D 重建模型能從極少數且分散的網路照片中，成功還原世界上的「冷門景點」。</p>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<p><strong>背景：</strong><br />
+網路上有許多照片，但分布很不均勻——著名的景點（如羅馬競技場）有海量照片，從各種角度都有；但絕大多數的地方景點（長尾景點）只有幾張稀疏、雜亂的照片。</p>
+<p><strong>痛點：</strong><br />
+傳統的 3D 重建方法（如 COLMAP）遇到這種稀疏照片時很吃力，因為特徵點對應困難。而現在流行的深度學習模型（如 DUSt3R、VGGT）雖然強大，但主要是在受控環境下訓練的，面對這種不規則的網路照片常常失敗。</p>
+<p><strong>重要性：</strong><br />
+長尾景點才是網路照片的常態，而不是例外。如果能解決這個問題，就能讓更多人透過網路照片還原出世界各地的角落。</p>
+<h3>他們做了什麼？（研究方法）</h3>
+<p><strong>建立新資料集：MegaDepth-X (MD-X)</strong><br />
+就像整理教材一樣，他們從網路上精選了 2474 個候選場景，然後用三步驟「清洗」：<br />
+1. 過濾掉人群或動態活動多的場景<br />
+2. 用 MASt3R-SfM 技術搭配「雙胞胎分類器」解決「雙胞胎問題」（視覺相似但地理位置遙遠的圖片被錯誤配對）<br />
+3. 用外部參考（如 Google Maps）手動驗證</p>
+<p><strong>創新：深度引導的過濾步驟</strong><br />
+用單目深度預測（MoGe2）作為優先順序，過濾掉不一致的像素。這就像用另一張參考圖來檢查你的重建結果是否合理。</p>
+<p><strong>模擬長尾場景的採樣策略</strong><br />
+用三步驟模擬現實中的長尾場景：<br />
+1. <strong>觀點多樣性</strong>：確保選擇的視角涵蓋不同方向<br />
+2. <strong>稀疏性</strong>：讓選出的視角相隔較遠，模擬真實長尾場景<br />
+3. <strong>局部可重建性</strong>：雖然稀疏，但每個視角組合仍需足夠的互觀性才能重建</p>
+<p><strong>訓練模型</strong><br />
+用新方法訓練兩個現有模型：π³-FT 和 VGGT-FT</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<p><strong>結果 1：在長尾場景上表現更好</strong><br />
+在較難的稀疏場景（hard）中，訓練好的模型比原始模型提升了：<br />
+- π³ 模型：RRA 準確率從 75.31% 提升到 86.40%<br />
+- VGGT 模型：RRA 準確率從 70.98% 提升到 81.07%</p>
+<p><strong>結果 2：解決雙胞胎問題</strong><br />
+成功處理像 Calvaire de Plougonven 這類對稱結構明顯的場景，這是傳統方法和預訓練模型容易失敗的場合。</p>
+<p><strong>結果 3：不犧牲標準資料集的表現</strong><br />
+即使在專門為標準資料集設計的測試上（如 RealEstate10K、CO3Dv2），訓練後的模型表現與原始模型相當，證明沒有過擬合。</p>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li>3D 遊戲開發者可以用少許照片快速重建冷門景點</li>
+<li>虛擬導航系統能更好地處理稀疏照片</li>
+<li>擴增實境（AR）導遊能從手機拍攝的照片還原完整景觀</li>
+<li>考古與文物數位保存，即使只有少量照片也能還原遺址</li>
+<li>攝影愛好者可以用網路上的零星照片重建景點 3D 模型</li>
+</ul>
+            </div>
+        </div>
+        
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            const swiper = new Swiper('.swiper', {
+                direction: 'vertical',
+                mousewheel: true,
+                keyboard: true,
+                speed: 800,
+                pagination: { el: '.swiper-pagination', clickable: true },
+            });
+        </script>
+    </body>
+    </html>
+    
