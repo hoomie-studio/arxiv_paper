@@ -46,6 +46,56 @@
                 <div class="hk-grid">
                     <div class="hk-left-col">
                         <div class="hk-tag">[ 04/27 ]</div>
+                        <h1 class="hk-main-title">用腦電波重建你「大腦裡正在想的畫面」：結構引導的擴散模型</h1>
+                        <p class="hk-eng-subtitle">Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction</p>
+                        <div class="hk-core-statement">
+                            <span class="hk-label">CORE</span>
+                            <p>透過 EEG（腦電波）訊號，利用「結構化先驗知識」重建出符合你個人認知的主觀視知影像，而且比過去方法更準確、更穩定。</p>
+                        </div>
+                        <a href="https://arxiv.org/abs/2604.22649" target="_blank" class="hk-link-btn">READ ORIGINAL PAPER</a>
+                    </div>
+                    <div class="hk-right-col">
+                        <div class="hk-content-wrapper"><ul>
+<li>抓取時間: 2026-04-27 16:35 (Asia/Taipei)</li>
+</ul>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<p>過去我們想要從腦部活動（像 EEG 這種戴在頭上的電極裝置）來反推你腦子裡正在看什麼、想什麼，但有三個老大難問題：<br />
+1.  <strong>只懂「類別」不懂「結構」</strong>：以前的模型只知道眼前這東西是「動物」還是「非動物」，卻不懂這頭動物具體的長相結構（頭長什麼樣、四肢在哪）。這就像只告訴你在看一張「貓」的照片，卻不知道貓長什麼樣子。<br />
+2.  <strong>缺乏階層結構資訊</strong>：研究大多關注低階特徵（例如顏色、形狀輪廓），卻沒有能明確描述「局部到整體」結構關係的數據或建模框架。<br />
+3.  <strong>個人認知差異難對齊</strong>：實驗主要聚焦在客觀「看到的」刺激物，卻忽略個體如何拆解與詮釋視覺結構的「主觀認知過程」。這造成一般神經訊號與特定物體的細部認知代表之間出現「語義差距」。</p>
+<h3>他們做了什麼？（研究方法）</h3>
+<p>這群人開發了一個叫 <strong>SGDM（結構引導擴散模型）</strong> 的框架，它的做法很像這樣：<br />
+-   他們用了一個叫做 <strong>Kilogram</strong> 的數據集，裡面是 900 多個「七巧板」的抽象圖案，每個都有人仔細註解。<br />
+-   先讓受試者戴 EEG 看這些七巧板，同時記錄他們腦波，然後請受試者描述他們腦中呈現的影像。<br />
+-   接著，模型把這些腦波訊號轉成「語義嵌入」（就是電腦懂的語言表達），然後透過一個「結構預測模組」，生成一個低解析度的結構圖。<br />
+-   最後，用「雙約束擴散生成器」，把「語義」和「結構」兩種資訊同時輸入，生成符合個人認知的影像。<br />
+-   實驗在 THINGS（真實物體）和 Kilogram（抽象七巧板）兩個數據集上測試。</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<ol>
+<li><strong>結構預測更準確</strong>：在 Kilogram 數據集上，SGDM 的結構預測準確率（IoU）達到 0.517，而沒有結構引導的 Baseline 只有 0.492。在 THINGS 數據集上，SGDM 的 IoU 更是從 Baseline 的 0.432 提升到 0.541，提升幅度達 0.109。</li>
+<li><strong>語義一致性更好</strong>：SGDM 不僅能重建結構，還能捕捉受試者對同一個抽象圖案的個人化認知。例如，同樣的七巧板配置，不同的人可能把它看成「山」、「坐姿的人」或「玻璃獎盃」，SGDM 都能根據每個人的認知生成不同的圖片，而不是像 Baseline 那樣產生混淆。</li>
+<li><strong>時間窗分析</strong>：對於抽象視覺刺激的處理，大腦在 400-600ms 的處理階段（比看自然圖片晚一點）扮演關鍵角色，SGDM 能有效利用這段時間的腦波訊號來進行重建。</li>
+</ol>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<p>這個技術未來可能用在以下幾點：<br />
+-   <strong>腦機介面（BCI）進階</strong>：能更精準地解讀使用者的意圖，讓假肢控制或溝通系統更靈活。<br />
+-   <strong>臨床與心理評估</strong>：幫助評估意識狀態、認知功能，甚至用於神經復康訓練。<br />
+-   <strong>個人化視覺輔助</strong>：未來或許可以幫助視障人士，透過腦波重建出更符合他們個人認知習慣的影像。<br />
+-   <strong>理解人腦視覺機制</strong>：從計算角度理解人腦如何從局部細節整合成整體認知，提供神經科學新視角。</p></div>
+                    </div>
+                </div>
+                <div class="hk-footer">
+                    <div class="hk-logo">HUMANKIND <span>×</span> GEOMATICS</div>
+                    <div class="hk-scroll-hint">SCROLL TO DISCOVER —</div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="hk-container">
+                <div class="hk-background-text">SEARCH</div>
+                <div class="hk-grid">
+                    <div class="hk-left-col">
+                        <div class="hk-tag">[ 04/27 ]</div>
                         <h1 class="hk-main-title">長尾派系網路照片重建</h1>
                         <p class="hk-eng-subtitle">Long-tail Internet photo reconstruction</p>
                         <div class="hk-core-statement">
