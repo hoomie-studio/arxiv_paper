@@ -1,47 +1,50 @@
-
-    <!DOCTYPE html>
-    <html lang="zh-TW">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Arxiv AI 論文速報</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-        <style>
-    :root { --primary-color: #ff6b6b; --bg-color: #121212; --card-bg: #1e1e1e; }
-    body { background-color: var(--bg-color); color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; }
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+    :root { --hk-bg: #f8f8f8; --hk-black: #0a0a0a; --hk-red: #e63946; --hk-gray: #e0e0e0; --serif: 'Noto Serif TC', serif; --sans: 'Noto Sans TC', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html { height: 100%; overflow: hidden; background: var(--hk-bg); color: var(--hk-black); font-family: var(--sans); }
     .swiper { width: 100%; height: 100vh; }
-    .swiper-slide { display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
-    .card { 
-        background: var(--card-bg); padding: 40px; border-radius: 20px; 
-        max-width: 900px; width: 100%; max-height: 85vh; overflow-y: auto;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5); border-left: 10px solid var(--primary-color);
-        line-height: 1.6; position: relative;
-    }
-    h2 { color: var(--primary-color); font-size: 2em; border-bottom: 1px solid #333; padding-bottom: 15px; }
-    h3 { color: #4ecdc4; margin-top: 25px; }
-    a { color: #f9d423; text-decoration: none; font-weight: bold; }
-    a:hover { text-decoration: underline; }
-    code { background: #333; padding: 2px 5px; border-radius: 4px; }
-    /* 滾動條樣式 */
-    .card::-webkit-scrollbar { width: 8px; }
-    .card::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
-    </style>
-    </head>
-    <body>
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                
+    .hk-container { width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; position: relative; z-index: 1; }
+    .hk-background-text { position: absolute; top: 5%; right: 5%; font-size: 22vw; font-weight: 900; color: rgba(0,0,0,0.03); z-index: 0; pointer-events: none; white-space: nowrap; }
+    .hk-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; z-index: 1; flex-grow: 1; min-height: 0; margin-bottom: 30px; }
+    .hk-main-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 4rem); line-height: 1.15; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; }
+    .hk-eng-subtitle { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 40px; }
+    .hk-core-statement { display: flex; gap: 20px; align-items: flex-start; }
+    .hk-label { background: var(--hk-black); color: #fff; padding: 4px 10px; font-size: 0.7rem; font-weight: 900; transform: rotate(-90deg) translateX(-5px); }
+    .hk-core-statement p { font-size: 1.3rem; font-family: var(--serif); line-height: 1.4; font-weight: 700; color: var(--hk-black); }
+    .hk-right-col { position: relative; overflow-y: auto; padding-right: 25px; scrollbar-width: thin; scrollbar-color: var(--hk-black) transparent; }
+    h3 { font-family: var(--serif); font-size: 1.5rem; margin: 35px 0 15px; border-bottom: 2px solid var(--hk-black); display: inline-block; }
+    p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
+    strong, b { color: var(--hk-red); font-weight: 700; } 
+    li { font-size: 1.05rem; padding: 12px 0; border-bottom: 1px solid var(--hk-gray); display: flex; gap: 10px; line-height: 1.6; }
+    li::before { content: '→'; font-weight: 900; color: var(--hk-red); flex-shrink: 0; }
+    .hk-footer { flex-shrink: 0; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #000; padding-top: 20px; z-index: 2; background: var(--hk-bg); }
+    .hk-logo { font-weight: 900; letter-spacing: 2px; font-size: 1.1rem; }
+    .hk-logo span { color: var(--hk-red); }
+    .hk-scroll-hint { font-size: 0.8rem; letter-spacing: 3px; font-weight: 700; }
+    </style></head><body><div class="swiper"><div class="swiper-wrapper">
         <div class="swiper-slide">
-            <div class="card">
-                <h2>文獻名稱</h2>
-<p>(AI 自動產生標題)</p>
-<h1>Long-tail Internet photo reconstruction</h1>
-<h2>長尾派系網路照片重建</h2>
+            <div class="hk-container">
+                <div class="hk-background-text">SEARCH</div>
+                <div class="hk-grid">
+                    <div class="hk-left-col">
+                        <div class="hk-tag">[ 04/27 ]</div>
+                        <h1 class="hk-main-title">未命名研究</h1>
+                        <p class="hk-eng-subtitle">RESEARCH PAPER</p>
+                        <div class="hk-core-statement">
+                            <span class="hk-label">CORE</span>
+                            <p>用特殊「稀疏感知」的數據訓練方法，讓 3D 重建模型能從極少數且分散的網路照片中，成功還原世界上的「冷門景點」。</p>
+                        </div>
+                    </div>
+                    <div class="hk-right-col">
+                        <div class="hk-content-wrapper"><h1>歸檔日期: 2026-04-27 12:10:05</h1>
+<h3>中文名稱:長尾派系網路照片重建</h3>
 <ul>
 <li>論文來源 URL: https://arxiv.org/abs/2604.22714</li>
 <li>抓取時間: 2026-04-27</li>
 </ul>
-<h3>一句話核心</h3>
 <p>用特殊「稀疏感知」的數據訓練方法，讓 3D 重建模型能從極少數且分散的網路照片中，成功還原世界上的「冷門景點」。</p>
 <h3>為什麼要研究這個？（研究動機）</h3>
 <p><strong>背景：</strong><br />
@@ -81,24 +84,14 @@
 <li>擴增實境（AR）導遊能從手機拍攝的照片還原完整景觀</li>
 <li>考古與文物數位保存，即使只有少量照片也能還原遺址</li>
 <li>攝影愛好者可以用網路上的零星照片重建景點 3D 模型</li>
-</ul>
+</ul></div>
+                    </div>
+                </div>
+                <div class="hk-footer">
+                    <div class="hk-logo">HUMANKIND <span>×</span> GEOMATICS</div>
+                    <div class="hk-scroll-hint">SCROLL TO DISCOVER —</div>
+                </div>
             </div>
-        </div>
-        
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <script>
-            const swiper = new Swiper('.swiper', {
-                direction: 'vertical',
-                mousewheel: true,
-                keyboard: true,
-                speed: 800,
-                pagination: { el: '.swiper-pagination', clickable: true },
-            });
-        </script>
-    </body>
-    </html>
-    
+        </div></div></div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>const swiper = new Swiper('.swiper', { mousewheel: true, speed: 800 });</script></body></html>
