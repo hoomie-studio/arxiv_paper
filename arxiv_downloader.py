@@ -27,6 +27,8 @@ BASE_PATH = r"C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads"
 HISTORY_FILE = os.path.join(BASE_PATH, "arxiv_history.md")
 TEMP_TASK = os.path.join(BASE_PATH, "temp_task.md")
 TEMP_RESULT = os.path.join(BASE_PATH, "temp_result.md")
+TEMP_SUMMARY = os.path.join(BASE_PATH, "temp_summary.md")
+TEMP_STUDYMODE = os.path.join(BASE_PATH, "temp_studymode.md")
 SUMMARY_FILE = os.path.join(BASE_PATH, "paper_summary.md")
 
 BASE = "https://arxiv.org"
@@ -164,9 +166,13 @@ class ArxivFullDownloader:
         print(f"[OK] 摘要已歸檔至 {SUMMARY_FILE}")
 
     def run(self):
-        if os.path.exists(TEMP_TASK) and os.path.getsize(TEMP_TASK) > 0 and not os.path.exists(TEMP_RESULT):
-            print(f"[暫停] 已存在待摘要任務: {TEMP_TASK}")
-            print("[提示] 請先讓模型完成摘要並寫入 temp_result.md，或手動處理 temp_task.md 後再抓新論文。")
+        pending_files = [TEMP_TASK, TEMP_SUMMARY, TEMP_STUDYMODE, TEMP_RESULT]
+        pending_existing = [p for p in pending_files if os.path.exists(p) and os.path.getsize(p) > 0]
+        if pending_existing:
+            print("[暫停] 已存在未合併的暫存任務，避免抓取下一篇論文。")
+            for p in pending_existing:
+                print(f"- {p}")
+            print("[提示] 請先完成 summary + studymode 生成並執行 arxiv_studymode.py --mode merge，或手動清理暫存檔。")
             return
 
         paper = self.get_first_paper_info(SEARCH_URL)
