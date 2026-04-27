@@ -1,10 +1,10 @@
 
 
 ### 歸檔日期: 2026-04-27 12:10:05
-## 文獻名稱
+### 文獻名稱
 Long-tail Internet photo reconstruction
 
-## 文獻中文名稱
+### 文獻中文名稱
 長尾派系網路照片重建
 
 - 論文來源 URL: https://arxiv.org/abs/2604.22714
