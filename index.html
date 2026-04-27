@@ -1,5 +1,123 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Paper Study Library</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
-:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</button><button type="button" data-filter="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</button><button type="button" data-filter="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="EEG">EEG</button><button type="button" data-filter="Diffusion Model">Diffusion Model</button><button type="button" data-filter="Brain Decoding">Brain Decoding</button><button type="button" data-filter="ControlNet">ControlNet</button><button type="button" data-filter="CLIP">CLIP</button><button type="button" data-filter="Visual Reconstruction">Visual Reconstruction</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Medical Imaging">Medical Imaging</button><button type="button" data-filter="Foundation Model / Transformer">Foundation Model / Transformer</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="Cardiac MRI">Cardiac MRI</button><button type="button" data-filter="Accelerated MRI">Accelerated MRI</button><button type="button" data-filter="Foundation Model">Foundation Model</button><button type="button" data-filter="CLIP">CLIP</button><button type="button" data-filter="DINOv2">DINOv2</button><button type="button" data-filter="BiomedCLIP">BiomedCLIP</button><button type="button" data-filter="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</button><button type="button" data-filter="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</button><button type="button" data-filter="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</button><button type="button" data-filter="EEG">EEG</button><button type="button" data-filter="Diffusion Model">Diffusion Model</button><button type="button" data-filter="Brain Decoding">Brain Decoding</button><button type="button" data-filter="ControlNet">ControlNet</button><button type="button" data-filter="Visual Reconstruction">Visual Reconstruction</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+    <article class="paper" data-tags="Medical Imaging|Foundation Model / Transformer|Reconstruction|進階|Cardiac MRI|Accelerated MRI|Foundation Model|CLIP|DINOv2|BiomedCLIP">
+      <header class="hero">
+        <div>
+          <p class="date">[ 04/27 ]</p>
+          <h1>自然影像領域的基礎模型，真的適合用來做加速心臟 MRI 重建嗎？</h1>
+          <p class="eng">Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction ?</p>
+        </div>
+        <div class="actions">
+          <a class="btn secondary" href="#" target="_blank" rel="noopener">閱讀原始論文</a>
+          <button class="btn primary" type="button" data-open-study>進入 Study Mode</button>
+        </div>
+        <div class="core"><span>CORE</span><p>這篇論文發現，雖然專門為 MRI 訓練的模型在一般情況下還是最強，但在跨資料域或重建更困難的情況下，來自自然影像的 Foundation Model 也能提供很有競爭力的結構先驗，甚至有時會更好。</p></div>
+        <div class="tags"><span class="tag" data-tag="Medical Imaging">Medical Imaging</span><span class="tag" data-tag="Foundation Model / Transformer">Foundation Model / Transformer</span><span class="tag" data-tag="Reconstruction">Reconstruction</span><span class="tag" data-tag="進階">進階</span><span class="tag" data-tag="Cardiac MRI">Cardiac MRI</span><span class="tag" data-tag="Accelerated MRI">Accelerated MRI</span><span class="tag" data-tag="Foundation Model">Foundation Model</span><span class="tag" data-tag="CLIP">CLIP</span><span class="tag" data-tag="DINOv2">DINOv2</span><span class="tag" data-tag="BiomedCLIP">BiomedCLIP</span></div>
+      </header>
+      <section class="summary-panel">
+        <div class="section-title"><span>Summary</span><h2>這篇研究在做什麼？</h2></div>
+        <div class="markdown-body"><h3>文獻名稱</h3>
+<p>Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction ?</p>
+<h3>文獻中文名稱</h3>
+<p>自然影像領域的基礎模型，真的適合用來做加速心臟 MRI 重建嗎？</p>
+<ul>
+<li>論文來源URL: [https://arxiv.org/abs/2604.22557]</li>
+<li>抓取時間: 2026-04-27 20:08 (Asia/Taipei)</li>
+</ul>
+<h3>分類關鍵字</h3>
+<ul>
+<li>主題類別：Medical Imaging</li>
+<li>方法類別：Foundation Model / Transformer</li>
+<li>任務類別：Reconstruction</li>
+<li>難度：進階</li>
+<li>關鍵字：Cardiac MRI, Accelerated MRI, Reconstruction, Foundation Model, CLIP, DINOv2</li>
+</ul>
+<h3>一句話核心</h3>
+<p>這篇論文發現，雖然專門為 MRI 訓練的模型在一般情況下還是最強，但在跨資料域或重建更困難的情況下，來自自然影像的 Foundation Model 也能提供很有競爭力的結構先驗，甚至有時會更好。</p>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<p>先講幾個核心名詞。MRI 是磁振造影，可以不靠輻射看到身體內部結構；重建是指把儀器量到的原始訊號還原成影像；加速 MRI 則是故意少量測一些資料，縮短掃描時間，但代價是影像更難還原。Foundation Model（基礎模型）則是先在超大量資料上預訓練，學到可轉移能力的大模型。</p>
+<p>這篇研究想解決的痛點很直接，心臟 MRI 很有用，但掃描慢，病人容易不舒服，也更容易因為移動而讓影像變糊。所以大家會想少量測一些資料來加快掃描，但這會讓重建變成很難的「拼圖問題」。過去很多深度學習方法雖然很強，但往往只能在自己熟悉的資料條件下表現好，一換掃描條件、機器、器官或資料分布，效果就可能掉很多。</p>
+<p>研究者因此想問一個很有意思的問題，如果我們不用完全為 MRI 量身打造的新模型，而是借用像 CLIP、DINOv2、BiomedCLIP 這種已經在大規模資料上學過很多結構知識的模型，能不能把它們當成一種「有見過很多世界的顧問」，幫忙把缺資料的 MRI 影像補得更合理？</p>
+<h3>他們做了什麼？（研究方法）</h3>
+<p>你可以把整個 MRI 重建過程想像成在修一張缺角很多的拼圖。一般方法會找一個很熟這類拼圖的專家，反覆修補，直到拼圖看起來最像真的。這篇論文的做法則像是在每一輪修補時，都請一位見多識廣的圖像老師來看一下，告訴系統「這裡的結構大概應該長什麼樣」。</p>
+<p>具體來說，他們把 CLIP、DINOv2、BiomedCLIP 這些已經預訓練好的視覺 Transformer 編碼器固定住，不重新訓練它們，只把它們當成特徵提取器，嵌進一個反覆迭代的 MRI 重建架構裡。每一輪先做資料一致性檢查，確保結果沒有偏離真實量測，再利用這些 Foundation Model 提供的結構特徵來微調影像，就像一邊核對原始證據，一邊請高手幫你補全細節。</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<ul>
+<li>在同資料域的心臟 MRI 測試中，專門為 MRI 重建訓練的 E2E-VarNet 仍然最好。例如在 ×4 加速下，SSIM（結構相似度，越高越好）達到 0.9676，高於 CMR-CLIP 的 0.9585，代表專用模型在標準條件下還是更穩。</li>
+<li>但當加速更高、問題更難時，Foundation Model 方法仍然很有競爭力。比如在 ×10 加速下，CMR-BiomedCLIP 的 SSIM 為 0.9240，和 E2E-VarNet 的 0.9417 差距已經縮小，表示在資料更少、重建更難時，這些預訓練表示有實力撐住表現。</li>
+<li>論文最重要的觀察是，到了跨資料域測試和更強烈欠採樣的情境，Foundation Model 與專用模型的差距明顯縮小，某些情況下甚至反超。也就是說，這些從自然影像學來的結構知識，真的能轉移到醫學影像重建，而且在分布改變時更有韌性。</li>
+</ul>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li>未來有機會讓心臟 MRI 掃描更快，減少病人等待時間與不適感。</li>
+<li>對醫院來說，若模型更能適應不同設備或資料來源，就比較不需要每換一種場景就重訓一次。</li>
+<li>這代表大型通用視覺模型不只會看自然照片，也可能成為醫學影像重建的重要基礎工具。</li>
+<li>在資料少、跨醫院、跨器官或跨掃描條件的情境下，這類方法可能比傳統專用模型更實用。</li>
+</ul></div>
+      </section>
+      <section class="study-panel" hidden>
+        <div class="study-head"><div><span>Study Mode</span><h2>學習導覽</h2></div><button class="btn secondary" type="button" data-close-study>回到 Summary</button></div>
+        <div class="card-grid"><section class="card"><h3>學習路徑</h3><div class="markdown-body"><ul>
+<li>第一步：先理解 MRI 為什麼掃描慢，以及為什麼少量測資料後重建會變難。</li>
+<li>第二步：接著理解深度學習重建模型為什麼常在跨設備、跨器官或跨資料域時失效。</li>
+<li>第三步：最後用「通用視覺知識能不能當作影像結構先驗」的角度看這篇方法與結果。</li>
+</ul></div></section><section class="card"><h3>先備知識</h3><div class="markdown-body"><ul>
+<li>[k-space]：MRI 不是直接拍出圖片，而是先在頻率域收集訊號，再轉回影像。</li>
+<li>[Undersampling]：為了加快掃描，只量測部分資料，但這會讓重建資訊不足。</li>
+<li>[Inverse Problem]：從不完整或有雜訊的觀測資料反推出真實影像，是一類本質上不容易的問題。</li>
+<li>[Unrolled Network]：把傳統反覆優化流程展開成多步神經網路，讓每一步都學會更好的修正方式。</li>
+<li>[Foundation Model]：先在大規模資料上預訓練，再把學到的表示能力轉用到其他任務的大模型。</li>
+</ul></div></section><section class="card"><h3>重要名詞</h3><div class="markdown-body"><ol>
+<li><strong>Accelerated MRI Reconstruction</strong>：這是從欠採樣的 MRI 原始訊號中重建出可用影像的任務。它重要的原因是 MRI 掃描很慢，縮短掃描時間能減少病人不適與運動偽影。它改善了傳統完整掃描太耗時的缺點。</li>
+<li><strong>E2E-VarNet</strong>：這是 MRI 重建領域很強的專用型 unrolled 網路基線。它重要的原因是能把物理模型與學習到的影像先驗結合，常在標準測試中表現最好。它改善了較舊方法只靠手工先驗、重建品質有限的缺點。</li>
+<li><strong>CLIP / DINOv2 / BiomedCLIP</strong>：這些是不同來源預訓練的視覺 Foundation Model，分別代表自然影像語意對齊、自監督視覺表示與生醫圖文表示。它們重要的原因是能提供可轉移的結構特徵。它們改善了只靠小型、特定資料集訓練時泛化不足的缺點。</li>
+<li><strong>Data Consistency</strong>：這是在每次重建更新時，把結果拉回真實量測資料約束的一步。它重要的原因是可以避免模型只靠想像補圖，卻偏離實際量測。它改善了純影像生成式方法可能不符合物理量測的缺點。</li>
+</ol></div></section><section class="card"><h3>脈絡梳理</h3><div class="markdown-body"><ul>
+<li>背景：這個領域原本就在研究如何從較少的 MRI 量測資料中重建清楚影像，因為臨床上大家都想讓掃描更快、更穩，也更能適應不同病人與儀器。</li>
+<li>痛點：過去方法雖然在熟悉資料集上很強，但常依賴特定 MRI 資料分布，一遇到不同器官、不同掃描條件或更高加速比，表現就可能明顯下降。這不是小問題，因為臨床環境本來就充滿跨設備、跨院所與跨任務差異。</li>
+<li>作者的切入點：這篇論文最大的不同，是不把 Foundation Model 拿來直接做高階分類任務，而是把凍結的視覺編碼器當成重建過程中的「結構顧問」，測試它們能不能提供更有泛化性的先驗。</li>
+</ul></div></section><section class="card"><h3>方法流程</h3><div class="markdown-body"><ol>
+<li>[先拿到不完整的 MRI 訊號]：研究者先從多線圈心臟 MRI 的欠採樣 k-space 開始，這就像手上只有拼圖的一部分，必須想辦法補回整張圖。</li>
+<li>[估計量測規則]：系統先估計 coil sensitivity map，等於先弄懂每個感測器是從什麼角度在看影像，避免後面補圖時失去物理依據。</li>
+<li>[做一輪資料一致性修正]：每個 cascade 都先檢查目前重建結果有沒有偏離真實量測，像是每修一次拼圖都先對照手上確定存在的碎片。</li>
+<li>[請 Foundation Model 提供結構提示]：把中間重建結果轉成符合預訓練模型輸入的格式，送進 CLIP、DINOv2 或 BiomedCLIP，提取多層特徵，就像請見過大量圖像的老師指出哪裡的結構比較合理。</li>
+<li>[用輕量解碼器把提示變回重建修正]：系統把多層特徵融合後，經過階層式解碼器輸出新的影像修正，再回到下一輪迭代。</li>
+<li>[反覆多輪直到輸出最終影像]：整個流程重複多個 cascades，讓結果同時符合量測資料，也吸收預訓練表示中的結構知識。</li>
+</ol></div></section><section class="card"><h3>圖表導讀</h3><div class="markdown-body"><ul>
+<li>圖表重點：最值得新手看的，是 CMRxRecon 上不同加速倍率的結果表，因為它最清楚展示專用模型和 Foundation Model 方法的差距如何隨難度改變。</li>
+<li>怎麼看：先比較 E2E-VarNet 和 CMR-CLIP、CMR-DINOv2、CMR-BiomedCLIP 在 ×4、×8、×10 下的 SSIM。你會看到 ×4 時專用模型領先明顯，但加速倍率越高，差距越縮小，尤其 ×10 時 BiomedCLIP 版本更接近基線。</li>
+<li>新手重點：看完後最該記住的是，Foundation Model 不是在所有情況都最強，但在更困難、更容易發生分布偏移的場景下，它的可轉移性變得很有價值。</li>
+</ul></div></section><section class="card"><h3>觀念確認</h3><div class="markdown-body"><ol>
+<li>問：這篇論文為什麼不直接重新訓練 Foundation Model？答：因為作者想測試預訓練表示本身的可轉移價值，所以把編碼器凍結，只把它們當成先驗特徵來源。</li>
+<li>問：為什麼資料一致性在這篇方法裡很重要？答：因為它能確保每輪重建都不會偏離真實 MRI 量測，讓模型不是只憑外觀猜圖。</li>
+<li>問：這篇論文最重要的結果趨勢是什麼？答：專用模型在標準同資料域設定仍最強，但在更高加速與跨資料域情境下，Foundation Model 方法變得更有競爭力。</li>
+</ol></div></section><section class="card"><h3>理解檢查</h3><div class="markdown-body"><p>Q1: 這篇論文最想回答的核心問題是什麼？<br />
+A. MRI 是否應該完全改用 CT 取代<br />
+B. 自然影像預訓練的 Foundation Model 能否作為 MRI 重建的有效先驗<br />
+C. 哪一種 MRI 掃描機器價格最低<br />
+D. 影像分割是否比影像重建更適合 Transformer<br />
+答案: B<br />
+解釋: 論文的主軸就是測試自然影像或生醫預訓練模型能不能幫助加速 MRI 重建。</p>
+<p>Q2: 這篇方法在每個 unrolled cascade 中最重要的兩個元素是什麼？<br />
+A. 影像分類與文字生成<br />
+B. 人體器官辨識與病灶定位<br />
+C. 資料一致性步驟與 Foundation Model 引導的影像修正<br />
+D. 人工標註與監督式報告撰寫<br />
+答案: C<br />
+解釋: 每一輪都先遵守量測資料，再用凍結的預訓練特徵幫忙修正重建結果。</p>
+<p>Q3: 從結果來看，哪個說法最符合作者的發現？<br />
+A. 專用 MRI 模型在所有設定都被 Foundation Model 穩定超越<br />
+B. Foundation Model 完全不適合 MRI 重建<br />
+C. BiomedCLIP 在所有加速倍率都遠勝其他方法<br />
+D. 專用模型在標準條件下較強，但 Foundation Model 在高難度與跨域情境更有潛力<br />
+答案: D<br />
+解釋: 這正是論文最重要的 regime-dependent 結論。</p></div></section><section class="card"><h3>延伸閱讀</h3><div class="markdown-body"><ol>
+<li><strong>E2E-VarNet</strong>：這是本文最重要的比較基線，適合拿來理解專用 MRI 重建模型的設計思路。</li>
+<li><strong>DINOv2</strong>：如果你想知道自然影像自監督預訓練為什麼能學到可轉移表示，這個模型很值得接著看。</li>
+<li><strong>CMRxRecon 2023 dataset</strong>：這是本文的核心實驗資料集，能幫助你理解心臟 MRI 重建任務的標準測試場景。</li>
+</ol></div></section></div>
+      </section>
+    </article>
     <article class="paper" data-tags="Brain-Computer Interface / Computational Neuroscience|Diffusion / CLIP / VAE / ControlNet|Reconstruction / Generation / Prediction|進階|EEG|Diffusion Model|Brain Decoding|ControlNet|CLIP|Visual Reconstruction">
       <header class="hero">
         <div>
