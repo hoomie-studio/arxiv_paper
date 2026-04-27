@@ -43,7 +43,6 @@ def validate_and_fix_format(content):
         return False, content
         
     fixed_content = content
-    # 如果缺少標題但有內容，嘗試進行結構化修正
     if "## 文獻名稱" in missing and "## 文獻中文名稱" in missing:
         start_idx = 0
         if lines[0].startswith("# 歸檔時間"): start_idx = 1
@@ -63,7 +62,6 @@ def git_push_auto():
         if not os.path.exists(".git"):
             subprocess.run(["git", "init"], check=True)
         
-        # 確保遠端 URL 始終是最新的
         remote_check = subprocess.run(["git", "remote"], capture_output=True, text=True)
         if "origin" not in remote_check.stdout:
             subprocess.run(["git", "remote", "add", "origin", GITHUB_REMOTE_URL], check=True)
@@ -76,12 +74,9 @@ def git_push_auto():
         commit_msg = f"Auto-Update: {datetime.now().strftime('%m-%d %H:%M')}"
         subprocess.run(["git", "commit", "-m", commit_msg], capture_output=True)
         
-        # 推送至 main 分支
         result = subprocess.run(["git", "push", "-u", "origin", "main"], capture_output=True, text=True)
         if result.returncode == 0:
             print("[Git] 同步至 GitHub 成功。")
-        else:
-            print(f"[Git] 推送可能失敗: {result.stderr}")
     except Exception as e:
         print(f"[Git Error] 異常: {str(e)}")
 
@@ -94,36 +89,34 @@ def mode_render():
     with open(SUMMARY_FILE, "r", encoding="utf-8") as f:
         full_content = f.read()
 
-    # 以歸檔時間分割多篇論文
     entries = re.split(r"# 歸檔時間[:：]?\s*\d{4}-\d{2}-\d{2}.*?\n", full_content)
     entries = [e.strip() for e in entries if e.strip()]
-    if not entries: 
-        print("[Render] 總結文件內容為空，跳過渲染。")
-        return
+    if not entries: return
         
-    entries.reverse() # 最新文章排在最前面
+    entries.reverse() 
     
     all_slides_html = ""
     for entry in entries:
-        # 提取資訊
+        # --- 修正後的提取邏輯 ---
+        # 匹配任何包含 URL 字眼並接續網址的行，例如 "- 論文來源 URL: http..." 或 "- URL: http..."
+        url_match = re.search(r"URL[:：]?\s*(https?://[^\s\n]+)", entry)
+        
         eng_match = re.search(r"(?:#+)\s*文獻名稱\s*\n(.*?)\n", entry)
         chi_match = re.search(r"(?:#+)\s*文獻中文名稱\s*\n(.*?)\n", entry)
         core_match = re.search(r"(?:#+)\s*一句話核心\s*\n(.*?)\n", entry)
-        url_match = re.search(r"-\s*URL:\s*(https?://[^\s\n]+)", entry)
         
         eng_title = eng_match.group(1).strip() if eng_match else "RESEARCH PAPER"
         chi_title = chi_match.group(1).strip() if chi_match else "未命名研究"
         core_statement = core_match.group(1).strip() if core_match else "點擊查看詳情"
         paper_url = url_match.group(1).strip() if url_match else "#"
 
-        # 處理 Markdown 內文 (移除標題部分)
+        # 處理 Markdown 內文：移除標題行與包含 URL 的整行內容
         md_body = re.sub(r"(?:#+)\s*文獻(中文)?名稱.*?\n(.*?)\n", "", entry)
         md_body = re.sub(r"(?:#+)\s*一句話核心.*?\n(.*?)\n", "", md_body)
-        md_body = re.sub(r"-\s*URL:\s*https?://[^\s\n]+", "", md_body)
+        md_body = re.sub(r".*?URL[:：]?\s*https?://[^\s\n]+.*?\n", "", md_body)
         
         content_html = markdown.markdown(md_body, extensions=['extra', 'nl2br'])
 
-        # 生成 HTML 幻燈片
         all_slides_html += f"""
         <div class="swiper-slide">
             <div class="hk-container">
@@ -150,7 +143,6 @@ def mode_render():
             </div>
         </div>"""
 
-    # --- UI 樣式定義 ---
     style = """
     :root { --hk-bg: #f8f8f8; --hk-black: #0a0a0a; --hk-red: #e63946; --hk-gray: #e0e0e0; --serif: 'Noto Serif TC', serif; --sans: 'Noto Sans TC', sans-serif; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -159,13 +151,11 @@ def mode_render():
     .hk-container { width: 100%; height: 100%; padding: 60px; display: flex; flex-direction: column; position: relative; z-index: 1; }
     .hk-background-text { position: absolute; top: 5%; right: 5%; font-size: 22vw; font-weight: 900; color: rgba(0,0,0,0.03); z-index: 0; pointer-events: none; white-space: nowrap; }
     .hk-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; z-index: 1; flex-grow: 1; min-height: 0; margin-bottom: 30px; }
-    
     .hk-main-title { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 4rem); line-height: 1.15; font-weight: 900; letter-spacing: -1px; margin-bottom: 15px; }
     .hk-eng-subtitle { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 40px; }
     .hk-core-statement { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
     .hk-label { background: var(--hk-black); color: #fff; padding: 4px 10px; font-size: 0.7rem; font-weight: 900; transform: rotate(-90deg) translateX(-5px); }
     .hk-core-statement p { font-size: 1.3rem; font-family: var(--serif); line-height: 1.4; font-weight: 700; color: var(--hk-black); }
-    
     .hk-link-btn { 
         display: inline-block; 
         margin-top: 20px; 
@@ -180,14 +170,12 @@ def mode_render():
         z-index: 10;
     }
     .hk-link-btn:hover { background: var(--hk-black); color: #fff; transform: translateY(-3px); }
-
     .hk-right-col { position: relative; overflow-y: auto; padding-right: 25px; scrollbar-width: thin; scrollbar-color: var(--hk-black) transparent; }
     h3 { font-family: var(--serif); font-size: 1.5rem; margin: 35px 0 15px; border-bottom: 2px solid var(--hk-black); display: inline-block; }
     p { font-size: 1.05rem; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
     strong, b { color: var(--hk-red); font-weight: 700; } 
     li { font-size: 1.05rem; padding: 12px 0; border-bottom: 1px solid var(--hk-gray); display: flex; gap: 10px; line-height: 1.6; }
     li::before { content: '→'; font-weight: 900; color: var(--hk-red); flex-shrink: 0; }
-    
     .hk-footer { flex-shrink: 0; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #000; padding-top: 20px; z-index: 2; background: var(--hk-bg); }
     .hk-logo { font-weight: 900; letter-spacing: 2px; font-size: 1.1rem; }
     .hk-logo span { color: var(--hk-red); }
@@ -208,37 +196,23 @@ def mode_render():
     git_push_auto()
 
 def mode_merge():
-    """將暫存的解析結果併入總結文件"""
     target_file = TEMP_RESULT if os.path.exists(TEMP_RESULT) else TEMP_TASK
-    if not os.path.exists(target_file): 
-        print(f"[Merge] 找不到暫存文件: {target_file}")
-        return
-        
+    if not os.path.exists(target_file): return
     with open(target_file, "r", encoding="utf-8") as f:
         raw_content = f.read()
-        
     success, final_content = validate_and_fix_format(raw_content)
-    if not success: 
-        print("[Merge] 格式校驗失敗，內容過少或不完整。")
-        return
-    
+    if not success: return
     ensure_directory_exists()
     with open(SUMMARY_FILE, "a", encoding="utf-8") as sf:
         sf.write(f"\n\n# 歸檔時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         sf.write(final_content)
-    
-    # 清理暫存文件
     for f in [TEMP_TASK, TEMP_RESULT]:
         if os.path.exists(f): os.remove(f)
-    print("[Merge] 內容已併入總結文件並清理暫存。")
     mode_render()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Arxiv 論文管理工具")
-    parser.add_argument("--mode", choices=["merge", "render"], required=True, help="執行模式: merge (合併並渲染) 或 render (僅重繪網頁)")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["merge", "render"], required=True)
     args = parser.parse_args()
-    
-    if args.mode == "merge": 
-        mode_merge()
-    elif args.mode == "render": 
-        mode_render()
+    if args.mode == "merge": mode_merge()
+    elif args.mode == "render": mode_render()
