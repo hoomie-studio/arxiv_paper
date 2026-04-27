@@ -1,5 +1,121 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Paper Study Library</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
-:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</button><button type="button" data-filter="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</button><button type="button" data-filter="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="EEG">EEG</button><button type="button" data-filter="Diffusion Model">Diffusion Model</button><button type="button" data-filter="Brain Decoding">Brain Decoding</button><button type="button" data-filter="ControlNet">ControlNet</button><button type="button" data-filter="CLIP">CLIP</button><button type="button" data-filter="Visual Reconstruction">Visual Reconstruction</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+    <article class="paper" data-tags="Brain-Computer Interface / Computational Neuroscience|Diffusion / CLIP / VAE / ControlNet|Reconstruction / Generation / Prediction|進階|EEG|Diffusion Model|Brain Decoding|ControlNet|CLIP|Visual Reconstruction">
+      <header class="hero">
+        <div>
+          <p class="date">[ 04/27 ]</p>
+          <h1>結構引導擴散模型：從腦波重建人類視覺認知影像</h1>
+          <p class="eng">Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction</p>
+        </div>
+        <div class="actions">
+          <a class="btn secondary" href="https://arxiv.org/abs/2604.22649" target="_blank" rel="noopener">閱讀原始論文</a>
+          <button class="btn primary" type="button" data-open-study>進入 Study Mode</button>
+        </div>
+        <div class="core"><span>CORE</span><p>這篇論文的核心發現是，把「腦波中的結構線索」和「語意線索」一起拿來引導擴散模型，能比過去方法更穩定地重建出更像人腦真正理解內容的圖像。</p></div>
+        <div class="tags"><span class="tag" data-tag="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</span><span class="tag" data-tag="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</span><span class="tag" data-tag="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</span><span class="tag" data-tag="進階">進階</span><span class="tag" data-tag="EEG">EEG</span><span class="tag" data-tag="Diffusion Model">Diffusion Model</span><span class="tag" data-tag="Brain Decoding">Brain Decoding</span><span class="tag" data-tag="ControlNet">ControlNet</span><span class="tag" data-tag="CLIP">CLIP</span><span class="tag" data-tag="Visual Reconstruction">Visual Reconstruction</span></div>
+      </header>
+      <section class="summary-panel">
+        <div class="section-title"><span>Summary</span><h2>這篇研究在做什麼？</h2></div>
+        <div class="markdown-body"><h3>文獻名稱</h3>
+<p>Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction</p>
+<h3>文獻中文名稱</h3>
+<p>結構引導擴散模型：從腦波重建人類視覺認知影像</p>
+<ul>
+<li>論文來源URL: https://arxiv.org/abs/2604.22649</li>
+<li>抓取時間: 2026-04-27 20:03 (Asia/Taipei)</li>
+</ul>
+<h3>分類關鍵字</h3>
+<ul>
+<li>主題類別：Brain-Computer Interface / Computational Neuroscience</li>
+<li>方法類別：Diffusion / CLIP / VAE / ControlNet</li>
+<li>任務類別：Reconstruction / Generation / Prediction</li>
+<li>難度：進階</li>
+<li>關鍵字：EEG, Diffusion Model, Brain Decoding, ControlNet, CLIP, Visual Reconstruction</li>
+</ul>
+<h3>一句話核心</h3>
+<p>這篇論文的核心發現是，把「腦波中的結構線索」和「語意線索」一起拿來引導擴散模型，能比過去方法更穩定地重建出更像人腦真正理解內容的圖像。</p>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<p>EEG（腦電圖）是用頭皮上的電極量測大腦活動的方法，優點是便宜、非侵入，而且時間解析度很高。Diffusion Model（擴散模型）則是一種從雜訊慢慢生成圖片的模型。這個領域想做的事很直接，就是從人的腦波反推出他看見了什麼，甚至理解了什麼。</p>
+<p>但問題是，過去很多方法太依賴「這看起來像哪一類物體」這種粗略語意，卻沒真正抓住物體的結構，像是輪廓、部件關係、整體空間配置。對 EEG 來說，這尤其困難，因為腦波雜訊高、不同人的腦波差異也很大。結果就是，模型可能猜到大概是動物，卻畫不出像樣的形狀。這篇研究的重要性就在於，它想讓模型不只猜「是什麼」，還能更像人腦那樣理解「長什麼樣、怎麼組成」。 </p>
+<h3>他們做了什麼？（研究方法）</h3>
+<p>研究者的方法很像請一位畫家根據兩種提示作畫。第一種提示是「這張圖大概代表什麼意思」，第二種提示是「這個東西的結構草圖長怎樣」。他們先用 EEG 擷取腦波特徵，再把它對齊到 CLIP（把文字和圖片放進同一個語意空間的模型）的語意空間，讓模型知道受試者大概在想什麼。</p>
+<p>接著，他們再做一件很關鍵的事，就像先畫草稿再上色一樣，先從 EEG 預測出低解析度的結構圖，再把這個結構圖送進 ControlNet 去約束擴散生成。同時，語意訊息則透過 IP-Adapter 注入生成過程。最後的圖像不是只靠模糊語意亂猜，而是在「語意」和「結構」雙重限制下生成，因此更容易畫出既像、又有條理的結果。</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<ul>
+<li>在 Tangram（Kilogram）資料集上，SGDM 的 CLIP Score 達到 0.396，明顯高於 Base 的 0.222，代表生成圖和目標圖在高階語意上更接近。</li>
+<li>在 THINGS 資料集上，SGDM 的 SwAV FID 為 23.979，優於 Base 的 24.408，也優於 BrainVis 和 DreamDiffusion，表示整體表徵品質更好。</li>
+<li>在結構重建上，SGDM 的 IoU 顯著高於比較方法，Kilogram 的提升達統計顯著（p=0.013），而最終圖像相似度在 Kilogram 與 THINGS 也都顯著更好（分別為 p=0.021 與 p=0.037）。</li>
+</ul>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li>未來可用在更自然的腦機介面，幫助系統更準確理解人腦中的視覺想法。</li>
+<li>對失語或無法表達的人，可能成為輔助溝通的新方向。</li>
+<li>可用來研究人類如何從局部形狀一路形成完整語意，幫助神經科學理解視覺認知。</li>
+<li>在神經復健、意識評估與個人化認知分析上，也有潛在應用價值。</li>
+</ul></div>
+      </section>
+      <section class="study-panel" hidden>
+        <div class="study-head"><div><span>Study Mode</span><h2>學習導覽</h2></div><button class="btn secondary" type="button" data-close-study>回到 Summary</button></div>
+        <div class="card-grid"><section class="card"><h3>學習路徑</h3><div class="markdown-body"><ul>
+<li>第一步：先理解 EEG 能提供什麼腦部資訊，以及它為什麼適合做視覺解碼。</li>
+<li>第二步：接著理解舊方法為什麼只靠語意對齊還不夠，缺少結構會讓重建失真。</li>
+<li>第三步：最後從「先預測結構，再用擴散模型生成」的角度看 SGDM 如何提升結果。</li>
+</ul></div></section><section class="card"><h3>先備知識</h3><div class="markdown-body"><ul>
+<li>EEG：用頭皮電極記錄大腦電活動，時間解析度高，但訊號雜訊也高。</li>
+<li>CLIP：把文字和圖片映射到同一個語意空間，方便比較兩者是否表達相近意思。</li>
+<li>Diffusion Model：先從雜訊開始，再一步步去噪生成圖片的模型。</li>
+<li>ControlNet：在擴散模型中加入額外結構條件，幫助生成結果遵守空間布局。</li>
+<li>VAE：把資料壓縮成潛在表示再重建，常用來萃取影像的結構特徵。</li>
+</ul></div></section><section class="card"><h3>重要名詞</h3><div class="markdown-body"><ol>
+<li><strong>SGDM</strong>：這是作者提出的整體框架，目標是從 EEG 重建更符合人類認知的影像。它重要的原因是把結構與語意一起納入生成流程。它改善了舊方法只會抓大概語意、卻畫不準形狀的問題。</li>
+<li><strong>Structure Prediction Module</strong>：這個模組會先從 EEG 預測出粗略的視覺結構圖。它重要的原因是等於先幫生成模型打草稿。它改善了舊方法缺少明確空間約束、容易生成模糊輪廓的缺點。</li>
+<li><strong>CLIP-based EEG Semantic Alignment</strong>：這是把 EEG 特徵對齊到 CLIP 語意空間的做法。它重要的原因是讓模型知道腦波大致對應到什麼視覺概念。它改善了 EEG 和影像語意空間落差太大、訓練不穩的問題。</li>
+<li><strong>ControlNet + IP-Adapter 雙重條件生成</strong>：ControlNet 管結構，IP-Adapter 管語意，兩者一起控制擴散生成。它重要的原因是把「像什麼」與「長怎樣」分開但協同處理。它改善了過去只能單一路徑控制生成、平衡不好的一大缺點。</li>
+</ol></div></section><section class="card"><h3>脈絡梳理</h3><div class="markdown-body"><ul>
+<li>背景：這個領域想把腦訊號轉成圖像，幫助理解人類視覺認知，也可能應用在腦機介面與輔助溝通。</li>
+<li>痛點：過去 EEG 解碼方法常只能抓到類別語意，難以保留局部結構、整體布局與個體差異，這會讓生成結果看起來像是「猜中類別但畫錯內容」。</li>
+<li>作者的切入點：這篇論文最大的差別，是明確把「結構資訊」獨立出來建模，先從腦波預測結構，再把結構和語意一起餵給擴散模型。</li>
+</ul></div></section><section class="card"><h3>方法流程</h3><div class="markdown-body"><ol>
+<li><strong>建立共同語言</strong>：研究者先用 CLIP 把文字描述和圖片放進同一個語意空間，就像先定好一套大家都懂的翻譯字典。</li>
+<li><strong>讀懂腦波意思</strong>：再用 EEG 編碼器把腦波特徵轉成這套語意字典中的表示，等於把大腦訊號翻成模型能懂的意思。</li>
+<li><strong>先畫結構草圖</strong>：接著用結構預測模組，從 EEG 生成一張粗略的結構圖，像畫畫前先打底稿。</li>
+<li><strong>雙條件引導生成</strong>：生成圖片時，語意表示透過 IP-Adapter 告訴模型「內容像什麼」，結構圖透過 ControlNet 告訴模型「空間怎麼擺」。</li>
+<li><strong>比較生成品質</strong>：最後用 CLIP Score、SSIM、SwAV FID、IoU 等指標，檢查生成結果在語意、結構與整體品質上是否優於基線方法。</li>
+</ol></div></section><section class="card"><h3>圖表導讀</h3><div class="markdown-body"><ul>
+<li>圖表重點：Figure 9 和 Table 1 主要想證明，加入結構引導後，SGDM 在最終圖像重建上比 Base、BrainVis、DreamDiffusion 更穩定也更接近目標。</li>
+<li>怎麼看：先比較 Tangram 與 THINGS 兩個資料集上的 CLIP Score、SSIM 與 SwAV FID，再觀察 SGDM 是否同時在結構和語意上都比較好。</li>
+<li>新手重點：看完後最該記住的是，單靠語意不足以重建人腦看到的內容，加入結構草圖後，生成結果會明顯更像。</li>
+</ul></div></section><section class="card"><h3>觀念確認</h3><div class="markdown-body"><ol>
+<li>問：SGDM 和舊方法最大的差別是什麼？答：它不是只用語意來生成，而是把結構預測和語意對齊一起當成生成條件。</li>
+<li>問：為什麼作者要用 ControlNet？答：因為它能把從 EEG 預測出的結構圖當成空間約束，讓生成結果更守住輪廓和布局。</li>
+<li>問：這篇論文為什麼特別強調 Tangram 資料集？答：因為 Tangram 具有抽象性與主觀詮釋空間，更能測試模型是否真的抓到個體化認知，而不只是做類別辨識。</li>
+</ol></div></section><section class="card"><h3>理解檢查</h3><div class="markdown-body"><p>Q1: SGDM 最核心的設計思想是什麼？<br />
+A. 只用更大的 CLIP 模型提升分類能力<br />
+B. 只用更多 EEG 通道提高訊號解析度<br />
+C. 同時用語意對齊與結構預測來引導擴散生成<br />
+D. 完全移除結構限制以增加生成多樣性<br />
+答案: C<br />
+解釋: 這篇論文的核心就是讓語意與結構兩種資訊共同約束生成結果。</p>
+<p>Q2: Structure Prediction Module 在整個流程中最像哪個角色？<br />
+A. 負責把論文翻譯成中文的模組<br />
+B. 先替最終圖像畫出空間草稿的模組<br />
+C. 單純計算分類準確率的評估器<br />
+D. 專門增加圖片多樣性的隨機噪聲器<br />
+答案: B<br />
+解釋: 它先從 EEG 預測粗略結構圖，作為後續生成的空間底稿。</p>
+<p>Q3: 下列哪個結果最能支持 SGDM 確實提升了語意與結構一致性？<br />
+A. 在兩個資料集上，SGDM 的 SSIM、SwAV FID 與 CLIP Score 整體表現最佳<br />
+B. SGDM 的 Inception Score 在所有方法中都最高<br />
+C. 作者完全沒有做統計顯著性分析<br />
+D. 模型只在單一受試者上做測試<br />
+答案: A<br />
+解釋: 論文顯示 SGDM 在多項結構與語意指標上都優於其他方法，這才是關鍵證據。</p></div></section><section class="card"><h3>延伸閱讀</h3><div class="markdown-body"><ol>
+<li><strong>ControlNet</strong>：如果想理解結構條件如何控制擴散模型，這是最直接的延伸閱讀。</li>
+<li><strong>DreamDiffusion</strong>：它是 EEG 到影像生成的重要比較方法，能幫助理解 SGDM 改進了哪些地方。</li>
+<li><strong>THINGS dataset</strong>：這個自然影像 EEG 資料集很適合拿來了解腦波視覺解碼在較真實場景中的表現。</li>
+</ol></div></section></div>
+      </section>
+    </article>
     <article class="paper" data-tags="Computer Vision|Foundation Model, Dataset|Reconstruction|進階|3D reconstruction|Internet photos|long-tail scenes|MegaDepth-X|sparsity-aware sampling">
       <header class="hero">
         <div>
