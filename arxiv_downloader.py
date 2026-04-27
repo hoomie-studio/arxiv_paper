@@ -164,6 +164,11 @@ class ArxivFullDownloader:
         print(f"[OK] 摘要已歸檔至 {SUMMARY_FILE}")
 
     def run(self):
+        if os.path.exists(TEMP_TASK) and os.path.getsize(TEMP_TASK) > 0 and not os.path.exists(TEMP_RESULT):
+            print(f"[暫停] 已存在待摘要任務: {TEMP_TASK}")
+            print("[提示] 請先讓模型完成摘要並寫入 temp_result.md，或手動處理 temp_task.md 後再抓新論文。")
+            return
+
         paper = self.get_first_paper_info(SEARCH_URL)
         if not paper:
             print("[!] 沒有新論文。")

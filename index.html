@@ -1,7 +1,68 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Study Mode</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
 :root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#6f6f6f;--line:#deded8;--accent:#e92727;--soft:#f1f1ee;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}a{color:inherit}.paper-page{display:grid;grid-template-columns:minmax(0,1fr)270px;gap:28px;min-height:100vh;padding:32px 28px 28px 46px;border-bottom:1px solid var(--line)}.paper-main{min-width:0}.paper-hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;align-items:start;margin-bottom:18px}.date-tag{margin:0 0 4px;font-size:16px;font-weight:700}h1{font-family:var(--serif);font-size:clamp(38px,5vw,72px);line-height:1.06;margin:0;letter-spacing:0}.eng-title{margin:8px 0 0;color:#949494;text-transform:uppercase;letter-spacing:2px;font-size:16px}.hero-actions{display:flex;gap:14px;align-items:center;padding-top:38px}.outline-btn,.study-toggle{min-height:56px;border-radius:6px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;text-decoration:none;border:2px solid var(--ink);background:var(--paper);cursor:pointer;white-space:nowrap}.study-toggle{background:var(--ink);color:#fff}.core-line{grid-column:1/-1;display:flex;gap:14px;align-items:flex-start;font-size:17px;line-height:1.75}.core-line span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;letter-spacing:1px;margin-top:6px}.core-line p{margin:0}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.study-card{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:7px;padding:20px 22px;min-height:150px;scroll-margin-top:24px}.study-card:nth-child(1),.study-card:nth-child(4),.study-card:nth-child(5),.study-card:nth-child(6){grid-column:span 6}.study-card:nth-child(2),.study-card:nth-child(3),.study-card:nth-child(7),.study-card:nth-child(8){grid-column:span 4}.single-column .study-card{grid-column:1/-1}.card-heading{display:flex;align-items:center;gap:12px;margin-bottom:12px}.card-icon{color:var(--accent);border:1px solid var(--accent);width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}.card-heading h2{margin:0;font-size:20px;line-height:1.2}.markdown-body{font-size:15px;line-height:1.75}.markdown-body p{margin:0 0 10px}.markdown-body ul,.markdown-body ol{margin:0;padding-left:20px}.markdown-body li{margin:7px 0}.markdown-body strong{font-weight:900}.flow-card{grid-column:span 8!important}.flow-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px}.flow-step{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:14px;min-height:130px}.flow-number{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-bottom:10px}.flow-step strong{display:block;margin-bottom:8px}.flow-step p{margin:0;color:#444;font-size:13px;line-height:1.6}.quiz-question{font-weight:800;margin-top:0}.quiz-options{display:grid;gap:8px}.quiz-option{width:100%;border:1px solid var(--line);background:#fff;border-radius:7px;padding:10px 12px;text-align:left;cursor:pointer;font:inherit;display:flex;gap:10px;align-items:flex-start}.quiz-option span{color:var(--muted);font-weight:900}.quiz-option.correct{border-color:var(--accent);background:#fff4f4}.quiz-option.wrong{opacity:.55}.quiz-feedback{margin:10px 0 0;color:var(--accent);font-weight:800}.study-rail{position:sticky;top:0;height:100vh;padding:34px 0 28px 28px;border-left:1px solid var(--line);background:var(--bg)}.study-rail h2{margin:0 0 16px;font-size:22px}.study-rail>p{color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}.study-rail nav{display:grid;gap:12px}.study-rail nav a{display:grid;grid-template-columns:34px 1fr;gap:8px 10px;text-decoration:none;align-items:start}.study-rail nav span{width:26px;height:26px;border-radius:50%;border:1px solid #c8c8c8;display:inline-flex;align-items:center;justify-content:center;color:#777;font-size:13px}.study-rail nav strong{font-size:15px}.study-rail nav em{grid-column:2;color:#444;font-style:normal;font-size:14px}.hint-box{margin-top:40px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.6);padding:18px;line-height:1.8}.hint-box p{margin:10px 0 0;color:#666}body.study-mode .paper-page:not(.active-study){display:none}body.study-mode .study-card{opacity:.38;transition:opacity .2s,transform .2s}body.study-mode .study-card:hover,body.study-mode .study-card:target{opacity:1;transform:translateY(-2px)}body.study-mode .study-toggle{background:var(--accent);border-color:var(--accent)}@media(max-width:1080px){.paper-page{grid-template-columns:1fr;padding:24px}.study-rail{position:static;height:auto;border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.study-rail nav{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions{padding-top:0}}@media(max-width:760px){.paper-hero{grid-template-columns:1fr}.hero-actions{flex-wrap:wrap}.outline-btn,.study-toggle{width:100%}.study-card,.flow-card{grid-column:1/-1!important}.study-rail nav{grid-template-columns:1fr}.paper-page{padding:18px}h1{font-size:38px}}
 </style></head><body><div class="site-shell">
-    <article class="paper-page legacy-page" id="paper-1">
+    <article class="paper-page" id="paper-1">
+      <main class="paper-main">
+        <header class="paper-hero">
+          <div><p class="date-tag">[ 04/27 ]</p><h1>全景 3D 重建的突破：Holo360D 大規模真實世界資料集，提供連續視角軌跡與精準深度地圖</h1><p class="eng-title">Holo360D: A Large-Scale Real-World Dataset with Continuous Trajectories for Advancing Panoramic 3D Reconstruction and Beyond</p></div>
+          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22482" target="_blank" rel="noopener">閱讀原始論文</a><button class="study-toggle" type="button">進入 Study Mode</button></div>
+          <div class="core-line"><span>CORE</span><p>研究者用專業 3D 掃描設備拍攝超過 11 萬張全景照片，打造全景 3D 重建的新標準資料集。</p></div>
+        </header>
+        <div class="card-grid">
+      <section class="study-card overview-card" id="paper-1-overview">
+        <div class="card-heading"><span class="card-icon">◎</span><h2>30 秒看懂這篇論文</h2></div>
+        <div class="markdown-body"><p>研究者用專業 3D 掃描設備拍攝超過 11 萬張全景照片，打造全景 3D 重建的新標準資料集。</p></div>
+      </section>
+      <section class="study-card " id="paper-1-prerequisites">
+        <div class="card-heading"><span class="card-icon">□</span><h2>先備知識</h2></div>
+        <div class="markdown-body"><ul>
+<li>全景影像：像是 360 度相機拍攝的照片，可以環視四周。</li>
+<li>深度圖：表示物體距離相機遠近的照片，越靠近物體越亮。</li>
+<li>視差：同一物體在不同視角下看起來位置會移動，可以用來重建 3D 形狀。</li>
+</ul></div>
+      </section>
+      <section class="study-card " id="paper-1-terms">
+        <div class="card-heading"><span class="card-icon">◇</span><h2>重要名詞</h2></div>
+        <div class="markdown-body"><ol>
+<li><strong>全景影像</strong>：它重要是因為可以 360 度環視；它改善了只能拍直觀角度的限制。</li>
+<li><strong>深度圖</strong>：它重要是提供物體遠近資訊；它讓 3D 重建不需要測量儀器。</li>
+<li><strong>視差匹配</strong>：它重要是用多視角重建 3D；它解決單圖深度預測不準確的問題。</li>
+</ol></div>
+      </section>
+      <section class="study-card " id="paper-1-motivation">
+        <div class="card-heading"><span class="card-icon">※</span><h2>研究動機</h2></div>
+        <div class="markdown-body"><ul>
+<li>背景：AI 模型可以從照片重建 3D 世界，但大多只能處理單點視角的照片，對全景影像表現差。</li>
+<li>痛點：現有的全景資料集規模小，深度圖不完整，且視角間隔太大，不利於訓練。</li>
+<li>目標：提供大規模、高品質、視角連續的全景資料集，讓 3D 重建模型學會處理全景影像。</li>
+</ul></div>
+      </section><section class="study-card flow-card" id="paper-1-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>**資料收集**</strong><p>用結合雷射掃描與 360 度相機的手持設備，像逛展覽一樣連續拍攝。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>**離線重建**</strong><p>把原始資料拿去進行_bundle adjustment_，像是用拼圖軟體把照片與 3D 點雲對齊。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>**網格重建**</strong><p>用_Poisson 重建_的方法，把點雲轉成網格模型，就像用 3D 列印做出物體表面。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>**後處理淨化**</strong><p>移除異常點、填補玻璃區域的缺口，像是清理 3D 模型的雜質。</p></div><div class="flow-step"><span class="flow-number">5</span><strong>**區域性重網格化**</strong><p>針對複雜細節（如金屬柵欄），用高分辨率重現細節。</p></div><div class="flow-step"><span class="flow-number">6</span><strong>**深度圖生成**</strong><p>從網格與點雲投影出對應的深度圖。</p></div></div></section>
+      <section class="study-card " id="paper-1-results">
+        <div class="card-heading"><span class="card-icon">▣</span><h2>圖表導讀</h2></div>
+        <div class="markdown-body"><ul>
+<li>圖表重點：圖 1 顯示 Holo360D 的深度圖比 Stanford2D3D、Matterport3D、Depth360 等資料集完整度高出許多。</li>
+<li>怎麼看：室內完整度 0.86、室外 0.82，遠勝其他資料集。</li>
+<li>新手重點：深度圖越完整，AI 重建的 3D 模型就越精準。</li>
+</ul></div>
+      </section>
+      <section class="study-card quiz-card" id="paper-1-quiz" data-answer="B" data-explanation="論文核心是用專業設備收集資料，解決現有全景資料集規模小、深度不完整、視角斷裂的問題。">
+        <div class="card-heading"><span class="card-icon">?</span><h2>理解檢查</h2></div>
+        <p class="quiz-question">這篇論文最主要想解決什麼問題？</p>
+        <div class="quiz-options"><button class="quiz-option" type="button" data-option="A"><span>A</span>用手機拍攝高品質 360 度照片</button><button class="quiz-option" type="button" data-option="B"><span>B</span>提供大規模、高品質、視角連續的全景 3D 重建資料集</button><button class="quiz-option" type="button" data-option="C"><span>C</span>開發新的全景相機硬體設備</button><button class="quiz-option" type="button" data-option="D"><span>D</span>用 AI 生成逼真的 3D 建築模型</button></div>
+        <p class="quiz-feedback" aria-live="polite"></p>
+      </section>
+      <section class="study-card " id="paper-1-reading">
+        <div class="card-heading"><span class="card-icon">+</span><h2>延伸閱讀</h2></div>
+        <div class="markdown-body"><ol>
+<li><strong>VGGT</strong>：視覺幾何 grounded 變分架構，可同時預測物體深度、點雲與相機姿態。</li>
+<li><strong>π³ (pi-cube)</strong>：無參考框架的 3D 視覺模型，在 Holo360D 上表現更好。</li>
+<li><strong>DUST3R</strong>：先鋒性的幾何 3D 視覺模型，為後續許多 3D 重建研究打下基礎。</li>
+</ol></div>
+      </section></div>
+      </main>
+      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-1-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-1-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-1-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-1-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-1-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-1-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-1-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
+    </article>
+    <article class="paper-page legacy-page" id="paper-2">
       <main class="paper-main">
         <header class="paper-hero">
           <div><p class="date-tag">[ 04/27 ]</p><h1>未命名研究</h1><p class="eng-title">Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction ?</p></div>
@@ -9,7 +70,7 @@
           <div class="core-line"><span>CORE</span><p>尚未填寫核心摘要</p></div>
         </header>
         <div class="card-grid single-column">
-      <section class="study-card " id="paper-1-legacy">
+      <section class="study-card " id="paper-2-legacy">
         <div class="card-heading"><span class="card-icon">¶</span><h2>摘要內容</h2></div>
         <div class="markdown-body"><h1>今日待處理論文任務</h1>
 <h3>論文內容:</h3>
@@ -614,7 +675,7 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
       </main>
       <aside class="study-rail"><h2>學習導覽</h2><p>舊版摘要格式</p><div class="hint-box"><strong>提示</strong><p>這篇是舊格式資料，已用 fallback 模式顯示。</p></div></aside>
     </article>
-    <article class="paper-page" id="paper-2">
+    <article class="paper-page" id="paper-3">
       <main class="paper-main">
         <header class="paper-hero">
           <div><p class="date-tag">[ 04/27 ]</p><h1>長尾網路照片重建</h1><p class="eng-title">Long-tail Internet photo reconstruction</p></div>
@@ -622,11 +683,11 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
           <div class="core-line"><span>CORE</span><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
         </header>
         <div class="card-grid">
-      <section class="study-card overview-card" id="paper-2-overview">
+      <section class="study-card overview-card" id="paper-3-overview">
         <div class="card-heading"><span class="card-icon">◎</span><h2>30 秒看懂這篇論文</h2></div>
         <div class="markdown-body"><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
       </section>
-      <section class="study-card " id="paper-2-prerequisites">
+      <section class="study-card " id="paper-3-prerequisites">
         <div class="card-heading"><span class="card-icon">□</span><h2>先備知識</h2></div>
         <div class="markdown-body"><ul>
 <li>3D 重建（3D reconstruction）：從 2D 照片還原出三維場景。</li>
@@ -634,7 +695,7 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
 <li>長尾（long-tail）：資料分佈中少見但實際上很常見的案例。</li>
 </ul></div>
       </section>
-      <section class="study-card " id="paper-2-terms">
+      <section class="study-card " id="paper-3-terms">
         <div class="card-heading"><span class="card-icon">◇</span><h2>重要名詞</h2></div>
         <div class="markdown-body"><ol>
 <li><strong>長尾（long-tail）</strong>：照片資料裡，熱門地標影像多，冷門地標影像少，這種分佈叫長尾。</li>
@@ -642,15 +703,15 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
 <li><strong>稀疏感知採樣（sparsity-aware sampling）</strong>：刻意挑選稀疏但具多視角的照片來訓練，讓模型學得更 robust。</li>
 </ol></div>
       </section>
-      <section class="study-card " id="paper-2-motivation">
+      <section class="study-card " id="paper-3-motivation">
         <div class="card-heading"><span class="card-icon">※</span><h2>研究動機</h2></div>
         <div class="markdown-body"><ul>
 <li>背景：網路照片多數集中在幾個熱門地標，大部分真實影像都很稀疏。</li>
 <li>痛點：現行模型在稀疏照片上表現差，無法處理長尾場景。</li>
 <li>目標：透過模擬訓練與新資料集，讓模型在稀疏與雜亂的網路照片也能重建。</li>
 </ul></div>
-      </section><section class="study-card flow-card" id="paper-2-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>過濾與消歧</strong><p>從 MegaScenes 挑選穩定重建的場景，排除動態內容與雙胞胎問題。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>深度細化</strong><p>運用多視角立體（MVS）與單眼深度先驗，產生高品質深度圖。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>模擬長尾</strong><p>用稀疏感知採樣從資料集中抽取稀疏但有覆蓋度的照片子集。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>微調模型</strong><p>用處理過的 MD-X 資料集訓練 VGGT 與 π³ 等基礎模型。</p></div></div></section>
-      <section class="study-card " id="paper-2-results">
+      </section><section class="study-card flow-card" id="paper-3-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>過濾與消歧</strong><p>從 MegaScenes 挑選穩定重建的場景，排除動態內容與雙胞胎問題。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>深度細化</strong><p>運用多視角立體（MVS）與單眼深度先驗，產生高品質深度圖。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>模擬長尾</strong><p>用稀疏感知採樣從資料集中抽取稀疏但有覆蓋度的照片子集。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>微調模型</strong><p>用處理過的 MD-X 資料集訓練 VGGT 與 π³ 等基礎模型。</p></div></div></section>
+      <section class="study-card " id="paper-3-results">
         <div class="card-heading"><span class="card-icon">▣</span><h2>圖表導讀</h2></div>
         <div class="markdown-body"><ul>
 <li>圖表重點：圖 6 展示在真實長尾場景上，微調模型與傳統 SfM 或預訓練模型的對比。</li>
@@ -658,13 +719,13 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
 <li>新手重點：即使只有幾張角度不一的照片，也能還原出正確的三維場景。</li>
 </ul></div>
       </section>
-      <section class="study-card quiz-card" id="paper-2-quiz" data-answer="A" data-explanation="論文聚焦於長尾場景下的 3D 重建挑戰，並透過資料集與採樣策略來提升模型的泛化性。">
+      <section class="study-card quiz-card" id="paper-3-quiz" data-answer="A" data-explanation="論文聚焦於長尾場景下的 3D 重建挑戰，並透過資料集與採樣策略來提升模型的泛化性。">
         <div class="card-heading"><span class="card-icon">?</span><h2>理解檢查</h2></div>
         <p class="quiz-question">這篇論文最主要想解決什麼問題？</p>
         <div class="quiz-options"><button class="quiz-option" type="button" data-option="A"><span>A</span>提高 3D 重建模型在稀疏、雜亂的網路照片上的表現</button><button class="quiz-option" type="button" data-option="B"><span>B</span>開發一種新的物體識別演算法</button><button class="quiz-option" type="button" data-option="C"><span>C</span>降低電腦視覺模型的計算成本</button><button class="quiz-option" type="button" data-option="D"><span>D</span>設計更快速的影像壓縮技術</button></div>
         <p class="quiz-feedback" aria-live="polite"></p>
       </section>
-      <section class="study-card " id="paper-2-reading">
+      <section class="study-card " id="paper-3-reading">
         <div class="card-heading"><span class="card-icon">+</span><h2>延伸閱讀</h2></div>
         <div class="markdown-body"><ol>
 <li><strong>DUSt3R</strong>：從一對圖片預測 3D 點雲的 feed-forward 模型，這篇是它的前驅工作。</li>
@@ -673,7 +734,7 @@ At lower acceleration (×4\times 4), E2E-VarNet consistently achieves the best p
 </ol></div>
       </section></div>
       </main>
-      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-2-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-2-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-2-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-2-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-2-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-2-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-2-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
+      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-3-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-3-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-3-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-3-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-3-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-3-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-3-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
     </article></div><script>
 document.querySelectorAll('.study-toggle').forEach((button)=>{button.addEventListener('click',()=>{const page=button.closest('.paper-page');const active=document.body.classList.toggle('study-mode');document.querySelectorAll('.paper-page').forEach((item)=>item.classList.remove('active-study'));if(active){page.classList.add('active-study');button.textContent='離開 Study Mode'}else{document.querySelectorAll('.study-toggle').forEach((item)=>item.textContent='進入 Study Mode')}})});
 document.querySelectorAll('.quiz-card').forEach((card)=>{const answer=card.dataset.answer;const explanation=card.dataset.explanation;const feedback=card.querySelector('.quiz-feedback');card.querySelectorAll('.quiz-option').forEach((option)=>{option.addEventListener('click',()=>{card.querySelectorAll('.quiz-option').forEach((item)=>{item.classList.toggle('correct',item.dataset.option===answer);item.classList.toggle('wrong',item.dataset.option!==answer)});feedback.textContent=option.dataset.option===answer?`答對了：${explanation}`:`再想一下：正確答案是 ${answer}。${explanation}`})})});

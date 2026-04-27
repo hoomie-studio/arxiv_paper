@@ -302,10 +302,10 @@ def mode_render():
 
 
 def mode_merge():
-    target_file = TEMP_RESULT if os.path.exists(TEMP_RESULT) else TEMP_TASK
-    if not os.path.exists(target_file):
-        print("[Merge] 找不到暫存檔。")
+    if not os.path.exists(TEMP_RESULT):
+        print("[Merge] 找不到 temp_result.md，代表模型摘要尚未完成；不會合併 temp_task.md 原始論文。")
         return
+    target_file = TEMP_RESULT
     with open(target_file, "r", encoding="utf-8") as f:
         raw_content = f.read()
     success, final_content = validate_and_fix_format(raw_content)
