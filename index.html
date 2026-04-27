@@ -1,140 +1,66 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Study Mode</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
 :root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#6f6f6f;--line:#deded8;--accent:#e92727;--soft:#f1f1ee;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}a{color:inherit}.paper-page{display:grid;grid-template-columns:minmax(0,1fr)270px;gap:28px;min-height:100vh;padding:32px 28px 28px 46px;border-bottom:1px solid var(--line)}.paper-main{min-width:0}.paper-hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;align-items:start;margin-bottom:18px}.date-tag{margin:0 0 4px;font-size:16px;font-weight:700}h1{font-family:var(--serif);font-size:clamp(38px,5vw,72px);line-height:1.06;margin:0;letter-spacing:0}.eng-title{margin:8px 0 0;color:#949494;text-transform:uppercase;letter-spacing:2px;font-size:16px}.hero-actions{display:flex;gap:14px;align-items:center;padding-top:38px}.outline-btn,.study-toggle{min-height:56px;border-radius:6px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;text-decoration:none;border:2px solid var(--ink);background:var(--paper);cursor:pointer;white-space:nowrap}.study-toggle{background:var(--ink);color:#fff}.core-line{grid-column:1/-1;display:flex;gap:14px;align-items:flex-start;font-size:17px;line-height:1.75}.core-line span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;letter-spacing:1px;margin-top:6px}.core-line p{margin:0}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.study-card{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:7px;padding:20px 22px;min-height:150px;scroll-margin-top:24px}.study-card:nth-child(1),.study-card:nth-child(4),.study-card:nth-child(5),.study-card:nth-child(6){grid-column:span 6}.study-card:nth-child(2),.study-card:nth-child(3),.study-card:nth-child(7),.study-card:nth-child(8){grid-column:span 4}.single-column .study-card{grid-column:1/-1}.card-heading{display:flex;align-items:center;gap:12px;margin-bottom:12px}.card-icon{color:var(--accent);border:1px solid var(--accent);width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}.card-heading h2{margin:0;font-size:20px;line-height:1.2}.markdown-body{font-size:15px;line-height:1.75}.markdown-body p{margin:0 0 10px}.markdown-body ul,.markdown-body ol{margin:0;padding-left:20px}.markdown-body li{margin:7px 0}.markdown-body strong{font-weight:900}.flow-card{grid-column:span 8!important}.flow-line{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px}.flow-step{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:14px;min-height:130px}.flow-number{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:900;margin-bottom:10px}.flow-step strong{display:block;margin-bottom:8px}.flow-step p{margin:0;color:#444;font-size:13px;line-height:1.6}.quiz-question{font-weight:800;margin-top:0}.quiz-options{display:grid;gap:8px}.quiz-option{width:100%;border:1px solid var(--line);background:#fff;border-radius:7px;padding:10px 12px;text-align:left;cursor:pointer;font:inherit;display:flex;gap:10px;align-items:flex-start}.quiz-option span{color:var(--muted);font-weight:900}.quiz-option.correct{border-color:var(--accent);background:#fff4f4}.quiz-option.wrong{opacity:.55}.quiz-feedback{margin:10px 0 0;color:var(--accent);font-weight:800}.study-rail{position:sticky;top:0;height:100vh;padding:34px 0 28px 28px;border-left:1px solid var(--line);background:var(--bg)}.study-rail h2{margin:0 0 16px;font-size:22px}.study-rail>p{color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:20px}.study-rail nav{display:grid;gap:12px}.study-rail nav a{display:grid;grid-template-columns:34px 1fr;gap:8px 10px;text-decoration:none;align-items:start}.study-rail nav span{width:26px;height:26px;border-radius:50%;border:1px solid #c8c8c8;display:inline-flex;align-items:center;justify-content:center;color:#777;font-size:13px}.study-rail nav strong{font-size:15px}.study-rail nav em{grid-column:2;color:#444;font-style:normal;font-size:14px}.hint-box{margin-top:40px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.6);padding:18px;line-height:1.8}.hint-box p{margin:10px 0 0;color:#666}body.study-mode .paper-page:not(.active-study){display:none}body.study-mode .study-card{opacity:.38;transition:opacity .2s,transform .2s}body.study-mode .study-card:hover,body.study-mode .study-card:target{opacity:1;transform:translateY(-2px)}body.study-mode .study-toggle{background:var(--accent);border-color:var(--accent)}@media(max-width:1080px){.paper-page{grid-template-columns:1fr;padding:24px}.study-rail{position:static;height:auto;border-left:0;border-top:1px solid var(--line);padding:20px 0 0}.study-rail nav{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-actions{padding-top:0}}@media(max-width:760px){.paper-hero{grid-template-columns:1fr}.hero-actions{flex-wrap:wrap}.outline-btn,.study-toggle{width:100%}.study-card,.flow-card{grid-column:1/-1!important}.study-rail nav{grid-template-columns:1fr}.paper-page{padding:18px}h1{font-size:38px}}
 </style></head><body><div class="site-shell">
-    <article class="paper-page legacy-page" id="paper-1">
+    <article class="paper-page" id="paper-1">
       <main class="paper-main">
         <header class="paper-hero">
-          <div><p class="date-tag">[ 04/27 ]</p><h1>自然域基礎模型能用在加速心臟 MRI 重建嗎？</h1><p class="eng-title">Are Natural-Domain Foundation Models Effective for Accelerated Cardiac MRI Reconstruction?</p></div>
-          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22557" target="_blank" rel="noopener">閱讀原始論文</a></div>
-          <div class="core-line"><span>CORE</span><p>用在大規模自然照片上訓練的 AI 眼睛（CLIP），就能幫忙把快速掃描產生的模糊 MRI 照片修好，不用專門學過醫學影像也能行。</p></div>
+          <div><p class="date-tag">[ 04/27 ]</p><h1>長尾網路照片重建</h1><p class="eng-title">Long-tail Internet photo reconstruction</p></div>
+          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22714" target="_blank" rel="noopener">閱讀原始論文</a><button class="study-toggle" type="button">進入 Study Mode</button></div>
+          <div class="core-line"><span>CORE</span><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
         </header>
-        <div class="card-grid single-column">
-      <section class="study-card " id="paper-1-legacy">
-        <div class="card-heading"><span class="card-icon">¶</span><h2>摘要內容</h2></div>
-        <div class="markdown-body"><h3>為什麼要研究這個？（研究動機）</h3>
-<p>先說幾個名詞：<br />
-- <strong>MRI（磁振造影）</strong>：就是醫院里做檢查的那台機器，不照 X 光但能看清楚的體內器官。<br />
-- <strong>k-space（k 空間）</strong>：MRI 先抓到的原始數據，像是一道道音訊波，要轉成圖片才算數。<br />
-- <strong>加速掃描</strong>：為了讓病人少躺久一點，故意少抓一些數據，但這樣重建出來的圖就模糊。<br />
-- <strong>基礎模型（Foundation Model）</strong>：一次學一大堆資料、可以拿來做很多事的超級 AI，就像會很多種菜的大廚。<br />
-- <strong>域偏移（Domain Shift）</strong>：在自然照片上學來的本事，搬到醫學影像上能不能用。</p>
-<p>這項研究想解決的痛點是：傳統要專心學「怎么重建 MRI 圖片」的 AI，在資料不足、掃描參數不同或病人族群變化時，表現就會變差。如果能用「會很多種菜」的基礎模型，少一點專門訓練，就能讓 MRI 檢查更穩定、更快速。</p>
-<h3>他們做了什麼？（研究方法）</h3>
-<p>他們用「逐層精修」（unrolled reconstruction）的方法，就像調皮的孩子畫歪圖，然後一步步擦掉再重畫：<br />
-1. <strong>先抓數據</strong>：在 k 空間少抓一些數據（加速）。<br />
-2. <strong>再用基礎模型幫忙</strong>：把模糊的圖轉成亮度圖，用已經會看自然照片的 AI 眼睛（CLIP、DINOv2、BiomedCLIP）來猜哪裡像什麼樣，但不更新 AI 的腦袋（frozen），只用它的「眼光」。<br />
-3. <strong>最後再抓數據</strong>：確保重建出來的數據跟實際抓到的符合。<br />
-4. <strong>重複多次</strong>：像迭代優化，一次比一次清楚。</p>
-<p>他們比較了三種 AI 眼睛：<br />
-- <strong>CLIP</strong>：看自然照片 + 文字配對。<br />
-- <strong>DINOv2</strong>：只看自然照片，自己學會看。<br />
-- <strong>BiomedCLIP</strong>：在醫學影像上訓練過。</p>
-<h3>驚人發現與具體數據（關鍵結果）</h3>
-<ol>
-<li><strong>加速越高，基礎模型越有用</strong>：在 ×4、×8 加速時，專職 MRI AI（E2E-VarNet）還是最強；但到 ×10 加速，基礎模型的表現就追平甚至超越，特別是在跨族群（cross-domain）測試中。</li>
-<li><strong>自然照片預訓練已經很强</strong>：CLIP 在 ×4、×8 加速時，SSIM 達到 0.9585、0.9359（越接近 1 越像），證明大規模自然預訓練的結構知識可以跨到醫學。</li>
-<li><strong>BiomedCLIP 在難題上加分</strong>：在 ×10 加速的 k 空間中心分數 0.04 時，CMR-BiomedCLIP 的 SSIM 0.9240，比 CLIP 高，說明醫學預訓練在更難的重建上能幫忙。</li>
-</ol>
-<h3>這對我有什麼意義？（實際應用）</h3>
-<ul>
-<li>未來 MRI 檢查可以更快速、更清楚，減少病人躺久不舒服。</li>
-<li>少花資源訓練專門 AI，基礎模型就能跨任務、跨機構用。</li>
-<li>可擴展到腦部、關節等部位，甚至低資源醫療環境。</li>
+        <div class="card-grid">
+      <section class="study-card overview-card" id="paper-1-overview">
+        <div class="card-heading"><span class="card-icon">◎</span><h2>30 秒看懂這篇論文</h2></div>
+        <div class="markdown-body"><p>針對網路照片中大量冷門地標，提出新資料集與採樣策略，讓 3D 重建模型在稀疏影像下也能穩定運作。</p></div>
+      </section>
+      <section class="study-card " id="paper-1-prerequisites">
+        <div class="card-heading"><span class="card-icon">□</span><h2>先備知識</h2></div>
+        <div class="markdown-body"><ul>
+<li>3D 重建（3D reconstruction）：從 2D 照片還原出三維場景。</li>
+<li>SfM（Structure-from-Motion）：傳統從多張照片推算相機位置與 3D 點的技術。</li>
+<li>長尾（long-tail）：資料分佈中少見但實際上很常見的案例。</li>
 </ul></div>
-      </section></div>
-      </main>
-      <aside class="study-rail"><h2>學習導覽</h2><p>舊版摘要格式</p><div class="hint-box"><strong>提示</strong><p>這篇是舊格式資料，已用 fallback 模式顯示。</p></div></aside>
-    </article>
-    <article class="paper-page legacy-page" id="paper-2">
-      <main class="paper-main">
-        <header class="paper-hero">
-          <div><p class="date-tag">[ 04/27 ]</p><h1>用腦電波重建你「大腦裡正在想的畫面」：結構引導的擴散模型</h1><p class="eng-title">Structure-Guided Diffusion Model for EEG-Based Visual Cognition Reconstruction</p></div>
-          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22649" target="_blank" rel="noopener">閱讀原始論文</a></div>
-          <div class="core-line"><span>CORE</span><p>透過 EEG（腦電波）訊號，利用「結構化先驗知識」重建出符合你個人認知的主觀視知影像，而且比過去方法更準確、更穩定。</p></div>
-        </header>
-        <div class="card-grid single-column">
-      <section class="study-card " id="paper-2-legacy">
-        <div class="card-heading"><span class="card-icon">¶</span><h2>摘要內容</h2></div>
-        <div class="markdown-body"><h3>為什麼要研究這個？（研究動機）</h3>
-<p>過去我們想要從腦部活動（像 EEG 這種戴在頭上的電極裝置）來反推你腦子裡正在看什麼、想什麼，但有三個老大難問題：<br />
-1.  <strong>只懂「類別」不懂「結構」</strong>：以前的模型只知道眼前這東西是「動物」還是「非動物」，卻不懂這頭動物具體的長相結構（頭長什麼樣、四肢在哪）。這就像只告訴你在看一張「貓」的照片，卻不知道貓長什麼樣子。<br />
-2.  <strong>缺乏階層結構資訊</strong>：研究大多關注低階特徵（例如顏色、形狀輪廓），卻沒有能明確描述「局部到整體」結構關係的數據或建模框架。<br />
-3.  <strong>個人認知差異難對齊</strong>：實驗主要聚焦在客觀「看到的」刺激物，卻忽略個體如何拆解與詮釋視覺結構的「主觀認知過程」。這造成一般神經訊號與特定物體的細部認知代表之間出現「語義差距」。</p>
-<h3>他們做了什麼？（研究方法）</h3>
-<p>這群人開發了一個叫 <strong>SGDM（結構引導擴散模型）</strong> 的框架，它的做法很像這樣：<br />
--   他們用了一個叫做 <strong>Kilogram</strong> 的數據集，裡面是 900 多個「七巧板」的抽象圖案，每個都有人仔細註解。<br />
--   先讓受試者戴 EEG 看這些七巧板，同時記錄他們腦波，然後請受試者描述他們腦中呈現的影像。<br />
--   接著，模型把這些腦波訊號轉成「語義嵌入」（就是電腦懂的語言表達），然後透過一個「結構預測模組」，生成一個低解析度的結構圖。<br />
--   最後，用「雙約束擴散生成器」，把「語義」和「結構」兩種資訊同時輸入，生成符合個人認知的影像。<br />
--   實驗在 THINGS（真實物體）和 Kilogram（抽象七巧板）兩個數據集上測試。</p>
-<h3>驚人發現與具體數據（關鍵結果）</h3>
-<ol>
-<li><strong>結構預測更準確</strong>：在 Kilogram 數據集上，SGDM 的結構預測準確率（IoU）達到 0.517，而沒有結構引導的 Baseline 只有 0.492。在 THINGS 數據集上，SGDM 的 IoU 更是從 Baseline 的 0.432 提升到 0.541，提升幅度達 0.109。</li>
-<li><strong>語義一致性更好</strong>：SGDM 不僅能重建結構，還能捕捉受試者對同一個抽象圖案的個人化認知。例如，同樣的七巧板配置，不同的人可能把它看成「山」、「坐姿的人」或「玻璃獎盃」，SGDM 都能根據每個人的認知生成不同的圖片，而不是像 Baseline 那樣產生混淆。</li>
-<li><strong>時間窗分析</strong>：對於抽象視覺刺激的處理，大腦在 400-600ms 的處理階段（比看自然圖片晚一點）扮演關鍵角色，SGDM 能有效利用這段時間的腦波訊號來進行重建。</li>
-</ol>
-<h3>這對我有什麼意義？（實際應用）</h3>
-<p>這個技術未來可能用在以下幾點：<br />
--   <strong>腦機介面（BCI）進階</strong>：能更精準地解讀使用者的意圖，讓假肢控制或溝通系統更靈活。<br />
--   <strong>臨床與心理評估</strong>：幫助評估意識狀態、認知功能，甚至用於神經復康訓練。<br />
--   <strong>個人化視覺輔助</strong>：未來或許可以幫助視障人士，透過腦波重建出更符合他們個人認知習慣的影像。<br />
--   <strong>理解人腦視覺機制</strong>：從計算角度理解人腦如何從局部細節整合成整體認知，提供神經科學新視角。</p></div>
-      </section></div>
-      </main>
-      <aside class="study-rail"><h2>學習導覽</h2><p>舊版摘要格式</p><div class="hint-box"><strong>提示</strong><p>這篇是舊格式資料，已用 fallback 模式顯示。</p></div></aside>
-    </article>
-    <article class="paper-page legacy-page" id="paper-3">
-      <main class="paper-main">
-        <header class="paper-hero">
-          <div><p class="date-tag">[ 04/27 ]</p><h1>長尾派系網路照片重建</h1><p class="eng-title">Long-tail Internet photo reconstruction</p></div>
-          <div class="hero-actions"><a class="outline-btn" href="https://arxiv.org/abs/2604.22714" target="_blank" rel="noopener">閱讀原始論文</a></div>
-          <div class="core-line"><span>CORE</span><p>用特殊「稀疏感知」的數據訓練方法，讓 3D 重建模型能從極少數且分散的網路照片中，成功還原世界上的「冷門景點」。</p></div>
-        </header>
-        <div class="card-grid single-column">
-      <section class="study-card " id="paper-3-legacy">
-        <div class="card-heading"><span class="card-icon">¶</span><h2>摘要內容</h2></div>
-        <div class="markdown-body"><h3>為什麼要研究這個？（研究動機）</h3>
-<p><strong>背景：</strong><br />
-網路上有許多照片，但分布很不均勻——著名的景點（如羅馬競技場）有海量照片，從各種角度都有；但絕大多數的地方景點（長尾景點）只有幾張稀疏、雜亂的照片。</p>
-<p><strong>痛點：</strong><br />
-傳統的 3D 重建方法（如 COLMAP）遇到這種稀疏照片時很吃力，因為特徵點對應困難。而現在流行的深度學習模型（如 DUSt3R、VGGT）雖然強大，但主要是在受控環境下訓練的，面對這種不規則的網路照片常常失敗。</p>
-<p><strong>重要性：</strong><br />
-長尾景點才是網路照片的常態，而不是例外。如果能解決這個問題，就能讓更多人透過網路照片還原出世界各地的角落。</p>
-<h3>他們做了什麼？（研究方法）</h3>
-<p><strong>建立新資料集：MegaDepth-X (MD-X)</strong><br />
-就像整理教材一樣，他們從網路上精選了 2474 個候選場景，然後用三步驟「清洗」：<br />
-1. 過濾掉人群或動態活動多的場景<br />
-2. 用 MASt3R-SfM 技術搭配「雙胞胎分類器」解決「雙胞胎問題」（視覺相似但地理位置遙遠的圖片被錯誤配對）<br />
-3. 用外部參考（如 Google Maps）手動驗證</p>
-<p><strong>創新：深度引導的過濾步驟</strong><br />
-用單目深度預測（MoGe2）作為優先順序，過濾掉不一致的像素。這就像用另一張參考圖來檢查你的重建結果是否合理。</p>
-<p><strong>模擬長尾場景的採樣策略</strong><br />
-用三步驟模擬現實中的長尾場景：<br />
-1. <strong>觀點多樣性</strong>：確保選擇的視角涵蓋不同方向<br />
-2. <strong>稀疏性</strong>：讓選出的視角相隔較遠，模擬真實長尾場景<br />
-3. <strong>局部可重建性</strong>：雖然稀疏，但每個視角組合仍需足夠的互觀性才能重建</p>
-<p><strong>訓練模型</strong><br />
-用新方法訓練兩個現有模型：π³-FT 和 VGGT-FT</p>
-<h3>驚人發現與具體數據（關鍵結果）</h3>
-<p><strong>結果 1：在長尾場景上表現更好</strong><br />
-在較難的稀疏場景（hard）中，訓練好的模型比原始模型提升了：<br />
-- π³ 模型：RRA 準確率從 75.31% 提升到 86.40%<br />
-- VGGT 模型：RRA 準確率從 70.98% 提升到 81.07%</p>
-<p><strong>結果 2：解決雙胞胎問題</strong><br />
-成功處理像 Calvaire de Plougonven 這類對稱結構明顯的場景，這是傳統方法和預訓練模型容易失敗的場合。</p>
-<p><strong>結果 3：不犧牲標準資料集的表現</strong><br />
-即使在專門為標準資料集設計的測試上（如 RealEstate10K、CO3Dv2），訓練後的模型表現與原始模型相當，證明沒有過擬合。</p>
-<h3>這對我有什麼意義？（實際應用）</h3>
-<ul>
-<li>3D 遊戲開發者可以用少許照片快速重建冷門景點</li>
-<li>虛擬導航系統能更好地處理稀疏照片</li>
-<li>擴增實境（AR）導遊能從手機拍攝的照片還原完整景觀</li>
-<li>考古與文物數位保存，即使只有少量照片也能還原遺址</li>
-<li>攝影愛好者可以用網路上的零星照片重建景點 3D 模型</li>
+      </section>
+      <section class="study-card " id="paper-1-terms">
+        <div class="card-heading"><span class="card-icon">◇</span><h2>重要名詞</h2></div>
+        <div class="markdown-body"><ol>
+<li><strong>長尾（long-tail）</strong>：照片資料裡，熱門地標影像多，冷門地標影像少，這種分佈叫長尾。</li>
+<li><strong>雙胞胎問題（doppelganger）</strong>：相似建築的照片被錯誤當成同一場景，導致重建混亂。</li>
+<li><strong>稀疏感知採樣（sparsity-aware sampling）</strong>：刻意挑選稀疏但具多視角的照片來訓練，讓模型學得更 robust。</li>
+</ol></div>
+      </section>
+      <section class="study-card " id="paper-1-motivation">
+        <div class="card-heading"><span class="card-icon">※</span><h2>研究動機</h2></div>
+        <div class="markdown-body"><ul>
+<li>背景：網路照片多數集中在幾個熱門地標，大部分真實影像都很稀疏。</li>
+<li>痛點：現行模型在稀疏照片上表現差，無法處理長尾場景。</li>
+<li>目標：透過模擬訓練與新資料集，讓模型在稀疏與雜亂的網路照片也能重建。</li>
 </ul></div>
+      </section><section class="study-card flow-card" id="paper-1-method"><div class="card-heading"><span class="card-icon">→</span><h2>方法流程</h2></div><div class="flow-line"><div class="flow-step"><span class="flow-number">1</span><strong>過濾與消歧</strong><p>從 MegaScenes 挑選穩定重建的場景，排除動態內容與雙胞胎問題。</p></div><div class="flow-step"><span class="flow-number">2</span><strong>深度細化</strong><p>運用多視角立體（MVS）與單眼深度先驗，產生高品質深度圖。</p></div><div class="flow-step"><span class="flow-number">3</span><strong>模擬長尾</strong><p>用稀疏感知採樣從資料集中抽取稀疏但有覆蓋度的照片子集。</p></div><div class="flow-step"><span class="flow-number">4</span><strong>微調模型</strong><p>用處理過的 MD-X 資料集訓練 VGGT 與 π³ 等基礎模型。</p></div></div></section>
+      <section class="study-card " id="paper-1-results">
+        <div class="card-heading"><span class="card-icon">▣</span><h2>圖表導讀</h2></div>
+        <div class="markdown-body"><ul>
+<li>圖表重點：圖 6 展示在真實長尾場景上，微調模型與傳統 SfM 或預訓練模型的對比。</li>
+<li>怎麼看：同一場景中，底部幾張稀疏照片的重建結果，微調模型明顯更完整且無碎片。</li>
+<li>新手重點：即使只有幾張角度不一的照片，也能還原出正確的三維場景。</li>
+</ul></div>
+      </section>
+      <section class="study-card quiz-card" id="paper-1-quiz" data-answer="A" data-explanation="論文聚焦於長尾場景下的 3D 重建挑戰，並透過資料集與採樣策略來提升模型的泛化性。">
+        <div class="card-heading"><span class="card-icon">?</span><h2>理解檢查</h2></div>
+        <p class="quiz-question">這篇論文最主要想解決什麼問題？</p>
+        <div class="quiz-options"><button class="quiz-option" type="button" data-option="A"><span>A</span>提高 3D 重建模型在稀疏、雜亂的網路照片上的表現</button><button class="quiz-option" type="button" data-option="B"><span>B</span>開發一種新的物體識別演算法</button><button class="quiz-option" type="button" data-option="C"><span>C</span>降低電腦視覺模型的計算成本</button><button class="quiz-option" type="button" data-option="D"><span>D</span>設計更快速的影像壓縮技術</button></div>
+        <p class="quiz-feedback" aria-live="polite"></p>
+      </section>
+      <section class="study-card " id="paper-1-reading">
+        <div class="card-heading"><span class="card-icon">+</span><h2>延伸閱讀</h2></div>
+        <div class="markdown-body"><ol>
+<li><strong>DUSt3R</strong>：從一對圖片預測 3D 點雲的 feed-forward 模型，這篇是它的前驅工作。</li>
+<li><strong>VGGT</strong>：能同時預測相機參數、深度與點雲的 Transformer 模型，本文在其上微調。</li>
+<li><strong>MegaDepth</strong>：早期用於學習單眼深度預測的大規模 3D 資料集，本文是其進階版 MD-X。</li>
+</ol></div>
       </section></div>
       </main>
-      <aside class="study-rail"><h2>學習導覽</h2><p>舊版摘要格式</p><div class="hint-box"><strong>提示</strong><p>這篇是舊格式資料，已用 fallback 模式顯示。</p></div></aside>
+      <aside class="study-rail"><h2>學習導覽</h2><p>本篇學習路徑</p><nav><a href="#paper-1-overview"><span>1</span><strong>Overview</strong><em>總覽</em></a><a href="#paper-1-prerequisites"><span>2</span><strong>Prerequisites</strong><em>先備知識</em></a><a href="#paper-1-terms"><span>3</span><strong>Key Terms</strong><em>重要名詞</em></a><a href="#paper-1-motivation"><span>4</span><strong>Motivation</strong><em>研究動機</em></a><a href="#paper-1-method"><span>5</span><strong>Method</strong><em>方法流程</em></a><a href="#paper-1-results"><span>6</span><strong>Results</strong><em>圖表導讀</em></a><a href="#paper-1-quiz"><span>7</span><strong>Quiz</strong><em>理解檢查</em></a></nav><div class="hint-box"><strong>學習小提示</strong><p>先看 30 秒總覽，再進入方法與測驗，學習效果更穩。</p></div></aside>
     </article></div><script>
 document.querySelectorAll('.study-toggle').forEach((button)=>{button.addEventListener('click',()=>{const page=button.closest('.paper-page');const active=document.body.classList.toggle('study-mode');document.querySelectorAll('.paper-page').forEach((item)=>item.classList.remove('active-study'));if(active){page.classList.add('active-study');button.textContent='離開 Study Mode'}else{document.querySelectorAll('.study-toggle').forEach((item)=>item.textContent='進入 Study Mode')}})});
 document.querySelectorAll('.quiz-card').forEach((card)=>{const answer=card.dataset.answer;const explanation=card.dataset.explanation;const feedback=card.querySelector('.quiz-feedback');card.querySelectorAll('.quiz-option').forEach((option)=>{option.addEventListener('click',()=>{card.querySelectorAll('.quiz-option').forEach((item)=>{item.classList.toggle('correct',item.dataset.option===answer);item.classList.toggle('wrong',item.dataset.option!==answer)});feedback.textContent=option.dataset.option===answer?`答對了：${explanation}`:`再想一下：正確答案是 ${answer}。${explanation}`})})});
