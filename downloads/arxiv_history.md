@@ -36,3 +36,9 @@
 - ID: 2604.24000
 - URL: https://arxiv.org/abs/2604.24000
 - 狀態: [已完成-含StudyMode] (2026-04-28 11:27:53)
+
+---
+## Learning Interpretable PDE Representations for Generative Reconstructions with Structured Sparsity
+- ID: 2604.23867
+- URL: https://arxiv.org/abs/2604.23867
+- 狀態: [已完成-含StudyMode] (2026-04-28 12:52:00)

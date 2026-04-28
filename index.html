@@ -11,6 +11,179 @@
           <div class="hk-grid">
             <div class="hk-left-col">
               <p class="hk-tag">[ 04/28 ]</p>
+              <h1 class="hk-main-title">以結構稀疏性進行生成式還原的 PDE 可解釋表示</h1>
+              <p class="hk-eng-subtitle">Learning Interpretable PDE Representations for Generative Reconstructions with Structured Sparsity</p>
+              <div class="hk-core-statement"><span class="hk-label">CORE</span><p>透過可解釋的潛在變量嵌入物理方程係數，用擴散模型從稀疏雜訊觀測中還原符合物理定律的高解析度場。</p></div>
+              <div class="paper-tags"><span class="paper-tag">reconstruction</span><span class="paper-tag">machine learning</span></div>
+              <div class="hero-actions">
+                <a class="hk-link-btn" href="https://arxiv.org/abs/2604.23867" target="_blank" rel="noopener">閱讀原始論文</a>
+                <button class="hk-link-btn dark" type="button" data-open-study>進入 Study Mode</button>
+              </div>
+            </div>
+            <div class="hk-right-col">
+              <section class="summary-panel">
+                <div class="mode-eyebrow">Academic Brief</div>
+                <h2>學術早報</h2>
+                <div class="markdown-body"><!-- SUMMARY_START -->
+
+<h3>文獻名稱</h3>
+<p>Learning Interpretable PDE Representations for Generative Reconstructions with Structured Sparsity</p>
+<h3>文獻中文名稱</h3>
+<p>以結構稀疏性進行生成式還原的 PDE 可解釋表示</p>
+<ul>
+<li>論文來源 URL: https://arxiv.org/abs/2604.23867</li>
+<li>抓取時間：2026-04-28</li>
+</ul>
+<h3>分類關鍵字</h3>
+<ul>
+<li>關鍵字：reconstruction, machine learning, PDE</li>
+</ul>
+<h3>一句話核心</h3>
+<p>透過可解釋的潛在變量嵌入物理方程係數，用擴散模型從稀疏雜訊觀測中還原符合物理定律的高解析度場。</p>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<ul>
+<li><strong>問題是什麼：</strong> 真實世界物理系統觀測站稀疏，測量數據受雜訊污染且解析度有限。</li>
+<li><strong>為什麼麻煩：</strong> 傳統逆問題方法無法穩定填補觀測缺口，且難以量化不確定性，高階應用如天氣預報與醫學成像無法做出可靠判斷。</li>
+<li><strong>作者想改善：</strong> 將物理定律直接嵌入架構而非僅作為軟規則化，強制執行物理約束來獲得結構真實的重建結果。</li>
+</ul>
+<h3>他們做了什麼？（研究方法）</h3>
+<p>就像用可解釋的「物理參數地圖」代替黑盒子模型，研究者設計了三階段推理流程：<br />
+- <strong>條件化表示：</strong> 先將稀疏觀測轉換為四通道空間表示，區分未觀測的零值與真實測量。<br />
+- <strong>潛在變量估計：</strong> 使用 MAP（最大後驗）或直接推論編碼器預測潛在變量作為初始值。<br />
+- <strong>擴散去雜訊：</strong> 透過去雜訊擴散模型 refin 潛在變量，最後用可微分光譜求解器解碼為高解析度場。</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<ul>
+<li><strong>發現：</strong> LatentPDE 在三個 PDE 家族（輸運 - 擴散、Klein-Gordon、Helmholtz）均達到低 RMSE。</li>
+<li><strong>數字代表什麼：</strong> 相比 EnKF 減少超過 87% 的 RMSE，相比次佳方法 PINN 減少高達 73%，同時具有更好的頻譜特性。</li>
+<li><strong>發現：</strong> LatentPDE 能有效過濾注入雜訊並恢復次網格物理結構。</li>
+</ul>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li><strong>應用情境 1：</strong> 結構健康監測系統，即使感測器稀疏也能還原完整應力場。</li>
+<li><strong>應用情境 2：</strong> 極端天氣預報，在觀測稀少的地區也能提供可靠的物理一致重建。</li>
+<li><strong>應用情境 3：</strong> 醫學影像重建，從有限的掃描數據中恢復完整的生理場分布。</li>
+</ul>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li><strong>應用情境 1：</strong> 災害管理，在缺乏充足觀測數據的環境中進行高保真預測建模。</li>
+<li><strong>應用情境 2：</strong> 氣候韌性分析，在稀疏觀測下仍可推估動態場的完整演進。</li>
+<li><strong>應用情境 3：</strong> 安全生成系統，提供內建的不確定性量化以支持風險評估決策。</li>
+</ul></div>
+              </section>
+              <section class="study-panel" hidden>
+                <div class="study-hero">
+                  <div>
+                    <p class="hk-tag">[ 04/28 ]</p>
+                    <div class="mode-eyebrow">Study Mode</div>
+                    <h2>以結構稀疏性進行生成式還原的 PDE 可解釋表示</h2>
+                    <p>Learning Interpretable PDE Representations for Generative Reconstructions with Structured Sparsity</p>
+                    <div class="study-core"><span>CORE</span>透過可解釋的潛在變量嵌入物理方程係數，用擴散模型從稀疏雜訊觀測中還原符合物理定律的高解析度場。</div>
+                    <div class="paper-tags"><span class="paper-tag">reconstruction</span><span class="paper-tag">machine learning</span></div>
+                  </div>
+                  <button class="mini-btn" type="button" data-close-study>回到 Summary</button>
+                </div>
+                <div class="study-layout">
+                  <main class="card-grid"><section class="study-card" id="overview"><div class="card-kicker">快速版</div><h3>30 秒看懂這篇論文</h3><div class="markdown-body quick-layer"><ul>
+<li><strong>解決什麼問題：</strong> 從稀疏、雜訊且低解析度的觀測數據中，還原符合物理定律的高解析度完整場。</li>
+<li><strong>方法是什麼：</strong> 像是用「物理參數地圖」代替黑盒子，將 PDE 係數作為潛在表示，用擴散去雜訊後解碼。</li>
+<li><strong>結果如何：</strong> 在多種 PDE 類型上都能達到最低誤差，同時量化不確定性。</li>
+</ul></div><details class="detail-layer" id="overview-detail"><summary>詳細版</summary><div class="markdown-body"><ul>
+<li><strong>解決什麼問題：</strong> 從稀疏、雜訊且低解析度的觀測數據中，還原符合物理定律的高解析度完整場。</li>
+<li><strong>方法是什麼：</strong> 像是用「物理參數地圖」代替黑盒子，將 PDE 係數作為潛在表示，用擴散去雜訊後解碼。</li>
+<li><strong>結果如何：</strong> 在多種 PDE 類型上都能達到最低誤差，同時量化不確定性。</li>
+</ul></div></details></section><section class="study-card" id="prerequisites"><div class="card-kicker">快速版</div><h3>先備知識</h3><div class="markdown-body quick-layer"><ul>
+<li><strong>PDE（偏微分方程）：</strong> 描述物理系統演化規律的數學方程式，已知參數與邊界條件後可用正向求解器推演系統狀態。</li>
+<li><strong>擴散模型：</strong> 一種生成式模型，透過逐步加雜訊再學習去雜訊的過程，能從雜訊中生成符合分佈的樣本。</li>
+<li><strong>潛在變量（latent variable）：</strong> 低維度的隱藏表示，能解碼回高維度的觀測數據，這裡用來嵌入物理參數。</li>
+</ul></div><details class="detail-layer" id="prerequisites-detail"><summary>詳細版</summary><div class="markdown-body"><ul>
+<li><strong>PDE（偏微分方程）：</strong> 描述物理系統演化規律的數學方程式，已知參數與邊界條件後可用正向求解器推演系統狀態。</li>
+<li><strong>擴散模型：</strong> 一種生成式模型，透過逐步加雜訊再學習去雜訊的過程，能從雜訊中生成符合分佈的樣本。</li>
+<li><strong>潛在變量（latent variable）：</strong> 低維度的隱藏表示，能解碼回高維度的觀測數據，這裡用來嵌入物理參數。</li>
+<li><strong>頻譜方法：</strong> 將解表示为全球基函式的展開，透過傅立葉係數轉換可高效地處理微分操作。</li>
+<li><strong>逆問題：</strong> 從觀測數據反推系統參數或初始條件的問題，通常病態且需要正則化。</li>
+</ul></div></details></section><section class="study-card" id="terms"><div class="card-kicker">快速版</div><h3>重要名詞</h3><div class="markdown-body quick-layer"><ol>
+<li><strong>[LatentPDE]</strong><br />
+- 白話描述：將 PDE 係數作為潛在變量表示的擴散模型框架。<br />
+- 意義：解決了傳統方法無法同時保證物理一致與不確定性量化的問題。</li>
+</ol></div><details class="detail-layer" id="terms-detail"><summary>詳細版</summary><div class="markdown-body"><ol>
+<li><strong>[LatentPDE]</strong><br />
+   - 白話描述：將 PDE 係數作為潛在變量表示的擴散模型框架。<br />
+   - 意義：解決了傳統方法無法同時保證物理一致與不確定性量化的問題。</li>
+<li><strong>[可微分光譜求解器]</strong><br />
+   - 白話描述：一個可以對其輸入進行微分計算的光譜求解器，用於將潛在變量解碼為物理場。<br />
+   - 意義：讓物理定律成為解碼過程的結構約束，而非僅是軟規則化。</li>
+<li><strong>[條件化表示]</strong><br />
+   - 白話描述：四通道空間表示，包含遮蔽場、二值遮蔽、距離觀測地圖與觀測密度地圖。<br />
+   - 意義：讓網絡分辨未觀測的零值與真實測量，並暴露感測器模式的空間結構。</li>
+<li><strong>[振幅後驗（MAP）估計]</strong><br />
+   - 白話描述：透過最小化正則化損失函數，直接求得最可能的潛在變量。<br />
+   - 意義：不需訓練數據就能配合觀測，但每樣本優化較慢。</li>
+<li><strong>[推論編碼器（amortized encoder）]</strong><br />
+   - 白話描述：訓練好的神經網絡，一次前向傳播就能預測潛在變量。<br />
+   - 意義：推論極快，但可能對訓練時 unseen 的遮蔽模式泛化不佳。</li>
+<li><strong>[擴散去雜訊模型]</strong><br />
+   - 白話描述：在潛在空間進行去雜訊的擴散過程，學習符合物理定律的潛在先驗分佈。<br />
+   - 意義：提供 calibrated 的不確定性量化，捕捉後驗分佈。</li>
+<li><strong>[物理引導（physics guidance）]</strong><br />
+   - 白話描述：在擴散後向步驟中，使用遮蔽殘差進行梯度下降來修正潛在預測。<br />
+   - 意義：確保最終重建結果符合物理定律，而非僅是統計平均。</li>
+</ol></div></details></section><section class="study-card" id="motivation"><div class="card-kicker">快速版</div><h3>研究動機</h3><div class="markdown-body quick-layer"><ul>
+<li><strong>背景：</strong> 物理系統逆向模擬需要從觀測數據推演完整場，應用於天氣預報、醫學成像等高風險場景。</li>
+<li><strong>痛點：</strong> 現有方法（如 EnKF、3D-Var、PINNs）要麼無法量化不確定性，要麼過度平滑遺失重要動態。</li>
+<li><strong>目標：</strong> 建立一個能同時保證物理一致性、不確定性量化，且能從稀疏觀測中還原高解析度場的框架。</li>
+</ul></div><details class="detail-layer" id="motivation-detail"><summary>詳細版</summary><div class="markdown-body"><ul>
+<li><strong>背景：</strong> 物理系統逆向模擬需要從觀測數據推演完整場，應用於天氣預報、醫學成像等高風險場景。</li>
+<li><strong>痛點：</strong> 現有方法（如 EnKF、3D-Var、PINNs）要麼無法量化不確定性，要麼過度平滑遺失重要動態。</li>
+<li><strong>目標：</strong> 建立一個能同時保證物理一致性、不確定性量化，且能從稀疏觀測中還原高解析度場的框架。</li>
+</ul></div></details></section><section class="study-card" id="method"><div class="card-kicker">快速版</div><h3>方法流程</h3><div class="markdown-body quick-layer"><ol>
+<li><strong>[條件化表示生成]</strong>：將稀疏觀測與初始條件轉換為四通道空間表示。</li>
+<li><strong>[潛在變量初始估計]</strong>：使用 MAP 優化或編碼器推論獲得初始潛在變量。</li>
+<li><strong>[擴散去雜訊過程]</strong>：透過去雜訊擴散模型在潛在空間進行 refine。</li>
+</ol></div><details class="detail-layer" id="method-detail"><summary>詳細版</summary><div class="markdown-body"><ol>
+<li><strong>[條件化表示生成]</strong>：將稀疏觀測與初始條件轉換為四通道空間表示。</li>
+<li><strong>[潛在變量初始估計]</strong>：使用 MAP 優化或編碼器推論獲得初始潛在變量。</li>
+<li><strong>[擴散去雜訊過程]</strong>：透過去雜訊擴散模型在潛在空間進行 refine。</li>
+<li><strong>[物理引導修正]</strong>：在後向步驟中使用物理約束修正潛在預測。</li>
+<li><strong>[可微分光譜解碼]</strong>：將最終潛在變量解碼為高解析度、物理一致的場。</li>
+<li><strong>[後向 Adam 優化（可選）]</strong>：使用 Adam 進一步最小化殘差以提升精度。</li>
+</ol></div></details></section><section class="study-card" id="concepts"><div class="card-kicker">快速版</div><h3>觀念確認</h3><div class="markdown-body quick-layer"><ul>
+<li><strong>觀念 1：</strong> LatentPDE 不應用物理罰則到損失函數，而是將 PDE 係數直接作為潛在表示，讓物理成為架構約束。</li>
+<li><strong>觀念 2：</strong> 擴散模型提供的不確定性量化不是來自資料分佈假設，而是來自對物理一致潛在變量的後驗採樣。</li>
+<li><strong>觀念 3：</strong> MAP 與編碼器初始化的相對性能取決於觀測資訊量與訓練分佈的覆蓋程度，沒有絕對優劣。</li>
+</ul></div><details class="detail-layer" id="concepts-detail"><summary>詳細版</summary><div class="markdown-body"><ul>
+<li><strong>觀念 1：</strong> LatentPDE 不應用物理罰則到損失函數，而是將 PDE 係數直接作為潛在表示，讓物理成為架構約束。</li>
+<li><strong>觀念 2：</strong> 擴散模型提供的不確定性量化不是來自資料分佈假設，而是來自對物理一致潛在變量的後驗採樣。</li>
+<li><strong>觀念 3：</strong> MAP 與編碼器初始化的相對性能取決於觀測資訊量與訓練分佈的覆蓋程度，沒有絕對優劣。</li>
+<li><strong>觀念 4：</strong> 頻譜表示讓單一解碼器可處理多種 PDE 類型，因為不同 PDE 的傅立葉模式獨立演化。</li>
+<li><strong>觀念 5：</strong> 物理引導在擴散後向階段強制修正，確保最終結果符合物理定律而非僅統計平均。</li>
+</ul></div></details></section><section class="study-card quiz-card" id="quiz"><h3>理解檢查</h3><div class="quiz-block" data-answer="A"><p class="quiz-question">Q1. 為什麼 LatentPDE 要將 PDE 係數作為潛在變量？</p><button type="button" class="quiz-option" data-option="A"><span>A</span>為了讓物理定律成為架構約束而非軟規則化</button><button type="button" class="quiz-option" data-option="B"><span>B</span>為了減少模型訓練時間</button><button type="button" class="quiz-option" data-option="C"><span>C</span>為了方便使用現成的擴散模型庫</button><button type="button" class="quiz-option" data-option="D"><span>D</span>因為這是當前最熱門的研究趨勢</button><p class="quiz-feedback" data-explanation="將 PDE 係數作為潛在變量可以確保解碼過程嚴格遵守物理定律，而非僅作為輕柔的規則化項，這能避免模型在推論時違反物理。"></p></div><div class="quiz-block" data-answer="B"><p class="quiz-question">Q2. 為什麼需要物理引導（physics guidance）？</p><button type="button" class="quiz-option" data-option="A"><span>A</span>因為擴散模型的預測總是錯誤的</button><button type="button" class="quiz-option" data-option="B"><span>B</span>因為去雜訊器只是近似地條件化於觀測，需要物理約束修正</button><button type="button" class="quiz-option" data-option="C"><span>C</span>為了減少計算成本</button><button type="button" class="quiz-option" data-option="D"><span>D</span>為了讓模型能處理非線性 PDE</button><p class="quiz-feedback" data-explanation="去雜訊器無法完美地條件化於所有觀測，因此在後向擴散步驟中需要物理引導來確保重建結果符合物理定律。"></p></div><div class="quiz-block" data-answer="B"><p class="quiz-question">Q3. LatentPDE 與 FunDPS 的主要差異在哪？</p><button type="button" class="quiz-option" data-option="A"><span>A</span>LatentPDE 使用頻譜解碼器，FunDPS 使用卷積神經網絡</button><button type="button" class="quiz-option" data-option="B"><span>B</span>LatentPDE 從低解析度稀疏觀測還原，FunDPS 需要高解析度輸入</button><button type="button" class="quiz-option" data-option="C"><span>C</span>LatentPDE 不使用擴散模型，FunDPS 使用</button><button type="button" class="quiz-option" data-option="D"><span>D</span>LatentPDE 不能量化不確定性</button><p class="quiz-feedback" data-explanation="根據論文，LatentPDE 嚴格使用低解析度、稀疏觀測與初始條件，而 FunDPS 需要高解析度輸入，這在比較時是重要的結構差異。
+
+&lt;!-- STUDY_END --&gt;"></p></div></section></main>
+                  <aside class="study-rail">
+                    <h3>學習導覽</h3>
+                    <p>本篇學習路徑</p>
+                    <a class="active" href="#overview"><span>1</span>Overview<small>總覽</small></a>
+                    <a href="#prerequisites"><span>2</span>Prerequisites<small>先備知識</small></a>
+                    <a href="#terms"><span>3</span>Key Terms<small>重要名詞</small></a>
+                    <a href="#motivation"><span>4</span>Motivation<small>研究動機</small></a>
+                    <a href="#method"><span>5</span>Method<small>方法流程</small></a>
+                    <a href="#concepts"><span>6</span>Concepts<small>觀念確認</small></a>
+                    <a href="#quiz"><span>7</span>Quiz<small>理解檢查</small></a>
+                    <div class="study-tip"><strong>學習小提示</strong><br>先看快速版建立地圖，再展開詳細版補足細節。</div>
+                  </aside>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="hk-footer"><div class="hk-logo">HUMANKIND <span>+</span> GEOMATICS</div><div class="hk-scroll-hint">SWIPE RIGHT</div></div>
+        </div>
+      </section>
+      <section class="swiper-slide paper-slide" data-tags="reconstruction|machine learning">
+        <div class="hk-container">
+          <div class="hk-background-text">SEARCH</div>
+          <div class="hk-grid">
+            <div class="hk-left-col">
+              <p class="hk-tag">[ 04/28 ]</p>
               <h1 class="hk-main-title">共享卷積核心的小波神經網路，用來從拉普拉斯場重建影像</h1>
               <p class="hk-eng-subtitle">Shared-kernel Wavelet Neural Networks for Poisson Image Reconstruction</p>
               <div class="hk-core-statement"><span class="hk-label">CORE</span><p>這篇論文提出一個只有 177 個參數的小型神經網路，能從稀疏的拉普拉斯場快速重建影像，而且速度快、泛化到不同解析度也行。</p></div>

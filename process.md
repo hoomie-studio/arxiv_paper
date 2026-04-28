@@ -1,67 +1,136 @@
-# Arxiv 自動化轉譯原子操作：Summary + Study Mode 雙階段版（OpenClaw 穩定版）
+# Arxiv Paper Library：CRON 自動流程提示詞
 
-請嚴格遵守以下原子操作。執行過程中不要中途回報完成；只有動作 11 結束後才回覆結果。
+你現在要執行 Arxiv_cs 這個 skill 的每日自動流程。
 
-重要規則：
-- 執行 Python 時，直接呼叫完整 Python exe 與腳本路徑。
-- 不要把 PowerShell 檢查指令當成 Python 或 Markdown 內容執行。
-- 若某個檔案不存在，請直接停止並回報缺少哪個檔案，不要跳到下一步。
-- 不要把 temp_task.md 當作摘要結果寫入或合併。
+非常重要：
+- `arxiv_downloader.py` 只負責抓取論文與產生 `downloads/temp_task.md`。
+- `arxiv_studymode.py` 只支援 `--mode merge` 與 `--mode render`。
+- `arxiv_studymode.py` 不會呼叫模型，也沒有 `summary` 或 `studymode` 生成模式。
+- Summary 與 Study Mode 的 Markdown 內容只能由 OpenClaw/Qwen 在對話中完成，再寫入暫存檔。
+- Summary 與 Study Mode 內容必須由你這個 OpenClaw/Qwen 模型依照 prompt 生成，再用寫檔工具存成 Markdown。
+- 不要用 PowerShell 內嵌長段 Markdown，也不要用 Python 自己假裝生成摘要。
+- 每一步完成後才進入下一步；如果缺檔或檔案是空的，停止並回報，不要 merge。
 
-## 第一階段：爬蟲與任務檢查
-【動作 1】：執行論文抓取。請用執行命令工具直接執行下列命令：
+## 固定路徑
+
+Skill 目錄：
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs`
+
+下載與暫存目錄：
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads`
+
+Python：
+`C:\Users\folow\AppData\Local\Programs\Python\Python313\python.exe`
+
+## 動作 1：抓取一篇待處理論文
+
+執行：
+
+```powershell
 C:\Users\folow\AppData\Local\Programs\Python\Python313\python.exe C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\arxiv_downloader.py --mode collect
-銜接要求：執行完畢後，繼續動作 1.1，不要回報完成。
+```
 
-【動作 1.1】：使用檔案讀取或檔案檢查工具確認以下檔案存在且內容不為空：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_task.md
-如果不存在或為空，立刻停止並回報「temp_task.md 未產生」，不要繼續摘要。
-銜接要求：檢查通過後，繼續動作 2，不要回報完成。
+完成後，檢查這個檔案是否存在且不是空檔：
 
-## 第二階段：Summary Mode 生成
-【動作 2】：讀取 Summary 規則：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\summary.md
-銜接要求：讀取後，繼續動作 3，不要回報完成。
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_task.md`
 
-【動作 3】：讀取論文原始任務：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_task.md
-銜接要求：讀取後，繼續動作 4，不要回報完成。
+如果不存在或是空檔，請停止流程並回報「沒有可處理的新論文或抓取失敗」。
 
-【動作 4】：根據 summary.md，產出段落化 Summary Mode 摘要。請嚴格保留 summary.md 指定的 Markdown 標題，不要輸出 JSON，不要輸出額外說明。
-銜接要求：生成後，繼續動作 5，不要回報完成。
+## 動作 2：讀取 Summary prompt
 
-【動作 5】：使用 write_file 將 Summary Mode 摘要寫入：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_summary.md
-寫入後，使用檔案讀取或檔案檢查工具確認 temp_summary.md 存在且不為空。
-銜接要求：檢查通過後，繼續動作 6，不要回報完成。
+讀取：
 
-## 第三階段：Study Mode 生成
-【動作 6】：讀取 Study Mode 規則：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\studymode.md
-銜接要求：讀取後，繼續動作 7，不要回報完成。
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\summary.md`
 
-【動作 7】：再次使用動作 3 的論文內容，並可參考 temp_summary.md，產出 Study Mode 學習內容。請包含分類關鍵字、學習路徑、先備知識、重要名詞、脈絡梳理、方法流程、圖表導讀、觀念確認、3 題理解檢查與延伸閱讀。
-銜接要求：生成後，繼續動作 8，不要回報完成。
+這是 Summary Mode 的輸出規格。
 
-【動作 8】：使用 write_file 將 Study Mode 內容寫入：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_studymode.md
-寫入後，使用檔案讀取或檔案檢查工具確認 temp_studymode.md 存在且不為空。
-銜接要求：檢查通過後，繼續動作 9，不要回報完成。
+## 動作 3：讀取論文內容
 
-## 第四階段：合併、渲染與發布
-【動作 9】：再次確認以下兩個檔案都存在且不為空：
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_summary.md
-C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_studymode.md
-如果任一檔案不存在或為空，停止並回報缺少的檔案，不要執行 merge。
-銜接要求：檢查通過後，繼續動作 10，不要回報完成。
+讀取：
 
-【動作 10】：執行合併、渲染與 GitHub Pages 更新。請用執行命令工具直接執行下列命令：
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_task.md`
+
+這是本次要摘要的論文內容與來源資訊。
+
+## 動作 4：由模型生成 Summary Mode
+
+請你作為 OpenClaw/Qwen 模型，依照 `summary.md` 的規格，根據 `temp_task.md` 的內容生成 Summary Mode Markdown。
+
+注意：
+- 這一步是模型生成文字，不是 Python 指令。
+- 不要呼叫任何 Python 腳本來生成 Summary。
+- 不要只把 `temp_task.md` 原文貼過去。
+- 必須產生符合 `summary.md` 標題格式的繁體中文摘要。
+
+生成完成後，把完整 Summary Markdown 寫入：
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_summary.md`
+
+寫入後檢查檔案存在且不是空檔。
+
+## 動作 5：讀取 Study Mode prompt
+
+讀取：
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\studymode.md`
+
+這是 Study Mode 的輸出規格。
+
+## 動作 6：由模型生成 Study Mode
+
+請你作為 OpenClaw/Qwen 模型，依照 `studymode.md` 的規格，根據 `temp_task.md` 的內容生成 Study Mode Markdown。
+
+可以參考剛剛產生的：
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_summary.md`
+
+但 Study Mode 不是 Summary 的重寫，必須補足：
+- 30 秒看懂
+- 先備知識
+- 重要名詞，包含白話描述與意義
+- 研究動機
+- 方法流程
+- 觀念確認
+- 3 題理解檢查選擇題
+
+注意：
+- 這一步是模型生成文字，不是 Python 指令。
+- 不要呼叫任何 Python 腳本來生成 Study Mode。
+- 不要只把 `temp_task.md` 原文貼過去。
+- 必須產生符合 `studymode.md` 標題格式的繁體中文學習內容。
+
+生成完成後，把完整 Study Mode Markdown 寫入：
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_studymode.md`
+
+寫入後檢查檔案存在且不是空檔。
+
+## 動作 7：合併、渲染、推送
+
+確認以下兩個檔案都存在且不是空檔：
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_summary.md`
+
+`C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\downloads\temp_studymode.md`
+
+確認後執行：
+
+```powershell
 C:\Users\folow\AppData\Local\Programs\Python\Python313\python.exe C:\Users\folow\.openclaw\workspace\skills\Arxiv_cs\arxiv_studymode.py --mode merge
-銜接要求：執行完畢後，繼續動作 11。
+```
 
-【動作 11】：任務完成後，在對話中回報：
-1. 本次論文中文名稱
+`merge` 會做三件事：
+1. 把 Summary 與 Study Mode 合併進 `downloads/paper_summary.md`
+2. 重新產生 `index.html`
+3. 執行自動 Git push
+
+如果 merge 回報缺少章節或缺少暫存檔，停止並回報錯誤，不要刪除暫存檔。
+
+## 最終回報
+
+流程完成後，請回報：
+1. 文獻中文名稱
 2. 一句話核心
-3. temp_summary.md 是否成功寫入
-4. temp_studymode.md 是否成功寫入
+3. `temp_summary.md` 是否已寫入
+4. `temp_studymode.md` 是否已寫入
 5. merge/render/push 是否成功
