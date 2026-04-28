@@ -30,3 +30,9 @@
 - ID: 2604.24187
 - URL: https://arxiv.org/abs/2604.24187
 - 狀態: [已完成摘要+StudyMode] (2026-04-28 10:09:51)
+
+---
+## Shared-kernel Wavelet Neural Networks for Poisson Image Reconstruction
+- ID: 2604.24000
+- URL: https://arxiv.org/abs/2604.24000
+- 狀態: [已完成-含StudyMode] (2026-04-28 11:27:53)
