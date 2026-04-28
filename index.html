@@ -1,5 +1,115 @@
 <!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Paper Study Library</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>
-:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Medical Imaging">Medical Imaging</button><button type="button" data-filter="Foundation Model / Transformer">Foundation Model / Transformer</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="Cardiac MRI">Cardiac MRI</button><button type="button" data-filter="Accelerated MRI">Accelerated MRI</button><button type="button" data-filter="Foundation Model">Foundation Model</button><button type="button" data-filter="CLIP">CLIP</button><button type="button" data-filter="DINOv2">DINOv2</button><button type="button" data-filter="BiomedCLIP">BiomedCLIP</button><button type="button" data-filter="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</button><button type="button" data-filter="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</button><button type="button" data-filter="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</button><button type="button" data-filter="EEG">EEG</button><button type="button" data-filter="Diffusion Model">Diffusion Model</button><button type="button" data-filter="Brain Decoding">Brain Decoding</button><button type="button" data-filter="ControlNet">ControlNet</button><button type="button" data-filter="Visual Reconstruction">Visual Reconstruction</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button><button type="button" data-filter="Computer Vision">Computer Vision</button><button type="button" data-filter="Dataset">Dataset</button><button type="button" data-filter="Reconstruction">Reconstruction</button><button type="button" data-filter="進階">進階</button><button type="button" data-filter="全景攝影">全景攝影</button><button type="button" data-filter="3D 重建">3D 重建</button><button type="button" data-filter="點雲">點雲</button><button type="button" data-filter="深度圖">深度圖</button><button type="button" data-filter="資料集">資料集</button><button type="button" data-filter="SLAM">SLAM</button><button type="button" data-filter="Medical Imaging">Medical Imaging</button><button type="button" data-filter="Foundation Model / Transformer">Foundation Model / Transformer</button><button type="button" data-filter="Cardiac MRI">Cardiac MRI</button><button type="button" data-filter="Accelerated MRI">Accelerated MRI</button><button type="button" data-filter="Foundation Model">Foundation Model</button><button type="button" data-filter="CLIP">CLIP</button><button type="button" data-filter="DINOv2">DINOv2</button><button type="button" data-filter="BiomedCLIP">BiomedCLIP</button><button type="button" data-filter="Brain-Computer Interface / Computational Neuroscience">Brain-Computer Interface / Computational Neuroscience</button><button type="button" data-filter="Diffusion / CLIP / VAE / ControlNet">Diffusion / CLIP / VAE / ControlNet</button><button type="button" data-filter="Reconstruction / Generation / Prediction">Reconstruction / Generation / Prediction</button><button type="button" data-filter="EEG">EEG</button><button type="button" data-filter="Diffusion Model">Diffusion Model</button><button type="button" data-filter="Brain Decoding">Brain Decoding</button><button type="button" data-filter="ControlNet">ControlNet</button><button type="button" data-filter="Visual Reconstruction">Visual Reconstruction</button><button type="button" data-filter="Foundation Model, Dataset">Foundation Model, Dataset</button><button type="button" data-filter="3D reconstruction">3D reconstruction</button><button type="button" data-filter="Internet photos">Internet photos</button><button type="button" data-filter="long-tail scenes">long-tail scenes</button><button type="button" data-filter="MegaDepth-X">MegaDepth-X</button><button type="button" data-filter="sparsity-aware sampling">sparsity-aware sampling</button></div></nav><main>
+    <article class="paper" data-tags="Computer Vision|Dataset|Reconstruction|進階|全景攝影|3D 重建|點雲|深度圖|資料集|SLAM">
+      <header class="hero">
+        <div>
+          <p class="date">[ 04/28 ]</p>
+          <h1>Holo360D：一個超大規模真實世界的全景 3D 重建資料集，擁有連續觀測軌跡</h1>
+          <p class="eng">Holo360D: A Large-Scale Real-World Dataset with Continuous Trajectories for Advancing Panoramic 3D Reconstruction and Beyond</p>
+        </div>
+        <div class="actions">
+          <a class="btn secondary" href="https://arxiv.org/abs/2604.22482" target="_blank" rel="noopener">閱讀原始論文</a>
+          <button class="btn primary" type="button" data-open-study>進入 Study Mode</button>
+        </div>
+        <div class="core"><span>CORE</span><p>研究者製作了一個超大規模全景 3D 重建資料集，包含連續拍攝的軌跡與高品質深度圖，大幅提升了 3D 模型的準確度。</p></div>
+        <div class="tags"><span class="tag" data-tag="Computer Vision">Computer Vision</span><span class="tag" data-tag="Dataset">Dataset</span><span class="tag" data-tag="Reconstruction">Reconstruction</span><span class="tag" data-tag="進階">進階</span><span class="tag" data-tag="全景攝影">全景攝影</span><span class="tag" data-tag="3D 重建">3D 重建</span><span class="tag" data-tag="點雲">點雲</span><span class="tag" data-tag="深度圖">深度圖</span><span class="tag" data-tag="資料集">資料集</span><span class="tag" data-tag="SLAM">SLAM</span></div>
+      </header>
+      <section class="summary-panel">
+        <div class="section-title"><span>Summary</span><h2>這篇研究在做什麼？</h2></div>
+        <div class="markdown-body"><h3>文獻名稱</h3>
+<p>Holo360D: A Large-Scale Real-World Dataset with Continuous Trajectories for Advancing Panoramic 3D Reconstruction and Beyond</p>
+<h3>文獻中文名稱</h3>
+<p>Holo360D：一個超大規模真實世界的全景 3D 重建資料集，擁有連續觀測軌跡</p>
+<ul>
+<li>論文來源URL: https://arxiv.org/abs/2604.22482</li>
+<li>抓取時間：2026-04-28 00:36 UTC</li>
+</ul>
+<h3>分類關鍵字</h3>
+<ul>
+<li>主題類別：Computer Vision</li>
+<li>方法類別：Dataset</li>
+<li>任務類別：Reconstruction</li>
+<li>難度：進階</li>
+<li>關鍵字：全景攝影，3D 重建，點雲，深度圖，資料集</li>
+</ul>
+<h3>一句話核心</h3>
+<p>研究者製作了一個超大規模全景 3D 重建資料集，包含連續拍攝的軌跡與高品質深度圖，大幅提升了 3D 模型的準確度。</p>
+<h3>為什麼要研究這個？（研究動機）</h3>
+<p>過去很多電腦視覺的研究都集中在普通的平面照片（perspective images），但我們生活中常見的全景照片（panoramic images，比如旅遊時拍的全景圖）因為拍攝方式不同，呈現的是球形影像（spherical images），會產生特殊的視覺扭曲，導致針對平面照片訓練好的 3D 重建模型效果變差。</p>
+<p>現有的全景 3D 資料集（像是 Matterport3D 等）有三個主要問題：第一是資料量太少，通常只有幾千張全景照，很難訓練出強大的模型；第二是深度圖品質不佳，因為玻璃反光或是被遮擋的地方常常沒有深度資訊；第三是觀測點之間距離太遠、不連續，難以用於需要連續視角的任務。</p>
+<p>這些問題讓研究人員很難開發出好的全景 3D 重建模型，限制了我們在生活中運用全景攝影技術的可能性，例如虛擬實境導覽、建築數位孿生等應用都因此受限。</p>
+<h3>他們做了什麼？（研究方法）</h3>
+<p>研究者開發了一套手持式的掃描系統，就像是拿著專業級的 3D 掃描筆一樣，一邊緩慢移動一邊同時記錄全景照片、點雲資料和相機位置。為了確保資料品質，掃描速度控制得很慢（室內約 0.3 公尺/秒，室外約 0.6 公尺/秒），就像是在畫一幅極其細緻的 3D 繪圖一樣。</p>
+<p>整個製作過程就像是在廚房做菜一樣分為三個步驟：首先收集食材（野外採集資料），然後進行初步處理（離線重建），最後進行精修（資料後處理）。就像是在做雕塑時，先粗略塑造大形，再慢慢修飾細節。他們特別設計了一套「三步驟精修流程」來去除雜訊、填補缺漏並重做細節，就像是雕塑家用手仔細打磨每一處表面。</p>
+<h3>驚人發現與具體數據（關鍵結果）</h3>
+<p>這個新資料集擁有高達 109,495 張全景照片，總拍攝距離超過 31.5 公里，涵蓋了超過 190,000 平方公尺的範圍。更重要的是，它的深度圖品質在所有全景資料集中排名第一，室內區域有 86% 的像素都有有效的深度資訊，而許多舊資料集只有 62-72%。深度圖與照片對齊的平均誤差只有 5.03 個像素，非常精準。</p>
+<p>當研究人員用這個資料集訓練 3D 重建模型時，效果提升了相當多。特別是針對透明物體（像玻璃窗）的重建，原本很難處理的地方，現在也能準確重建出玻璃另一邊的物體。這就像是用高解析度地圖來導航，連建築物的每一處細節都清晰可見。</p>
+<h3>這對我有什麼意義？（實際應用）</h3>
+<ul>
+<li><strong>建築數位孿生</strong>：可以用來建立超真實的建築 3D 模型，讓建築師和設計師更精準地呈現設計概念。</li>
+<li><strong>虛擬實境導覽</strong>：提供連續且高品質的 3D 環境，讓 VR 導覽更流暢、真實，不會有畫面跳動或深度錯位。</li>
+<li><strong>自動化建築測量</strong>：結合手持掃描設備，可以快速生成完整的建築 3D 模型，減少人力現場測量的時間。</li>
+<li><strong>教育與遊戲開發</strong>：提供高品質的室內外觀環境，讓遊戲開發者和教育內容創作者更容易取得逼真的場景素材。</li>
+</ul></div>
+      </section>
+      <section class="study-panel" hidden>
+        <div class="study-head"><div><span>Study Mode</span><h2>學習導覽</h2></div><button class="btn secondary" type="button" data-close-study>回到 Summary</button></div>
+        <div class="card-grid"><section class="card"><h3>學習路徑</h3><div class="markdown-body"><ul>
+<li>第一步：先了解什麼是 3D 重建、點雲、深度圖、全景攝影等基本觀念。</li>
+<li>第二步：理解現有全景資料集的限制（資料量小、深度不完整、觀測點不連續）以及它們帶來的問題。</li>
+<li>第三步：從資料採集、離線重建、資料後處理三個階段，掌握整個資料集的製作流程與設計思考。</li>
+</ul></div></section><section class="card"><h3>先備知識</h3><div class="markdown-body"><p>請列出讀懂這篇論文前最好先知道的 3 到 5 個概念。每個概念 1 句話。<br />
+- <strong>點雲（Point Cloud）</strong>：由許多三維坐標點組成的資料集，每個點代表空間中的一個位置，就像是組成 3D 模型的無數顆珠子。<br />
+- <strong>全景攝影（Panoramic Imaging）</strong>：拍攝環繞四周 360 度視野的照片或影片，需要用特殊的投影方式將影像展開成平面，會產生球形扭曲。<br />
+- <strong>深度圖（Depth Map）</strong>：一張圖片，其中每個像素的值代表該位置物體的距離，就像是用不同顏色表示不同距離的地圖。<br />
+- <strong>SLAM（即時定位與地圖繪製）</strong>：讓機器人在未知環境中同時知道自己位置和周圍環境的技術，這裡用於即時將 3D 點雲初步對齊。<br />
+- <strong>網格模型（Mesh）</strong>：由許多多邊形連接而成的三維表面模型，用來描述物體的形狀，類似於用無數個三角形拼湊出物體外觀。</p></div></section><section class="card"><h3>重要名詞</h3><div class="markdown-body"><p>請挑選論文中最重要的 4 個名詞。每個名詞都要包含：它是什麼、為什麼重要、它解決了舊方法的什麼缺點。<br />
+1. <strong>Holo360D</strong>：這是一個包含 109,495 張全景照片的大型資料集，每個照片都有對應的深度圖和點雲資料。它重要的原因是提供了超大規模、高品質且連續的觀測軌跡，改善了以往資料集規模小、品質差、觀測點分散的問題。<br />
+2. <strong>深度完整性（Depth Completeness）</strong>：指深度圖中有多少比例的像素是有效的深度值，而非空白或錯誤值。它重要的原因是深度圖越完整，訓練出的模型就越準確，改善了舊資料集在玻璃、反光區域常被遺漏深度資訊的缺點。<br />
+3. <strong>連續軌跡（Continuous Trajectories）</strong>：指相機在拍攝過程中相鄰兩個視點之間的距離非常近（平均只有 29 公分）。它重要的原因是讓模型可以學習連續的視覺資訊，改善了舊資料集觀測點相距數公尺、難以用於連續視角重建的問題。<br />
+4. <strong>網格補孔（Mesh Hole Filling）</strong>：一種自動填補三維模型缺漏的技術，特別是處理玻璃等透明材質造成的空洞。它重要的原因是可以還原被遮擋或反光區域的完整形狀，改善了點雲在複雜場景中無法完整呈現物體的問題。</p></div></section><section class="card"><h3>脈絡梳理</h3><div class="markdown-body"><ul>
+<li>背景：電腦視覺領域過去主要在研究如何從平面照片重建三維世界，像 DUST3R 等模型已經能夠很精準地從幾張照片還原出物體的 3D 位置和相機位置。但這些模型都是針對平面照片訓練的，當我們用在全景照片上時效果就很差。</li>
+<li>痛點：現有的全景資料集就像是給學生做的练习题，題目太少、難度不夠、還有很多缺漏的題目。Matterport3D 只有不到一萬張全景照，而且觀測點之間平均相距兩點二五公尺，就像是給學生看的練習題都是分散在不同頁上的，很難讓學生理解整個章節的內容。</li>
+<li>作者的切入點：這篇論文的作者直接「走出去」，拿著專業的 3D 掃描設備，花了十九個小時實際採集資料，就像是一位老師自己編了一套完整教材，而不只是收集現有的習題。他們不僅提供了大量資料，還特別設計了完整的後處理流程來提升資料品質。</li>
+</ul></div></section><section class="card"><h3>方法流程</h3><div class="markdown-body"><p>用生活化的類比方式說明研究者怎麼做。請列 4 到 6 步，每步 1 到 2 句話。<br />
+1. <strong>資料採集</strong>：帶著手持掃描設備緩慢移動拍攝，一邊走一邊記錄全景照片、點雲和相機位置，就像是用專業攝影機拍攝一部 3D 電影。<br />
+2. <strong>初步對齊</strong>：用掃描設備內建的 SLAM 系統即時處理資料，快速生成粗略對齊的點雲和相機位置，就像是先用鉛筆在紙上畫出大致的輪廓。<br />
+3. <strong>離線精修</strong>：將粗略資料送進電腦進行更精確的處理，計算出準確的相機位置和對齊的點雲，並生成高品質的三維網格模型，就像是請專家把素描稿變成精細的插圖。<br />
+4. <strong>雜訊過濾</strong>：用三種方式去除點雲中的雜訊，包括切除孤立點、自動補滿缺口、重新製作細節豐富的區域，就像是雕刻家去除大理石上的碎石並修飾細節。<br />
+5. <strong>深度圖生成</strong>：將處理好的點雲和網格資料轉換成深度圖，就像是用不同顏色標記每個位置的距離，讓電腦能夠理解物體的前後關係。<br />
+6. <strong>品質檢驗</strong>：檢查深度圖與照片對齊的精確度、點雲的重建準確度等指標，確保資料品質符合標準，就像是產品出貨前的品質檢驗。</p></div></section><section class="card"><h3>圖表導讀</h3><div class="markdown-body"><p>請挑一個最適合新手理解的圖、表或實驗結果來解釋。不要嘗試重建圖片，只用文字導讀。<br />
+- 圖表重點：圖表 1 比較了不同全景資料集的深度圖品質，Holo360D 在所有環境中都表現最好。這張圖主要想證明 Holo360D 的深度圖不僅規模大，而且品質也遠超現有資料集。<br />
+- 怎麼看：比較圖中各資料集的數據，你會看到舊資料集在玻璃區域常常是一片空白（沒有深度資訊），而 Holo360D 即使是玻璃也能還原出完整的形狀。深度完整性的數值越高（越接近 100%）代表品質越好。<br />
+- 新手重點：看完後最該記住的一件事是，深度圖的完整性對於訓練 3D 重建模型至關重要，而 Holo360D 在處理透明物體（如玻璃窗）方面的表現特別出色。</p></div></section><section class="card"><h3>觀念確認</h3><div class="markdown-body"><p>請列出 3 個讀者讀完後應該能回答的觀念確認題，用簡答形式。<br />
+1. 問：為什麼全景照片不能用平面照片的 3D 重建模型來處理？答：因為全景照片是球形投影的，會產生特殊的視覺扭曲，而平面照片的模型是基於平面幾何學的，無法正確理解球形扭曲的影像。<br />
+2. 問：Holo360D 資料集的連續軌跡指的是什麼？答：指的是相機在採集資料時，相鄰兩個視點之間的距離非常近（平均只有 29 公分），讓模型可以學習連續的視覺資訊。<br />
+3. 問：為什麼說網格深度圖比點雲深度圖更好？答：網格深度圖是基於完整的三維網格表面生成的，能完整表示物體的形狀，而點雲在某些區域（如被遮擋處）會有缺失，導致深度資訊不完整。</p></div></section><section class="card"><h3>理解檢查</h3><div class="markdown-body"><p>請出 3 題單選題，測驗讀者是否理解本文核心貢獻、方法流程與結果意義。格式必須如下：<br />
+Q1: 這篇論文主要解決了什麼問題？<br />
+A. 提出了一個全新的 3D 重建演算法<br />
+B. 製作了一個高品質的全景 3D 重建資料集並建立新的基準<br />
+C. 開發了一種新的全景攝影技術<br />
+D. 改進了相機感光元件的製造工藝<br />
+答案：B<br />
+解釋：論文的主要貢獻是資料集，而非演算法或硬體技術。</p>
+<p>Q2: 為什麼 Holo360D 的連續軌跡對於 3D 重建很重要？<br />
+A. 可以讓資料集體積變大<br />
+B. 能讓模型學習到更多連續的視覺資訊，提升重建準確度<br />
+C. 可以加快相機的拍攝速度<br />
+D. 能讓照片變得更清晰<br />
+答案：B<br />
+解釋：連續的視點讓模型可以「逐步」重建整個場景，而非依賴極少數的視點。</p>
+<p>Q3: 資料集後處理中的「網格補孔」主要用於處理什麼問題？<br />
+A. 照片過於昏暗的區域<br />
+B. 玻璃或反光表面造成的點雲缺失<br />
+C. 相機旋轉角度不當造成的失真<br />
+D. 點雲資料過大造成的記憶體不足<br />
+答案：B<br />
+解釋：玻璃等透明材質會導致點雲稀疏，網格補孔可以自動填補這些區域的缺漏。</p></div></section><section class="card"><h3>延伸閱讀</h3><div class="markdown-body"><p>請列出 2 到 3 個論文中提到、或和本文高度相關的方法、模型、資料集或研究方向。不需要查網路，不要捏造 URL。<br />
+1. <strong>DUST3R</strong>：這是一款開源的 3D 重建模型，可以直接從平面照片還原三維世界，是理解這篇論文的基礎參考。<br />
+2. <strong>Matterport3D</strong>：這是一個較早的全景 3D 資料集，可以用來與 Holo360D 比較，了解為什麼新資料集更優異。<br />
+3. <strong>VGGT</strong>：這是一個強大的三維重建模型，論文中展示了用 Holo360D 資料集調整後的 VGGT 表現更好。</p></div></section></div>
+      </section>
+    </article>
     <article class="paper" data-tags="Medical Imaging|Foundation Model / Transformer|Reconstruction|進階|Cardiac MRI|Accelerated MRI|Foundation Model|CLIP|DINOv2|BiomedCLIP">
       <header class="hero">
         <div>

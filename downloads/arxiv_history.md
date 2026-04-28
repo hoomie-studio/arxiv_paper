@@ -18,3 +18,9 @@
 - ID: 2604.22557
 - URL: https://arxiv.org/abs/2604.22557
 - 狀態: [已完成摘要+StudyMode] (2026-04-27 20:08:46)
+
+---
+## Holo360D: A Large-Scale Real-World Dataset with Continuous Trajectories for Advancing Panoramic 3D Reconstruction and Beyond
+- ID: 2604.22482
+- URL: https://arxiv.org/abs/2604.22482
+- 狀態: [已完成摘要+StudyMode] (2026-04-28 08:38:16)
