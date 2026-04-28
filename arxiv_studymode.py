@@ -27,6 +27,18 @@ SUMMARY_END = "<!-- SUMMARY_END -->"
 STUDY_START = "<!-- STUDYMODE_START -->"
 STUDY_END = "<!-- STUDYMODE_END -->"
 REQUIRED_SECTIONS = ["文獻名稱", "文獻中文名稱", "一句話核心"]
+ALLOWED_TAGS = [
+    "reconstruction",
+    "remote sensing",
+    "point cloud",
+    "object detection",
+    "GIS",
+    "digital twin",
+    "Lidar",
+    "machine learning",
+    "photogrammetry",
+]
+TAG_LOOKUP = {tag.lower(): tag for tag in ALLOWED_TAGS}
 
 
 def ensure_directory_exists():
@@ -34,7 +46,7 @@ def ensure_directory_exists():
 
 
 def md_to_html(text):
-    return markdown.markdown(text.strip(), extensions=["extra", "nl2br", "sane_lists"]) if text.strip() else ""
+    return markdown.markdown(text.strip(), extensions=["extra", "nl2br", "sane_lists", "tables"]) if text.strip() else ""
 
 
 def normalize_heading(text):
@@ -90,51 +102,37 @@ def split_entries(full_content):
 
 
 def parse_entry(entry):
-    summary = extract_between(entry, SUMMARY_START, SUMMARY_END)
+    summary = extract_between(entry, SUMMARY_START, SUMMARY_END) or entry
     study = extract_between(entry, STUDY_START, STUDY_END)
-    if not summary:
-        summary = entry
     summary_sections = split_sections(summary)
     study_sections = split_sections(study)
-    merged = {**summary_sections, **{f"study:{k}": v for k, v in study_sections.items()}}
     title = first_line(summary_sections.get("文獻中文名稱", study_sections.get("文獻中文名稱", "")), "未命名研究")
     eng_title = first_line(summary_sections.get("文獻名稱", study_sections.get("文獻名稱", "")), "RESEARCH PAPER")
     core = first_line(summary_sections.get("一句話核心", study_sections.get("一句話核心", "")), "點擊查看詳情")
     date_match = re.search(r"歸檔時間[:：]?\s*(\d{4}-\d{2}-\d{2})", entry)
+    tags = parse_tags(summary_sections.get("分類關鍵字", "") + "\n" + study_sections.get("分類關鍵字", ""))
     return {
         "raw": entry,
         "summary": summary,
         "study": study,
         "summary_sections": summary_sections,
         "study_sections": study_sections,
-        "sections": merged,
         "title": title,
         "eng_title": eng_title,
         "core": core,
         "url": extract_url(summary + "\n" + study),
         "date": date_match.group(1) if date_match else datetime.now().strftime("%Y-%m-%d"),
-        "tags": parse_tags(summary_sections.get("分類關鍵字", "") + "\n" + study_sections.get("分類關鍵字", "")),
+        "tags": tags,
     }
 
 
 def parse_tags(text):
-    tags = []
-    for line in text.splitlines():
-        line = re.sub(r"^\s*[-*]\s*", "", line.strip())
-        if not line or "：" not in line and ":" not in line:
-            continue
-        key, val = re.split(r"[:：]", line, 1)
-        key, val = key.strip(), val.strip().strip("[]")
-        if key in ["主題類別", "方法類別", "任務類別", "難度"] and val:
-            tags.append(val)
-        elif key == "關鍵字":
-            tags.extend([x.strip() for x in re.split(r"[,，、]", val) if x.strip()])
-    seen, out = set(), []
-    for tag in tags:
-        if tag and tag not in seen and "例如" not in tag:
-            seen.add(tag)
-            out.append(tag)
-    return out[:10]
+    found = []
+    lowered = text.lower()
+    for key, canonical in TAG_LOOKUP.items():
+        if re.search(rf"(?<![a-z0-9]){re.escape(key)}(?![a-z0-9])", lowered):
+            found.append(canonical)
+    return found
 
 
 def strip_meta_sections(sections, names):
@@ -144,11 +142,15 @@ def strip_meta_sections(sections, names):
 def render_article(paper, idx):
     ss, ts = paper["summary_sections"], paper["study_sections"]
     date_tag = paper["date"][5:].replace("-", "/")
-    tags = "".join(f'<span class="tag" data-tag="{html.escape(t)}">{html.escape(t)}</span>' for t in paper["tags"])
+    tag_html = "".join(f'<span class="paper-tag">{html.escape(tag)}</span>' for tag in paper["tags"])
     data_tags = "|".join(paper["tags"])
-    summary_body = strip_meta_sections(ss, ["為什麼要研究這個？（研究動機）", "他們做了什麼？（研究方法）", "驚人發現與具體數據（關鍵結果）", "這對我有什麼意義？（實際應用）"])
-    if not summary_body:
-        summary_body = paper["summary"]
+    summary_body = strip_meta_sections(ss, [
+        "秒懂表格",
+        "為什麼要研究這個？（研究動機）",
+        "他們做了什麼？（研究方法）",
+        "驚人發現與具體數據（關鍵結果）",
+        "這對我有什麼意義？（實際應用）",
+    ]) or paper["summary"]
     study_cards = [
         ("學習路徑", ts.get("學習路徑", "")),
         ("先備知識", ts.get("先備知識", "")),
@@ -160,33 +162,38 @@ def render_article(paper, idx):
         ("理解檢查", ts.get("理解檢查", "")),
         ("延伸閱讀", ts.get("延伸閱讀", "")),
     ]
-    cards = "".join(render_card(name, body) for name, body in study_cards if body.strip())
-    if not cards:
-        cards = render_card("Study Mode", paper["study"] or "尚未產生 Study Mode 內容。")
+    cards = "".join(render_card(name, body) for name, body in study_cards if body.strip()) or render_card("Study Mode", paper["study"] or "尚未產生 Study Mode 內容。")
     return f'''
-    <article class="paper" data-tags="{html.escape(data_tags)}">
-      <header class="hero">
-        <div>
-          <p class="date">[ {html.escape(date_tag)} ]</p>
-          <h1>{html.escape(paper["title"])}</h1>
-          <p class="eng">{html.escape(paper["eng_title"])}</p>
+      <section class="swiper-slide paper-slide" data-tags="{html.escape(data_tags)}">
+        <div class="hk-container">
+          <div class="hk-background-text">SEARCH</div>
+          <div class="hk-grid">
+            <div class="hk-left-col">
+              <p class="hk-tag">[ {html.escape(date_tag)} ]</p>
+              <h1 class="hk-main-title">{html.escape(paper["title"])}</h1>
+              <p class="hk-eng-subtitle">{html.escape(paper["eng_title"])}</p>
+              <div class="hk-core-statement"><span class="hk-label">CORE</span><p>{html.escape(paper["core"])}</p></div>
+              <div class="paper-tags">{tag_html}</div>
+              <div class="hero-actions">
+                <a class="hk-link-btn" href="{html.escape(paper["url"])}" target="_blank" rel="noopener">閱讀原始論文</a>
+                <button class="hk-link-btn dark" type="button" data-open-study>進入 Study Mode</button>
+              </div>
+            </div>
+            <div class="hk-right-col">
+              <section class="summary-panel">
+                <div class="mode-eyebrow">Summary</div>
+                <h2>這篇研究在做什麼？</h2>
+                <div class="markdown-body">{md_to_html(summary_body)}</div>
+              </section>
+              <section class="study-panel" hidden>
+                <div class="study-head"><div><div class="mode-eyebrow">Study Mode</div><h2>學習導覽</h2></div><button class="mini-btn" type="button" data-close-study>回到 Summary</button></div>
+                <div class="card-grid">{cards}</div>
+              </section>
+            </div>
+          </div>
+          <div class="hk-footer"><div class="hk-logo">HUMANKIND <span>×</span> GEOMATICS</div><div class="hk-scroll-hint">SWIPE RIGHT —</div></div>
         </div>
-        <div class="actions">
-          <a class="btn secondary" href="{html.escape(paper["url"])}" target="_blank" rel="noopener">閱讀原始論文</a>
-          <button class="btn primary" type="button" data-open-study>進入 Study Mode</button>
-        </div>
-        <div class="core"><span>CORE</span><p>{html.escape(paper["core"])}</p></div>
-        <div class="tags">{tags}</div>
-      </header>
-      <section class="summary-panel">
-        <div class="section-title"><span>Summary</span><h2>這篇研究在做什麼？</h2></div>
-        <div class="markdown-body">{md_to_html(summary_body)}</div>
-      </section>
-      <section class="study-panel" hidden>
-        <div class="study-head"><div><span>Study Mode</span><h2>學習導覽</h2></div><button class="btn secondary" type="button" data-close-study>回到 Summary</button></div>
-        <div class="card-grid">{cards}</div>
-      </section>
-    </article>'''
+      </section>'''
 
 
 def render_card(title, body):
@@ -194,28 +201,22 @@ def render_card(title, body):
 
 
 def render_page(papers):
-    all_tags = []
-    for p in papers:
-        all_tags.extend(p["tags"])
-    unique_tags = []
-    for tag in all_tags:
-        if tag not in unique_tags:
-            unique_tags.append(tag)
-    filters = "".join(f'<button type="button" data-filter="{html.escape(tag)}">{html.escape(tag)}</button>' for tag in unique_tags)
-    articles = "".join(render_article(p, i) for i, p in enumerate(papers, 1))
-    return f'''<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Paper Study Library</title><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>{page_style()}</style></head><body><nav class="topbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button>{filters}</div></nav><main>{articles}</main><script>{page_script()}</script></body></html>'''
+    filters = "".join(f'<button type="button" data-filter="{html.escape(tag)}">{html.escape(tag)}</button>' for tag in ALLOWED_TAGS)
+    slides = "".join(render_article(p, i) for i, p in enumerate(papers, 1))
+    return f'''<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Arxiv Paper Study Library</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet"><style>{page_style()}</style></head><body><nav class="filterbar"><strong>Arxiv Paper Library</strong><div class="filters"><button type="button" data-filter="__all" class="active">全部</button>{filters}</div></nav><div class="swiper"><div class="swiper-wrapper">{slides}</div></div><script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script><script>{page_script()}</script></body></html>'''
 
 
 def page_style():
     return r'''
-:root{--bg:#f7f7f5;--paper:#fff;--ink:#111;--muted:#686868;--line:#ddd;--accent:#e92727;--soft:#f0f0ed;--sans:'Noto Sans TC',sans-serif;--serif:'Noto Serif TC',serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}.topbar{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--line);background:rgba(247,247,245,.94);backdrop-filter:blur(8px)}.filters{display:flex;gap:8px;overflow:auto}.filters button,.btn{border:1px solid var(--ink);border-radius:6px;background:#fff;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}.filters button.active,.btn.primary{background:var(--ink);color:#fff}.paper{min-height:100vh;padding:36px 44px;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:minmax(0,1fr)auto;gap:18px 28px;margin-bottom:18px}.date{margin:0 0 4px;font-weight:800}h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);line-height:1.08;margin:0}.eng{margin:8px 0 0;color:#8b8b8b;text-transform:uppercase;letter-spacing:2px}.actions{display:flex;gap:12px;align-items:start;padding-top:36px}.core{grid-column:1/-1;display:flex;gap:12px;font-size:17px;line-height:1.8}.core span{background:var(--ink);color:#fff;font-size:12px;padding:3px 10px;font-weight:900;height:max-content;margin-top:6px}.core p{margin:0}.tags{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.tag{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}.summary-panel,.study-panel{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:8px;padding:24px}.section-title span,.study-head span{color:var(--accent);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px}.section-title h2,.study-head h2{margin:4px 0 18px;font-size:26px}.markdown-body{font-size:16px;line-height:1.85}.markdown-body h3{font-size:20px;margin:22px 0 8px}.markdown-body p{margin:0 0 12px}.markdown-body li{margin:7px 0}.study-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:16px}.card-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}.card{grid-column:span 4;background:#fff;border:1px solid var(--line);border-radius:7px;padding:18px}.card:nth-child(4),.card:nth-child(5),.card:nth-child(8){grid-column:span 6}.card h3{margin:0 0 10px;font-size:20px;color:var(--accent)}.paper.hidden{display:none}@media(max-width:980px){.topbar{display:block}.filters{margin-top:10px}.paper{padding:24px}.hero{grid-template-columns:1fr}.actions{padding-top:0;flex-wrap:wrap}.btn{width:100%;justify-content:center;display:inline-flex}.card{grid-column:1/-1!important}}'''
+:root{--hk-bg:#f8f8f8;--hk-black:#0a0a0a;--hk-red:#e63946;--hk-gray:#e0e0e0;--soft:#f1f1ee;--serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif}*{box-sizing:border-box;margin:0;padding:0}body,html{height:100%;overflow:hidden;background:var(--hk-bg);color:var(--hk-black);font-family:var(--sans)}.filterbar{position:fixed;left:0;right:0;top:0;z-index:10;height:54px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 34px;border-bottom:1px solid var(--hk-gray);background:rgba(248,248,248,.94);backdrop-filter:blur(8px)}.filterbar strong{font-weight:900;letter-spacing:1px}.filters{display:flex;gap:8px;overflow:auto}.filters button,.mini-btn{border:1px solid var(--hk-black);background:#fff;border-radius:5px;padding:7px 10px;font:inherit;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer}.filters button.active{background:var(--hk-black);color:#fff}.swiper{width:100%;height:100vh;padding-top:54px}.hk-container{width:100%;height:calc(100vh - 54px);padding:48px 60px 34px;display:flex;flex-direction:column;position:relative;z-index:1}.hk-background-text{position:absolute;top:4%;right:5%;font-size:20vw;font-weight:900;color:rgba(0,0,0,.035);z-index:0;pointer-events:none;white-space:nowrap}.hk-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;z-index:1;flex-grow:1;min-height:0;margin-bottom:24px}.hk-left-col{min-width:0}.hk-right-col{position:relative;overflow-y:auto;padding-right:20px;scrollbar-width:thin;scrollbar-color:var(--hk-black) transparent}.hk-tag{font-weight:800;margin-bottom:8px}.hk-main-title{font-family:var(--serif);font-size:clamp(2.1rem,4.8vw,5.2rem);line-height:1.08;font-weight:900;letter-spacing:0;margin-bottom:12px}.hk-eng-subtitle{font-size:.88rem;color:#888;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:28px}.hk-core-statement{display:flex;gap:18px;align-items:flex-start;margin-bottom:18px}.hk-label{background:var(--hk-black);color:#fff;padding:4px 10px;font-size:.7rem;font-weight:900;transform:rotate(-90deg) translateX(-5px);margin-top:16px}.hk-core-statement p{font-size:1.22rem;font-family:var(--serif);line-height:1.45;font-weight:800}.paper-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.paper-tag{background:#fff;border:1px solid var(--hk-gray);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;color:#333}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.hk-link-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border:2px solid var(--hk-black);border-radius:5px;color:var(--hk-black);text-decoration:none;font-weight:900;background:#fff;cursor:pointer;font:inherit}.hk-link-btn.dark{background:var(--hk-black);color:#fff}.summary-panel,.study-panel{background:rgba(255,255,255,.76);border:1px solid var(--hk-gray);border-radius:7px;padding:22px}.mode-eyebrow{color:var(--hk-red);font-weight:900;text-transform:uppercase;letter-spacing:1px;font-size:12px}.summary-panel h2,.study-head h2{font-size:24px;margin:4px 0 14px}.markdown-body{font-size:16px;line-height:1.78}.markdown-body h3{font-family:var(--serif);font-size:1.35rem;margin:24px 0 10px;border-bottom:2px solid var(--hk-black);display:inline-block}.markdown-body p{margin-bottom:14px;text-align:justify}.markdown-body strong,.markdown-body b{color:var(--hk-red);font-weight:900}.markdown-body ul,.markdown-body ol{padding-left:20px;margin-bottom:12px}.markdown-body li{padding:7px 0;line-height:1.65}.markdown-body table{width:100%;border-collapse:separate;border-spacing:0;margin:8px 0 18px;border:1px solid var(--hk-gray);border-radius:7px;overflow:hidden;background:#fff}.markdown-body th{background:var(--hk-black);color:#fff;text-align:left;padding:10px}.markdown-body td{border-top:1px solid var(--hk-gray);padding:12px;vertical-align:top}.markdown-body td:first-child{width:34%;font-weight:900;color:var(--hk-red)}.study-head{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:14px}.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:#fff;border:1px solid var(--hk-gray);border-radius:7px;padding:16px}.card h3{font-size:18px;color:var(--hk-red);margin-bottom:10px}.hk-footer{flex-shrink:0;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid #000;padding-top:16px;z-index:2;background:var(--hk-bg)}.hk-logo{font-weight:900;letter-spacing:2px}.hk-logo span{color:var(--hk-red)}.hk-scroll-hint{font-size:.78rem;letter-spacing:3px;font-weight:800}.paper-slide.hidden{display:none!important}@media(max-width:980px){body,html{overflow:auto}.filterbar{position:sticky;height:auto;display:block;padding:12px 18px}.filters{margin-top:10px}.swiper{height:auto;padding-top:0}.hk-container{height:auto;min-height:100vh;padding:24px 18px}.hk-grid{grid-template-columns:1fr;gap:24px}.hk-main-title{font-size:2.4rem}.card-grid{grid-template-columns:1fr}.hk-footer{display:none}.hk-right-col{overflow:visible;padding-right:0}}'''
 
 
 def page_script():
     return r'''
-document.querySelectorAll('[data-open-study]').forEach(btn=>btn.addEventListener('click',()=>{const p=btn.closest('.paper');p.querySelector('.summary-panel').hidden=true;p.querySelector('.study-panel').hidden=false;p.scrollIntoView({behavior:'smooth',block:'start'});}));
-document.querySelectorAll('[data-close-study]').forEach(btn=>btn.addEventListener('click',()=>{const p=btn.closest('.paper');p.querySelector('.study-panel').hidden=true;p.querySelector('.summary-panel').hidden=false;p.scrollIntoView({behavior:'smooth',block:'start'});}));
-document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{const tag=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.paper').forEach(p=>{p.classList.toggle('hidden',tag!=='__all'&&!p.dataset.tags.split('|').includes(tag));});}));
+const swiper=new Swiper('.swiper',{speed:700,mousewheel:{forceToAxis:true},keyboard:{enabled:true},direction:'horizontal'});
+document.querySelectorAll('[data-open-study]').forEach(btn=>btn.addEventListener('click',()=>{const slide=btn.closest('.paper-slide');slide.querySelector('.summary-panel').hidden=true;slide.querySelector('.study-panel').hidden=false;}));
+document.querySelectorAll('[data-close-study]').forEach(btn=>btn.addEventListener('click',()=>{const slide=btn.closest('.paper-slide');slide.querySelector('.study-panel').hidden=true;slide.querySelector('.summary-panel').hidden=false;}));
+document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{const tag=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.paper-slide').forEach(slide=>{slide.classList.toggle('hidden',tag!=='__all'&&!slide.dataset.tags.split('|').includes(tag));});swiper.update();swiper.slideTo(0,0);}));
 '''
 
 

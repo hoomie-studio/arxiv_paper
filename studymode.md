@@ -5,10 +5,14 @@
 【重要原則】
 - 全部使用繁體中文，論文英文原標題、模型名稱、資料集名稱除外。
 - 請嚴格照下面 Markdown 標題輸出，不要新增其他主標題。
-- 不要輸出 JSON，不要輸出表格。
+- 不要輸出 JSON。
 - 若論文沒有提供某項資訊，請寫「論文未明確說明」，不要幻想細節。
 - 內容要比 Summary Mode 更偏學習導覽：重視脈絡、流程、名詞、觀念確認與測驗。
 - 測驗題請避免太簡單，選項要合理但只有一個正確答案。
+
+【固定標籤規則】
+分類關鍵字只能從以下 9 個標籤中挑選，請勿自創新標籤：
+reconstruction, remote sensing, point cloud, object detection, GIS, digital twin, Lidar, machine learning, photogrammetry
 
 ### 文獻名稱
 論文原始英文標題
@@ -20,11 +24,7 @@
 - 抓取時間: {{CURRENT_TIME}}
 
 ### 分類關鍵字
-- 主題類別：[例如 Computer Vision / Medical Imaging / NLP / Robotics / Remote Sensing]
-- 方法類別：[例如 Foundation Model / Diffusion / Transformer / Optimization / Dataset]
-- 任務類別：[例如 Reconstruction / Segmentation / Detection / Generation / Prediction]
-- 難度：[入門 / 中級 / 進階]
-- 關鍵字：[3 到 6 個關鍵字，用逗號分隔]
+- 關鍵字：[從固定標籤中挑選 1 到 4 個，用逗號分隔]
 
 ### 一句話核心
 用一句話說明這篇論文最重要的貢獻，80 字內。

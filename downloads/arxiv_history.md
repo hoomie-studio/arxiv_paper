@@ -24,3 +24,9 @@
 - ID: 2604.22482
 - URL: https://arxiv.org/abs/2604.22482
 - 狀態: [已完成摘要+StudyMode] (2026-04-28 08:38:16)
+
+---
+## Multivariate Gaussian NeRF for Wide Field-of-View Ultrasound Reconstruction
+- ID: 2604.24187
+- URL: https://arxiv.org/abs/2604.24187
+- 狀態: [已完成摘要+StudyMode] (2026-04-28 10:09:51)
